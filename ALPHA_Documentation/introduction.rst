@@ -52,7 +52,7 @@ A high-level description of the REVS_Common directory structure follows.  Use it
 * datatypes
     * Contains Matlab class definitions for the Matlab objects that compose REVS and various enumerated datatypes.  Also contains REVS_fuel_table.csv that holds the fuel properties for known fuel types
 * drive_cycles
-    * Contains .mat files that represent various compliance or custom drive cycles in the form of class_REVS_drive_cycle objects with the name drive_cycle. The "sim_xxx.m" Matlab scripts are basically deprecated at this point and have been replaced by the use of tags in config strings within the batch process (more on that below)
+    * Contains ``.mat`` files that represent various compliance or custom drive cycles in the form of class_REVS_drive_cycle objects with the name drive_cycle. The "sim_xxx.m" Matlab scripts are basically deprecated at this point and have been replaced by the use of tags in config strings within the batch process (more on that below)
 * executable_tools
     * Contains tools for generating executable (binary) versions of the model.  Primarily used for developing the GEM compliance model
 * functions
