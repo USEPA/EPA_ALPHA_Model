@@ -546,7 +546,7 @@ This will create a timestamped .mat file in the sim batch output folder.  The fi
 
 The workspace is saved after all post-processing scripts have been run so the workspace contains everything required to replicate the simulation at a later time and also all of the datalogs, audits, etc.  The simulation may be run again or the outputs examined directly without the need for running the simulation.  Keep in mind that output workspaces will always be bigger than input workspaces and also take longer to save.  The workspace may be loaded by using the load command or double-clicking the filename in the Matlab Current Folder file browser.
 
-ost-Simulation Data Analysis
+Post-Simulation Data Analysis
 -----------------------------
 
 As mentioned before, a model_data object is created in the output workspace and may contain various model outputs.  One of the easiest ways to take a look at simulation data is to run a Data Observation Report (DOR) on the model data.  There are DORs for conventional (CVM), hybrid (HVM) and electric vehicles (EVM).  To run the default conventional vehicle model DOR, use the REVS_DOR_CVM() function:
