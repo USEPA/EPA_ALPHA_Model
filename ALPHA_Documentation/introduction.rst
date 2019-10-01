@@ -11,7 +11,7 @@ EPA has developed the ALPHA model to enable the simulation of current and future
 
 EPA engineers utilize ALPHA as an in-house research tool to explore in detail current and future advanced vehicle technologies.  ALPHA is continually refined and updated to more accurately model light-duty vehicle behavior and to include new technologies.
 
-ALPHA a (and EPA’s Heavy-Duty compliance model, GEM) are built on a common platform known as “REVS” – Regulated Emissions Vehicle Simulation.  REVS forms the foundation of ALPHA.  This document refers to the third revision of REVS, known as REVS3.  ALPHA can be considered a tool as well as a modeling process, the components of which are defined in REVS.
+ALPHA (and EPA's Heavy-Duty compliance model, GEM) are built on a common platform known as "REVS" - Regulated Emissions Vehicle Simulation.  REVS forms the foundation of ALPHA.  This document refers to the third revision of REVS, known as REVS3.  ALPHA can be considered a tool as well as a modeling process, the components of which are defined in REVS.
 
     For more information, visit:
 
@@ -19,11 +19,11 @@ ALPHA a (and EPA’s Heavy-Duty compliance model, GEM) are built on a common pla
 
 What is this Document?
 ^^^^^^^^^^^^^^^^^^^^^^
-This documentation should provide the reader a good overview of the ALPHA modeling process and serve as a starting point for understanding some of the ALPHA implementation details.  Common use cases are covered as a way to jump start ALPHA use and techniques commonly used to control and modify the modeling process are presented.
+This documentation should provide the reader an overview of the ALPHA modeling process and serve as a starting point for understanding some of the ALPHA implementation details.  Common use cases and techniques frequently used to control and modify the modeling process are presented as a way to jump start ALPHA use.
 
 Target Audience
 ^^^^^^^^^^^^^^^
-The target audience for this document is anyone who is interested in learning more about how to run EPA’s ALPHA model.  Prior modeling experience or a good understanding of vehicle powertrains and some Matlab familiarity is assumed.  There are plentiful resources available to learn the basics of Matlab and Simulink in print and online from MathWorks and other third parties.
+The target audience for this document is anyone who is interested in learning more about how to run EPA's ALPHA model.  Prior modeling experience or a good understanding of vehicle powertrains and some Matlab familiarity is assumed.  There are ample resources available to learn the basics of Matlab and Simulink in print and online from MathWorks and other third parties.
 
 System Requirements for Installation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -45,7 +45,7 @@ Launch Matlab and add REVS_Common and its subfolders to your Matlab path (from t
 
 Directory Structure
 ^^^^^^^^^^^^^^^^^^^
-A high-level description of the REVS_Common directory structure follows.  Use it as a rough guide to exploring the file system.  Not all releases of ALPHA may contain all subfolders (for example, the HIL-related files) but this should still give a good idea of where common items are located.
+A high-level description of the REVS_Common directory structure follows.  Use it as a rough guide to exploring the file system.  Not all releases of ALPHA may contain all subfolders (for example, the HIL-related files) but this should still provide the user a good idea of where common items are located.
 
 * REVS_Common  top level
     * Contains REVS_VM.mdl, the top-level ALPHA model and the ALPHA logo
@@ -66,7 +66,7 @@ A high-level description of the REVS_Common directory structure follows.  Use it
 * log_packages
     * Contains scripts that are used in conjunction with the batch modeling process in order to control the datalogging and post-processing of datalogs into a standardized data object
 * param_files
-    * Contains data for common model components such as engines or batteries which can be used across multiple modeling projects.  In particular, the engine files are part of the NCAT “data packet” publishing process
+    * Contains data for common model components such as engines or batteries which can be used across multiple modeling projects.  In particular, the engine files are part of the NCAT "data package" publishing process
 * plots
     * Can be used to store plots of common interest to REVS3 development
 * publish_tools
@@ -86,7 +86,7 @@ Component Reuse
 ---------------
 The use of Matlab classes and objects aids in the maintenance of the code base by allowing easier addition of new elements and behaviors to existing data structures.  Using classes (instead of structures) also ensures that data structures have known and reusable definitions.
 
-Generally speaking, model components have class definitions that correspond to the required parameters and data necessary for their intended function.  There are rare exceptions for a few legacy components that came over from REVS2 (which did not generally used Matlab classes and objects).  New components should be added to the model following the object-oriented paradigm whenever possible.
+Generally speaking, model components have class definitions that correspond to the required parameters and data necessary for their intended function.  There are rare exceptions for a few legacy components that came over from REVS2 (which did not generally use Matlab classes and objects).  New components should be added to the model following the object-oriented paradigm whenever possible.
 
 Datalogging and Auditing
 ------------------------
@@ -94,7 +94,7 @@ Datalogging enables post-simulation data analysis and debugging.  Significant ef
 
 The model is also set up to audit the energy flows throughout the model.  If auditing is enabled then a text file (or console output) is created that shows the energy sources and sinks that were simulated.  The total energy provided and absorbed should be equal if the model conserves energy.  Since the model runs at discrete time steps and since modeling is an exercise in approximation there is commonly some slight discrepancy which is noted as the Simulation Error in the audit report.  The Energy Conservation is reported as a percentage ratio between the Net Energy Provided and the Total Loss Energy.
 
-If new components are added to the model then new audit blocks need also to be added and the corresponding audit scripts will require updating in order to capture the new energy source or sink in the audit report.  Adding audits to the model is somewhat of an advanced topic, primarily because the block layout of the model and the mathematical structure of the model are not the same – except that sometimes they are!  The primary principle is to remember that the purpose of the audit is to monitor the physical energy flows and not the energy flow through the Simulink blocks which may be distinct from the physics.
+If new components are added to the model then new audit blocks also need to be added and the corresponding audit scripts require updating in order to capture the new energy source or sink in the audit report.  Adding audits to the model is somewhat of an advanced topic, primarily because the block layout of the model and the mathematical structure of the model are not the same - although sometimes they are!  The primary principle is to remember that the purpose of the audit is to monitor the physical energy flows and not the energy flow through the Simulink blocks which may be distinct from the physics.
 
 Auditing the energy flow in the model is a key factor in ensuring the plausibility and function of the model.
 
