@@ -50,7 +50,7 @@ A ``class_REVS_sim_batch`` object actually contains a vector of ``class_REVS_sim
 
 Understanding the ALPHA Quickstart Script
 -----------------------------------------
-The ``run_ALPHA_quickstart`` M-script demonstrates the simplest possible batch process - a single simulation run with the default settings and only the minimum required input files and minimal outputs.  Let's take a closer look.
+The ``run_ALPHA_quickstart`` M-script demonstrates the simplest possible batch process - a single simulation run with the default settings and only the minimum required input files and minimal outputs.
 
     run_ALPHA_quickstart.m:
 
