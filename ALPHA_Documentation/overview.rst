@@ -36,7 +36,7 @@ The fundamental modeling process consists of creating a Matlab workspace that co
     * Framework for saving Matlab workspaces at various points in the modeling process
     * Easy and convenient method to define and reuse sim batches across multiple projects
 
-2.	Load a saved workspace available in a .mat file and then run the model.  In this case the pre- and post-processing must be handled by the user, this is somewhat of an advanced use case but can be very useful under the right circumstances.
+2.	Load a saved workspace available in a ``.mat`` file and then run the model.  In this case the pre- and post-processing must be handled by the user, this is somewhat of an advanced use case but can be very useful under the right circumstances.
 
 3.	Create an ad-hoc script to load individual param files (Matlab scripts containing component data structures) and manually perform the pre- and post-processing.  This was the process prior to the standardized batch process, which can lead to duplication of effort and  inconsistent approaches across users and therefore should be avoided.
 
@@ -525,7 +525,7 @@ The simulation workspace may be saved prior to simulation by setting the sim bat
 
     sim_batch.save_input_workspace = true;
 
-This will create a timestamped .mat file in the sim batch output folder’s ``sim_input`` directory.  The filename also includes the index of the sim case.  For example, the input workspace for the first simulation (sim_1) in a batch:
+This will create a timestamped ``.mat`` file in the sim batch output folder’s ``sim_input`` directory.  The filename also includes the index of the sim case.  For example, the input workspace for the first simulation (sim_1) in a batch:
 
 ::
 
@@ -542,7 +542,7 @@ The simulation workspace may be saved after simulation by setting the sim batch 
 
     sim_batch.save_output_workspace = true;
 
-This will create a timestamped .mat file in the sim batch output folder.  The filename also includes the index of the sim case.  For example, the output workspace for the first simulation (sim_1) in a batch:
+This will create a timestamped ``.mat`` file in the sim batch output folder.  The filename also includes the index of the sim case.  For example, the output workspace for the first simulation (sim_1) in a batch:
 
 ::
 

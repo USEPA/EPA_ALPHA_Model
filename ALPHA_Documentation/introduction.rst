@@ -30,13 +30,13 @@ System Requirements for Installation
 
 System Requirements
 -------------------
-ALPHA REVS3 requires Matlab/Simulink with StateFlow 2016b, but should also work with later releases after library/model up-conversions.  Also required is a compiler, for compiling the StateFlow code, see http://www.mathworks.com/support/compilers/R2016b/index.html
+ALPHA REVS3 requires Matlab/Simulink with StateFlow 2016b, but should also work with later releases after library/model up-conversions.  Also required is a compiler, for compiling the StateFlow code, see http://www.mathworks.com/support/compilers/R2016b/index.html.
 
 Installation
 ------------
-Install Matlab/Simulink and the Simulink StateFlow toolbox following MathWork's instructions.  Copy the REVS_Common folder (and Matlab Common if provided) to a suitable directory on your modeling machine.  Matlab Common is a directory of helpful Matlab scripts and functions which are commonly used for data analysis and visualization, etc.  If Matlab Common is provided, add it to your Matlab path in the same manner as REVS_Common.
+Install Matlab/Simulink and the Simulink StateFlow toolbox following MathWork's instructions.  Copy the ``REVS_Common`` folder (and ``Matlab Common`` if provided) to a suitable directory on your modeling machine.  ``Matlab Common`` is a directory of helpful Matlab scripts and functions which are commonly used for data analysis and visualization, etc.  If ``Matlab Common`` is provided, add it to your Matlab path in the same manner as ``REVS_Common``.
 
-Launch Matlab and add REVS_Common and its subfolders to your Matlab path (from the Matlab console, select "Set Path" from the "HOME" tab of the Matlab window, then select "Add with Subfolders..." and browse to REVS_Common).  The path may be saved for future sessions or it is also possible to write a simple script to add the required folders to your path on an as-needed basis.  For example:
+Launch Matlab and add ``REVS_Common`` and its subfolders to your Matlab path (from the Matlab console, select "Set Path" from the "HOME" tab of the Matlab window, then select "Add with Subfolders..." and browse to ``REVS_Common``).  The path may be saved for future sessions or it is also possible to write a simple script to add the required folders to your path on an as-needed basis.  For example:
 
 ::
 
@@ -45,32 +45,32 @@ Launch Matlab and add REVS_Common and its subfolders to your Matlab path (from t
 
 Directory Structure
 ^^^^^^^^^^^^^^^^^^^
-A high-level description of the REVS_Common directory structure follows.  Use it as a rough guide to exploring the file system.  Not all releases of ALPHA may contain all subfolders (for example, the HIL-related files) but this should still provide the user a good idea of where common items are located.
+A high-level description of the ``REVS_Common`` directory structure follows.  Use it as a rough guide to exploring the file system.  Not all releases of ALPHA may contain all subfolders (for example, the HIL-related files) but this should still provide the user a good idea of where common items are located.
 
 * REVS_Common  top level
-    * Contains REVS_VM.mdl, the top-level ALPHA model and the ALPHA logo
+    * Contains ``REVS_VM.mdl``, the top-level ALPHA model and the ALPHA logo.
 * datatypes
-    * Contains Matlab class definitions for the Matlab objects that compose REVS and various enumerated datatypes.  Also contains REVS_fuel_table.csv that holds the fuel properties for known fuel types
+    * Contains Matlab class definitions for the Matlab objects that compose REVS and various enumerated datatypes.  Also contains ``REVS_fuel_table.csv`` that holds the fuel properties for known fuel types.
 * drive_cycles
-    * Contains ``.mat`` files that represent various compliance or custom drive cycles in the form of class_REVS_drive_cycle objects with the name drive_cycle. The "sim_xxx.m" Matlab scripts are basically deprecated at this point and have been replaced by the use of tags in config strings within the batch process (more on that below)
+    * Contains ``.mat`` files that represent various compliance or custom drive cycles in the form of ``class_REVS_drive_cycle`` objects with the name ``drive_cycle``. The ``sim_xxx.m`` Matlab scripts are basically deprecated at this point and have been replaced by the use of tags in config strings within the batch process (more on that below).
 * executable_tools
-    * Contains tools for generating executable (binary) versions of the model.  Primarily used for developing the GEM compliance model
+    * Contains tools for generating executable (binary) versions of the model.  Primarily used for developing the GEM compliance model.
 * functions
-    * Contains various Matlab functions used during the modeling process.   Also contains functionSignatures.json which Matlab can use to provide auto-completion assistance in the Editor
+    * Contains various Matlab functions used during the modeling process.   Also contains ``functionSignatures.json`` which Matlab can use to provide auto-completion assistance in the Editor.
 * helper_scripts
-    * Primarily contains scripts related to pre- and post-processing simulation runs
+    * Primarily contains scripts related to pre- and post-processing simulation runs.
 * HIL_tools
-    * Tools related to building executable ALPHA models for Hardware-in-the-Loop (HIL) testing
+    * Tools related to building executable ALPHA models for Hardware-in-the-Loop (HIL) testing.
 * libraries
-    * Contains the REVS Simulink component block models, separated into various libraries by component type
+    * Contains the REVS Simulink component block models, separated into various libraries by component type.
 * log_packages
-    * Contains scripts that are used in conjunction with the batch modeling process in order to control the datalogging and post-processing of datalogs into a standardized data object
+    * Contains scripts that are used in conjunction with the batch modeling process in order to control the datalogging and post-processing of datalogs into a standardized data object.
 * param_files
-    * Contains data for common model components such as engines or batteries which can be used across multiple modeling projects.  In particular, the engine files are part of the NCAT "data package" publishing process
+    * Contains data for common model components such as engines or batteries which can be used across multiple modeling projects.  In particular, the engine files are part of the NCAT Test Data Package publishing process.
 * plots
-    * Can be used to store plots of common interest to REVS3 development
+    * Can be used to store plots of common interest to REVS3 development.
 * publish_tools
-    * Contains tools related to publishing NCAT data packets, particularly for publishing engine data
+    * Contains tools related to publishing NCAT Test Data Packages, particularly for publishing engine data.
 * python
     * Contains Python scripts related to the implementation of multi-core and/or multi-machine parallel modeling processes on a local network using Python packages.
 
@@ -80,7 +80,7 @@ This section will lay out of the some high-level design principles that guide AL
 
 Object Oriented Design
 ----------------------
-REVS3 makes significant use of Matlab classes and objects in order to provide a well-defined, maintainable and re-usable set of data structures and model functionality.  Class definitions start with \class_ and enumerated types start with \enum_.  With a few exceptions, most of the classes start with class_REVS so that Matlab auto-completion provides a useful list of the available classes.
+REVS3 makes significant use of Matlab classes and objects in order to provide a well-defined, maintainable and re-usable set of data structures and model functionality.  Class definitions start with ``\class_`` and enumerated types start with ``\enum_``.  With a few exceptions, most of the classes start with ``class_REVS`` so that Matlab auto-completion provides a useful list of the available classes.
 
 Component Reuse
 ---------------
@@ -100,7 +100,7 @@ Auditing the energy flow in the model is a key factor in ensuring the plausibili
 
 Conventions and Guidelines
 --------------------------
-There are several conventions and guidelines that enhance the consistency and usability of the model, see :ref:`ad-crossref-1` under ALPHA Development.
+There are several conventions and guidelines that enhance the consistency and usability of the model, see ``:ref:ad-crossref-1`` under ALPHA Development.
 
 
 
