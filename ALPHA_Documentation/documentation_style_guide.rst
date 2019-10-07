@@ -71,7 +71,7 @@ To create a highlighted section of text that also ignores all RST formatting, a 
 
 Cross References
 ----------------
-To reference a section, place a marker (crossref1 in this case) above a section followed by a blank line.  Start the marker name with an underscore:
+To reference a section, place a marker (``crossref1`` in this case) above a section followed by a blank line.  Start the marker name with an underscore:
 
 ::
 
@@ -90,7 +90,7 @@ To refer to the section, use the following syntax.  The section name will automa
 
 Tables
 ------
-First task is to enable automatic numbering in the conf.py file:
+First task is to enable automatic numbering in the ``conf.py`` file:
 
 ::
 
