@@ -1,7 +1,14 @@
 """Code
    ----
 
-    Describe Code Here: This routine uses the datetime function to print the date and time"""
+   Information related to the code is placed here
+
+       ::
+
+        A literal section can also be added
+
+    """
+
 
 from datetime import datetime
 
