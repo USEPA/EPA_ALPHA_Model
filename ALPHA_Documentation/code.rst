@@ -7,6 +7,9 @@ Documentation From Code
 .. automodule:: TK1_Example
    :members:
 
+.. automodule:: Code_EXC
+   :members:
+
 
 
 

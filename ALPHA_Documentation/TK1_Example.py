@@ -1,5 +1,5 @@
 """TK1_Example
-   ----------
+   -----------
 
    Handy set of functions"""
 
