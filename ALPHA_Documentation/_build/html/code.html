@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>10. Documentation From Code &#8212; ALPHA Documentation 1.0 documentation</title>
+    <title>10. Python Documentation Style Guide &#8212; ALPHA Documentation 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -16,7 +16,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="9. Documentation Style Guide" href="documentation_style_guide.html" /> 
+    <link rel="prev" title="9. Reference Documentation Style Guide" href="documentation_style_guide.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,7 +28,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="documentation_style_guide.html" title="9. Documentation Style Guide"
+          <a href="documentation_style_guide.html" title="9. Reference Documentation Style Guide"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li> 
       </ul>
@@ -39,11 +39,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-functions">
-<span id="documentation-from-code"></span><h1>10. Documentation From Code<a class="headerlink" href="#module-functions" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="functions">
+  <div class="section" id="python-documentation-style-guide">
+<h1>10. Python Documentation Style Guide<a class="headerlink" href="#python-documentation-style-guide" title="Permalink to this headline">¶</a></h1>
+<p>This document defines the style guide for creating ALPHA Python documentation using reStructuredText and Sphinx tools.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">code.rst</span></code> file demonstrates how the subheadings under this chapter are built to be included in the auto-documentation.</p>
+<p>For further information, please reference the <code class="docutils literal notranslate"><span class="pre">xxx.py</span></code> files named in the following sections.</p>
+<span class="target" id="module-functions"></span><div class="section" id="functions">
 <h2>10.1. Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
-<p>This file demonstrates how to auto document functions</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">functions.py</span></code> file demonstrates how to auto-document functions</p>
 <dl class="function">
 <dt id="functions.get_filename">
 <code class="sig-prename descclassname">functions.</code><code class="sig-name descname">get_filename</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.get_filename" title="Permalink to this definition">¶</a></dt>
@@ -101,59 +104,6 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="functions.get_parent_foldername">
-<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">get_parent_foldername</code><span class="sig-paren">(</span><em class="sig-param">filepathnameext</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.get_parent_foldername" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the parent folder of the given file e.g. /apath/somepath/somefile.txt -&gt; somepath</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filepathnameext</strong> – file name, including extension and path to file</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>parent folder of the given file</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="functions.network_copyfile">
-<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">network_copyfile</code><span class="sig-paren">(</span><em class="sig-param">remote_path</em>, <em class="sig-param">srcfile</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.network_copyfile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy srcfile to remote_path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>remote_path</strong> – Path to file destination</p></li>
-<li><p><strong>srcfile</strong> – source file name, including extension and path to file</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="functions.relocate_file">
-<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">relocate_file</code><span class="sig-paren">(</span><em class="sig-param">remote_path</em>, <em class="sig-param">local_filename</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.relocate_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Move local_filename out to remote_path and return the filename in that remote context</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>remote_path</strong> – Path to file destination</p></li>
-<li><p><strong>local_filename</strong> – local source file name, including extension and path to file as required</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="functions.sysprint">
-<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">sysprint</code><span class="sig-paren">(</span><em class="sig-param">str</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.sysprint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs ECHO command of str in CMD window</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>str</strong> – string to echo</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
 <dt id="functions.validate_file">
 <code class="sig-prename descclassname">functions.</code><code class="sig-name descname">validate_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#functions.validate_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verify the existence of filename and try to create it if doesn’t exist</p>
@@ -187,11 +137,13 @@
 </dd></dl>
 
 </div>
-<span class="target" id="module-code2"></span><div class="section" id="code">
+<span class="target" id="module-code_1"></span><div class="section" id="code">
 <h2>10.2. Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
-<p>Information related to the code is placed here</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">code_1.py</span></code> file demonstrates how to auto-document code.</p>
+<p>A full functional description of the file contents will be
+located here.</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="n">literal</span> <span class="n">section</span> <span class="n">can</span> <span class="n">also</span> <span class="n">be</span> <span class="n">added</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="n">highlighted</span> <span class="n">literal</span> <span class="n">section</span> <span class="n">may</span> <span class="n">also</span> <span class="n">be</span> <span class="n">added</span> <span class="n">here</span> <span class="k">if</span> <span class="n">needed</span><span class="o">.</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -215,8 +167,8 @@
 <li class="toctree-l1"><a class="reference internal" href="alpha_development.html">6. ALPHA Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contact_information.html">7. Contact Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="company_information.html">8. Company Information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="documentation_style_guide.html">9. Documentation Style Guide</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">10. Documentation From Code</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="documentation_style_guide.html">9. Reference Documentation Style Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. Python Documentation Style Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#functions">10.1. Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#code">10.2. Code</a></li>
 </ul>
@@ -254,7 +206,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="documentation_style_guide.html" title="9. Documentation Style Guide"
+          <a href="documentation_style_guide.html" title="9. Reference Documentation Style Guide"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li> 
       </ul>

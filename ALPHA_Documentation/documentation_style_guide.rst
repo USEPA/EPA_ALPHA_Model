@@ -1,7 +1,7 @@
 
-Documentation Style Guide
-=========================
-This document defines the style guide and reference for creating ALPHA documentation using  reStructuredText and Sphinx tools.
+Reference Documentation Style Guide
+===================================
+This document defines the style guide for creating ALPHA reference documentation using  reStructuredText and Sphinx tools.
 
 Reference Guide
 ^^^^^^^^^^^^^^^

@@ -1,13 +1,21 @@
+# The following section demonstrates how to insert a header into the code file
+# that will be recorded when the auto-documentation is built.
+# "Functions" will be the name of the sub-heading in the documentation using the
+# formatting shown.
+
 """Functions
    ---------
 
-   This file demonstrates how to auto document functions"""
+   The ``functions.py`` file demonstrates how to auto-document functions
+
+   """
 
 import os
 import shutil
 import sys
 
-print('Loading %s...' % __name__)
+# The following section demonstrates how to comment functions
+# that will be recorded when the auto-documentation is built.
 
 
 def validate_folder(dstfolder):
@@ -83,48 +91,4 @@ def get_filenameext(filename):
     return os.path.split(filename)[1]
 
 
-def get_parent_foldername(filepathnameext):
-    """
-    Returns the parent folder of the given file e.g. /apath/somepath/somefile.txt -> somepath
 
-    :param filepathnameext: file name, including extension and path to file
-    :return: parent folder of the given file
-    """
-    return get_filename(get_filepath(filepathnameext))
-
-
-def network_copyfile(remote_path, srcfile):
-    """
-    Copy srcfile to remote_path
-
-    :param remote_path: Path to file destination
-    :param srcfile: source file name, including extension and path to file
-    """
-    dstfile = remote_path + os.sep + get_filenameext(srcfile)
-    shutil.copyfile(srcfile, dstfile)
-
-
-def relocate_file(remote_path, local_filename):
-    """
-    Move local_filename out to remote_path and return the filename in that remote context
-
-    :param remote_path: Path to file destination
-    :param local_filename: local source file name, including extension and path to file as required
-    """
-    network_copyfile(remote_path, local_filename)
-    return get_filenameext(local_filename)
-
-
-def sysprint(str):
-    """
-    Performs ECHO command of str in CMD window
-
-    :param str: string to echo
-    """
-    os.system('echo {}'.format(str))
-
-
-"""TK_Example1
-   -----------
-
-   Handy set of functions"""
