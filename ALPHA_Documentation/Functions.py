@@ -1,7 +1,7 @@
-"""TK1_Example
-   -----------
+"""Functions
+   ---------
 
-   Handy set of functions"""
+   This file demonstrates how to auto document functions"""
 
 import os
 import shutil

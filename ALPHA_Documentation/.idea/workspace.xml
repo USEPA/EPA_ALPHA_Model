@@ -2,34 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f03af937-98f9-425d-8041-407f32d8f52c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Code_EXC.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Functions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/file_eye_oh.rst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TK1_Example.py" beforeDir="false" afterPath="$PROJECT_DIR$/TK1_Example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/doctrees/alpha_development.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/alpha_development.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code_EXC.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TK1_Example.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TK_Example.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/_build/doctrees/code.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/code.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/doctrees/common_use_cases.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/common_use_cases.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/doctrees/documentation_style_guide.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/documentation_style_guide.doctree" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/environment.pickle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/doctrees/introduction.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/introduction.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/doctrees/overview.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/overview.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/_sources/alpha_development.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/_sources/alpha_development.rst.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_build/html/_sources/code.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/_sources/code.rst.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/_sources/common_use_cases.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/_sources/common_use_cases.rst.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/_sources/documentation_style_guide.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/_sources/documentation_style_guide.rst.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/_sources/introduction.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/_sources/introduction.rst.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/_sources/overview.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/_sources/overview.rst.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/alpha_development.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/alpha_development.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_build/html/code.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/code.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/common_use_cases.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/common_use_cases.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/documentation_style_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/documentation_style_guide.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_build/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/genindex.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_build/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/introduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/introduction.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/objects.inv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/overview.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_build/html/py-modindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/py-modindex.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/searchindex.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code.rst" beforeDir="false" afterPath="$PROJECT_DIR$/code.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/index.rst" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +59,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Code_EXC">
+  <component name="RunManager" selected="Python.code2">
     <configuration name="Code_EXC" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="ALPHA_Documentation" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -111,8 +102,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="code2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="ALPHA_Documentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.code2" />
         <item itemvalue="Python.Code_EXC" />
         <item itemvalue="Python.TK_Example" />
       </list>

@@ -1,8 +1,7 @@
-"""Code_EXC
-   --------
+"""Code
+   ----
 
-    Describe Code Here:
-    This routine uses the datetime function to print the date and time."""
+    Describe Code Here: This routine uses the datetime function to print the date and time"""
 
 from datetime import datetime
 

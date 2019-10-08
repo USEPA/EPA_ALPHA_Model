@@ -1,13 +1,10 @@
 Documentation From Code
 =======================
 
-.. automodule:: TK_Example
+.. automodule:: functions
    :members:
 
-.. automodule:: TK1_Example
-   :members:
-
-.. automodule:: Code_EXC
+.. automodule:: code2
    :members:
 
 
