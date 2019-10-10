@@ -1,14 +1,15 @@
+.. The following section demonstrates how to insert a header into the documentation file that will be recorded when the auto-documentation is built.
+
+.. "Reference Documentation Style Guide" will be the name of the chapter in the documentation using the formatting shown.
+
 
 Reference Documentation Style Guide
 ===================================
 This document defines the style guide for creating ALPHA reference documentation using  reStructuredText and Sphinx tools.
 
-Reference Guide
-^^^^^^^^^^^^^^^
-
 Defining Document Chapters and Sub-Chapters
 -------------------------------------------
-For ease of access and organization, a separate RST file is created for each chapter.  These chapter file names need to be listed in the index.rst file in the order desired for the final document.
+For ease of access and organization, a separate RST file is created for each chapter.  These chapter file names need to be listed in the ``index.rst`` file in the order desired for the final document.
 
 The section numbers in the document are created automatically by Sphinx provided the     ":numbered:" option is present in the index.rst file.  The levels are determined by the characters below the section names:
 

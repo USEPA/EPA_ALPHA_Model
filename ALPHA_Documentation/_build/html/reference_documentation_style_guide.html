@@ -16,7 +16,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="10. Python Documentation Style Guide" href="code.html" />
+    <link rel="next" title="10. Python Documentation Style Guide" href="python_documentation_style_guide.html" />
     <link rel="prev" title="8. Company Information" href="company_information.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -29,7 +29,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="code.html" title="10. Python Documentation Style Guide"
+          <a href="python_documentation_style_guide.html" title="10. Python Documentation Style Guide"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="company_information.html" title="8. Company Information"
@@ -46,11 +46,9 @@
   <div class="section" id="reference-documentation-style-guide">
 <h1>9. Reference Documentation Style Guide<a class="headerlink" href="#reference-documentation-style-guide" title="Permalink to this headline">¶</a></h1>
 <p>This document defines the style guide for creating ALPHA reference documentation using  reStructuredText and Sphinx tools.</p>
-<div class="section" id="reference-guide">
-<h2>9.1. Reference Guide<a class="headerlink" href="#reference-guide" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="defining-document-chapters-and-sub-chapters">
-<h3>9.1.1. Defining Document Chapters and Sub-Chapters<a class="headerlink" href="#defining-document-chapters-and-sub-chapters" title="Permalink to this headline">¶</a></h3>
-<p>For ease of access and organization, a separate RST file is created for each chapter.  These chapter file names need to be listed in the index.rst file in the order desired for the final document.</p>
+<h2>9.1. Defining Document Chapters and Sub-Chapters<a class="headerlink" href="#defining-document-chapters-and-sub-chapters" title="Permalink to this headline">¶</a></h2>
+<p>For ease of access and organization, a separate RST file is created for each chapter.  These chapter file names need to be listed in the <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> file in the order desired for the final document.</p>
 <p>The section numbers in the document are created automatically by Sphinx provided the     “:numbered:” option is present in the index.rst file.  The levels are determined by the characters below the section names:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Chapter</span> <span class="pre">numbers</span> <span class="pre">(example</span> <span class="pre">&quot;6&quot;)</span> <span class="pre">are</span> <span class="pre">underlined</span> <span class="pre">by</span> <span class="pre">&quot;========&quot;</span> <span class="pre">(equals)</span> <span class="pre">characters.</span></code></p></li>
@@ -99,7 +97,7 @@
 </div>
 </div>
 <div class="section" id="creating-a-highlighted-section-of-text">
-<h3>9.1.2. Creating a Highlighted Section of Text<a class="headerlink" href="#creating-a-highlighted-section-of-text" title="Permalink to this headline">¶</a></h3>
+<h2>9.2. Creating a Highlighted Section of Text<a class="headerlink" href="#creating-a-highlighted-section-of-text" title="Permalink to this headline">¶</a></h2>
 <p>To create a highlighted section of text that also ignores all RST formatting, a double colon is used to start the highlighted and unformatted section.  A blank line, followed by a double colon (::), followed by a blank line defines the section.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">highlighted</span> <span class="n">section</span> <span class="n">of</span> <span class="n">text</span> <span class="n">created</span> <span class="n">by</span> <span class="n">inserting</span> <span class="n">a</span> <span class="n">blank</span> <span class="n">line</span><span class="p">,</span> <span class="n">followed</span> <span class="n">by</span> <span class="n">a</span>
 <span class="n">double</span> <span class="n">colon</span> <span class="p">(::),</span> <span class="n">followed</span> <span class="n">by</span> <span class="n">a</span> <span class="n">blank</span> <span class="n">line</span> <span class="ow">and</span> <span class="n">then</span> <span class="n">entering</span> <span class="n">the</span> <span class="n">desired</span> <span class="n">text</span><span class="o">.</span>  <span class="n">The</span> <span class="n">RST</span>
@@ -108,7 +106,7 @@
 </div>
 </div>
 <div class="section" id="cross-references">
-<h3>9.1.3. Cross References<a class="headerlink" href="#cross-references" title="Permalink to this headline">¶</a></h3>
+<h2>9.3. Cross References<a class="headerlink" href="#cross-references" title="Permalink to this headline">¶</a></h2>
 <p>To reference a section, place a marker (<code class="docutils literal notranslate"><span class="pre">crossref1</span></code> in this case) above a section followed by a blank line.  Start the marker name with an underscore:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">_crossref1</span><span class="p">:</span>
 
@@ -123,7 +121,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">&quot;Refer</span> <span class="pre">to</span> <span class="pre">:ref:`crossref1`&quot;</span> <span class="pre">becomes</span> <span class="pre">&quot;Refer</span> <span class="pre">to</span> <span class="pre">Section</span> <span class="pre">Name&quot;</span> <span class="pre">when</span> <span class="pre">compiled.</span></code></p>
 </div>
 <div class="section" id="tables">
-<h3>9.1.4. Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
+<h2>9.4. Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h2>
 <p>First task is to enable automatic numbering in the <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numfig</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
@@ -145,7 +143,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">&quot;Please</span> <span class="pre">refer</span> <span class="pre">to</span> <span class="pre">:numref:`Table</span> <span class="pre">%s</span> <span class="pre">&lt;mylabel&gt;`&quot;</span> <span class="pre">becomes</span> <span class="pre">&quot;Please</span> <span class="pre">refer</span> <span class="pre">to</span> <span class="pre">Table</span> <span class="pre">1&quot;</span> <span class="pre">when</span> <span class="pre">compiled.</span></code></p>
 </div>
 <div class="section" id="literal-text">
-<h3>9.1.5. Literal Text<a class="headerlink" href="#literal-text" title="Permalink to this headline">¶</a></h3>
+<h2>9.5. Literal Text<a class="headerlink" href="#literal-text" title="Permalink to this headline">¶</a></h2>
 <p>At times, text is needed exactly as typed ignoring all markup symbols and compiler directives.  Simply place a double back quote (``) at the beginning and end of the desired text.  This process also switches to a fixed space system font for clarity:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>``.. #$%^ This text is output exactly as typed.``
 </pre></div>
@@ -153,7 +151,6 @@
 <p>Outputs as:</p>
 <p><code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">#$%^</span> <span class="pre">This</span> <span class="pre">text</span> <span class="pre">is</span> <span class="pre">output</span> <span class="pre">exactly</span> <span class="pre">as</span> <span class="pre">typed.</span></code></p>
 <p>Notice all special characters are shown and ignored by the compiler.</p>
-</div>
 </div>
 </div>
 
@@ -175,23 +172,20 @@
 <li class="toctree-l1"><a class="reference internal" href="contact_information.html">7. Contact Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="company_information.html">8. Company Information</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">9. Reference Documentation Style Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#reference-guide">9.1. Reference Guide</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#defining-document-chapters-and-sub-chapters">9.1.1. Defining Document Chapters and Sub-Chapters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#creating-a-highlighted-section-of-text">9.1.2. Creating a Highlighted Section of Text</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cross-references">9.1.3. Cross References</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tables">9.1.4. Tables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#literal-text">9.1.5. Literal Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-document-chapters-and-sub-chapters">9.1. Defining Document Chapters and Sub-Chapters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-highlighted-section-of-text">9.2. Creating a Highlighted Section of Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cross-references">9.3. Cross References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tables">9.4. Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#literal-text">9.5. Literal Text</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="code.html">10. Python Documentation Style Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_documentation_style_guide.html">10. Python Documentation Style Guide</a></li>
 </ul>
 
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/documentation_style_guide.rst.txt"
+      <li><a href="_sources/reference_documentation_style_guide.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -219,7 +213,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="code.html" title="10. Python Documentation Style Guide"
+          <a href="python_documentation_style_guide.html" title="10. Python Documentation Style Guide"
              >next</a> |</li>
         <li class="right" >
           <a href="company_information.html" title="8. Company Information"

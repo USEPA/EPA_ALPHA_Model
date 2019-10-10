@@ -8,7 +8,7 @@ Python Documentation Style Guide
 
 This document defines the style guide for creating ALPHA Python documentation using reStructuredText and Sphinx tools.
 
-The ``code.rst`` file demonstrates how the subheadings under this chapter are built to be included in the auto-documentation.
+The ``python_documentation_style_guide.rst`` file demonstrates how the subheadings under this chapter are built to be included in the auto-documentation.
 
 For further information, please reference the ``xxx.py`` files named in the following sections.
 
