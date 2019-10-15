@@ -21,7 +21,7 @@ EPA ALPHA Model Documentation
     model_outputs
     alpha_development
     contact_information
-    company_information
+    agency_information
     reference_documentation_style_guide
     python_documentation_style_guide
 

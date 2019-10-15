@@ -1,5 +1,5 @@
 
-Company Information
+Agency Information
 ===================
 
 ::
@@ -8,7 +8,7 @@ Company Information
     National Vehicle Fuel Emissions Laboratory (NVFEL)
     2565 Plymouth Road
     Ann Arbor, Michigan  48105
-    Tel 734.214.4200
+    Tel 734-214-4200
     www.epa.gov
 
 
