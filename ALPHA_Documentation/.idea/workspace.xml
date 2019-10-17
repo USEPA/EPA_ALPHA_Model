@@ -2,14 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f03af937-98f9-425d-8041-407f32d8f52c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Example_py_3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Example_py_4.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Try1.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/try1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui_Try1.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui_Try1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jcherr01.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/jcherr01.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Try2.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example_py_5.py" beforeDir="false" afterPath="$PROJECT_DIR$/Example_py_5.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/environment.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_build/doctrees/python_documentation_style_guide.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/python_documentation_style_guide.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_build/html/_sources/python_documentation_style_guide.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/_sources/python_documentation_style_guide.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_build/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/genindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_build/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/objects.inv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_build/html/py-modindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/py-modindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_build/html/python_documentation_style_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/python_documentation_style_guide.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/searchindex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python_documentation_style_guide.rst" beforeDir="false" afterPath="$PROJECT_DIR$/python_documentation_style_guide.rst" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
