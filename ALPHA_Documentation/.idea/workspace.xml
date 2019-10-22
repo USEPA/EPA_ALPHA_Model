@@ -2,19 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f03af937-98f9-425d-8041-407f32d8f52c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Try2.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ALPHA GUI V1.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ALPHA GUI V2.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Alpha GUI V1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Example_py_5.py" beforeDir="false" afterPath="$PROJECT_DIR$/Example_py_5.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/environment.pickle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/doctrees/python_documentation_style_guide.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/_build/doctrees/python_documentation_style_guide.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/_sources/python_documentation_style_guide.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/_sources/python_documentation_style_guide.rst.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/genindex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/objects.inv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/py-modindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/py-modindex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/python_documentation_style_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/python_documentation_style_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/_build/html/searchindex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/python_documentation_style_guide.rst" beforeDir="false" afterPath="$PROJECT_DIR$/python_documentation_style_guide.rst" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +44,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Example_py_5">
+  <component name="RunManager" selected="Python.Alpha GUI V1">
+    <configuration name="Alpha GUI V1" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="ALPHA_Documentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Alpha GUI V1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Example_2" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="ALPHA_Documentation" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -138,34 +150,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="try1" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="ALPHA_Documentation" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/try1.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Alpha GUI V1" />
         <item itemvalue="Python.Example_py_5" />
         <item itemvalue="Python.Example_py_4" />
         <item itemvalue="Python.Example_py_3" />
         <item itemvalue="Python.Example_2" />
-        <item itemvalue="Python.try1" />
       </list>
     </recent_temporary>
   </component>
@@ -180,7 +171,25 @@
       <option name="presentableId" value="Default" />
       <updated>1566302217700</updated>
     </task>
+    <task id="LOCAL-00001" summary="Update #15">
+      <created>1571336572538</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1571336572538</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -197,5 +206,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Update #15" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update #15" />
   </component>
 </project>
