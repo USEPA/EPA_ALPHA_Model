@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="tab_select">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -28,11 +28,17 @@
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="toolTip">
+     <string/>
+    </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="vehicle_type_tab">
      <attribute name="title">
+      <string>Vehicle Type</string>
+     </attribute>
+     <attribute name="toolTip">
       <string>Vehicle Type</string>
      </attribute>
      <widget class="QComboBox" name="vehicle_type_select">
@@ -50,7 +56,13 @@
        </font>
       </property>
       <property name="toolTip">
-       <string extracomment="Select the Vehicle Type"/>
+       <string>Select the Vehicle Type</string>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+      <property name="whatsThis">
+       <string/>
       </property>
       <item>
        <property name="text">
@@ -305,7 +317,7 @@
      <attribute name="title">
       <string>Road Load</string>
      </attribute>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="mass_reduction_label">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -330,7 +342,7 @@
         <height>89</height>
        </rect>
       </property>
-      <layout class="QFormLayout" name="formLayout_2">
+      <layout class="QFormLayout" name="mass_reduction_form_layout">
        <item row="0" column="0">
         <widget class="QLabel" name="mass_reduction_max_label">
          <property name="text">
@@ -384,7 +396,7 @@
         <height>89</height>
        </rect>
       </property>
-      <layout class="QFormLayout" name="formLayout_4">
+      <layout class="QFormLayout" name="rolling_reduction_form_layout">
        <item row="0" column="0">
         <widget class="QLabel" name="rolling_reduction_max_label">
          <property name="text">
@@ -438,44 +450,44 @@
         <height>89</height>
        </rect>
       </property>
-      <layout class="QFormLayout" name="formLayout_5">
+      <layout class="QFormLayout" name="aero_reduction_form_layout">
        <item row="0" column="0">
-        <widget class="QLabel" name="label_13">
+        <widget class="QLabel" name="aero_reduction_max_label">
          <property name="text">
           <string>Max %</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QSpinBox" name="spinBox_11">
+        <widget class="QSpinBox" name="aero_reduction_max_select">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="label_14">
+        <widget class="QLabel" name="aero_reduction_min_label">
          <property name="text">
           <string>Min %</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QSpinBox" name="spinBox_12">
+        <widget class="QSpinBox" name="aero_reduction_min_select">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_15">
+        <widget class="QLabel" name="aero_reduction_step_label">
          <property name="text">
           <string>Step %</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QSpinBox" name="spinBox_13">
+        <widget class="QSpinBox" name="aero_reduction_step_select">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
@@ -492,44 +504,44 @@
         <height>89</height>
        </rect>
       </property>
-      <layout class="QFormLayout" name="formLayout_6">
+      <layout class="QFormLayout" name="engine_sizing_form_layout">
        <item row="0" column="0">
-        <widget class="QLabel" name="label_16">
+        <widget class="QLabel" name="engine_sizing_max_label">
          <property name="text">
           <string>Max %</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QSpinBox" name="spinBox_14">
+        <widget class="QSpinBox" name="engine_sizing_max_select">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="label_17">
+        <widget class="QLabel" name="engine_sizing_min_label">
          <property name="text">
           <string>Min %</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QSpinBox" name="spinBox_15">
+        <widget class="QSpinBox" name="engine_sizing_min_select">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_18">
+        <widget class="QLabel" name="engine_sizing_step_label">
          <property name="text">
           <string>Step %</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QSpinBox" name="spinBox_16">
+        <widget class="QSpinBox" name="engine_sizing_step_label_2">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
@@ -537,7 +549,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QLabel" name="label_19">
+     <widget class="QLabel" name="rolling_reduction_label">
       <property name="geometry">
        <rect>
         <x>170</x>
@@ -553,7 +565,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_20">
+     <widget class="QLabel" name="aero_reduction_label">
       <property name="geometry">
        <rect>
         <x>330</x>
@@ -569,7 +581,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_21">
+     <widget class="QLabel" name="engine_sizing_label">
       <property name="geometry">
        <rect>
         <x>490</x>
