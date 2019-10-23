@@ -32,7 +32,7 @@
      <string/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="vehicle_type_tab">
      <attribute name="title">
@@ -597,6 +597,19 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QPushButton" name="validate_button">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>220</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Validate</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QLabel" name="label">
@@ -646,5 +659,54 @@
   </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>mass_reduction_max_select</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>validate_button</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>172</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>340</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mass_reduction_min_select</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>validate_button</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>340</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mass_reduction_step_select</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>validate_button</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>340</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

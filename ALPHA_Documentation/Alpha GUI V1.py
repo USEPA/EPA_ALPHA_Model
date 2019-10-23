@@ -21,10 +21,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
-        # Load the Use Interface
+        # Load the User Interface
         uic.loadUi('ALPHA GUI V2.ui', self)
         # Connect routines to events and any other needed initialization
         self.vehicle_type_select.currentIndexChanged.connect(self.displayvalue)
+        self.mass_reduction_step_select.valueChanged.connect(self.validate_road_load)
+        self.validate_button.clicked.connect(self.validate_button1)
         # self.calc_tax_button.clicked.connect(self.calculatetax)
         # self.knob1.valueChanged.connect(self.calculateknob)
         # self.knob1.setValue(10)
@@ -43,6 +45,13 @@ class MainWindow(QtWidgets.QMainWindow):
     def displayvalue(self):
         # rotary = self.comboBox.currentText()
         self.textEdit.setText(self.vehicle_type_select.currentText())
+
+    def validate_road_load(self):
+        self.textEdit.setText(self.vehicle_type_select.currentText())
+        mass_reduction_max = self.mass_reduction_max_select.value()
+
+    def validate_button1(self):
+        print("10")
 
 
 def main() -> object:
