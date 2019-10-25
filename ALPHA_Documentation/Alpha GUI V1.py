@@ -25,8 +25,8 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi('ALPHA GUI V3.ui', self)
         # Connect routines to events and any other needed initialization
         self.vehicle_type_select.currentIndexChanged.connect(self.displayvalue)
-        self.mass_reduction_step_select.valueChanged.connect(self.validate_road_load)
-        self.validate_button.clicked.connect(self.validate_button1)
+        # self.mass_reduction_step_select.valueChanged.connect(self.validate_road_load)
+        self.validate_road_load_button.clicked.connect(self.validate_road_load)
         # self.calc_tax_button.clicked.connect(self.calculatetax)
         # self.knob1.valueChanged.connect(self.calculateknob)
         # self.knob1.setValue(10)
@@ -46,12 +46,27 @@ class MainWindow(QtWidgets.QMainWindow):
         # rotary = self.comboBox.currentText()
         self.textEdit.setText(self.vehicle_type_select.currentText())
 
+    # This function calculates the possible step values given the max and min selections
     def validate_road_load(self):
-        self.textEdit.setText(self.vehicle_type_select.currentText())
-        mass_reduction_max = self.mass_reduction_max_select.value()
-
-    def validate_button1(self):
-        print("10")
+        # Mass Reduction
+        # Get selection range from ui
+        max_value = self.mass_reduction_max_select.value()
+        min_value = self.mass_reduction_min_select.value()
+        selection_range = max_value - min_value
+        # Clear the step selector on ui
+        self.mass_reduction_step_select.clear()
+        # Force selection ranges to be valid
+        if max_value < min_value:
+            min_value = max_value
+            selection_range = max_value - min_value
+            self.mass_reduction_min_select.setValue(self.mass_reduction_max_select.value())
+        #  Determine what step values are possible given the max and min selections in the ui
+        for a in range(1, selection_range + 1):
+            if selection_range/a == int(selection_range/a):
+                self.mass_reduction_step_select.addItem(str(a))
+        if selection_range == 0:
+            self.mass_reduction_step_select.clear()
+            self.mass_reduction_step_select.addItem("0")
 
 
 def main() -> object:

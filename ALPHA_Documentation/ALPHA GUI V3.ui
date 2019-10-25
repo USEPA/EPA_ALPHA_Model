@@ -336,9 +336,9 @@
      <widget class="QWidget" name="formLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>10</x>
         <y>50</y>
-        <width>105</width>
+        <width>143</width>
         <height>89</height>
        </rect>
       </property>
@@ -379,10 +379,12 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QSpinBox" name="mass_reduction_step_select">
-         <property name="showGroupSeparator" stdset="0">
-          <bool>false</bool>
-         </property>
+        <widget class="QComboBox" name="mass_reduction_step_select">
+         <item>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -597,17 +599,17 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="validate_button">
+     <widget class="QPushButton" name="validate_road_load_button">
       <property name="geometry">
        <rect>
-        <x>90</x>
-        <y>220</y>
-        <width>75</width>
+        <x>30</x>
+        <y>250</y>
+        <width>151</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>Validate</string>
+       <string>Validate Road Load</string>
       </property>
      </widget>
     </widget>
@@ -663,7 +665,7 @@
   <connection>
    <sender>mass_reduction_max_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_button</receiver>
+   <receiver>validate_road_load_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -679,28 +681,12 @@
   <connection>
    <sender>mass_reduction_min_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_button</receiver>
+   <receiver>validate_road_load_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>133</x>
      <y>203</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>149</x>
-     <y>340</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>mass_reduction_step_select</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>validate_button</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>133</x>
-     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>149</x>
