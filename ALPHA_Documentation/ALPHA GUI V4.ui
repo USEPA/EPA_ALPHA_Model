@@ -338,7 +338,7 @@
        <rect>
         <x>20</x>
         <y>50</y>
-        <width>101</width>
+        <width>105</width>
         <height>89</height>
        </rect>
       </property>
@@ -355,6 +355,9 @@
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
+         <property name="maximum">
+          <number>30</number>
+         </property>
         </widget>
        </item>
        <item row="1" column="0">
@@ -368,6 +371,9 @@
         <widget class="QSpinBox" name="mass_reduction_min_select">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
+         </property>
+         <property name="maximum">
+          <number>30</number>
          </property>
         </widget>
        </item>
@@ -411,6 +417,9 @@
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
+         <property name="maximum">
+          <number>30</number>
+         </property>
         </widget>
        </item>
        <item row="1" column="0">
@@ -424,6 +433,9 @@
         <widget class="QSpinBox" name="rolling_reduction_min_select">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
+         </property>
+         <property name="maximum">
+          <number>30</number>
          </property>
         </widget>
        </item>
@@ -467,6 +479,9 @@
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
+         <property name="maximum">
+          <number>30</number>
+         </property>
         </widget>
        </item>
        <item row="1" column="0">
@@ -480,6 +495,9 @@
         <widget class="QSpinBox" name="aero_reduction_min_select">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
+         </property>
+         <property name="maximum">
+          <number>30</number>
          </property>
         </widget>
        </item>
@@ -506,7 +524,7 @@
        <rect>
         <x>470</x>
         <y>50</y>
-        <width>105</width>
+        <width>114</width>
         <height>89</height>
        </rect>
       </property>
@@ -523,6 +541,15 @@
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
          </property>
+         <property name="minimum">
+          <number>50</number>
+         </property>
+         <property name="maximum">
+          <number>150</number>
+         </property>
+         <property name="value">
+          <number>100</number>
+         </property>
         </widget>
        </item>
        <item row="1" column="0">
@@ -536,6 +563,15 @@
         <widget class="QSpinBox" name="engine_sizing_min_select">
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <number>50</number>
+         </property>
+         <property name="maximum">
+          <number>150</number>
+         </property>
+         <property name="value">
+          <number>100</number>
          </property>
         </widget>
        </item>
@@ -594,7 +630,7 @@
        <rect>
         <x>450</x>
         <y>20</y>
-        <width>141</width>
+        <width>151</width>
         <height>21</height>
        </rect>
       </property>
@@ -605,17 +641,79 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="validate_road_load_button">
+     <widget class="QPushButton" name="validate_mass_reduction_button">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>212</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Validate Mass Reduction</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>230</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="validate_rolling_reduction_button">
       <property name="geometry">
        <rect>
         <x>30</x>
         <y>250</y>
-        <width>151</width>
-        <height>23</height>
+        <width>221</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string>Validate Road Load</string>
+       <string>Validate Rolling Reduction</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="validate_engine_sizing_button">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>330</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Validate Engine Sizing</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="validate_aero_reduction_button">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>290</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Validate Aero Reduction</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="calculate_iterations_button">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>330</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Calculate # of Iterations</string>
       </property>
      </widget>
     </widget>
@@ -671,7 +769,7 @@
   <connection>
    <sender>mass_reduction_max_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_road_load_button</receiver>
+   <receiver>validate_mass_reduction_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -687,7 +785,7 @@
   <connection>
    <sender>mass_reduction_min_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_road_load_button</receiver>
+   <receiver>validate_mass_reduction_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -703,7 +801,7 @@
   <connection>
    <sender>rolling_reduction_max_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_road_load_button</receiver>
+   <receiver>validate_rolling_reduction_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -711,15 +809,15 @@
      <y>172</y>
     </hint>
     <hint type="destinationlabel">
-     <x>127</x>
-     <y>370</y>
+     <x>162</x>
+     <y>374</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>rolling_reduction_min_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_road_load_button</receiver>
+   <receiver>validate_rolling_reduction_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -727,15 +825,15 @@
      <y>203</y>
     </hint>
     <hint type="destinationlabel">
-     <x>127</x>
-     <y>370</y>
+     <x>162</x>
+     <y>374</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>aero_reduction_max_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_road_load_button</receiver>
+   <receiver>validate_aero_reduction_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -743,15 +841,15 @@
      <y>172</y>
     </hint>
     <hint type="destinationlabel">
-     <x>127</x>
-     <y>370</y>
+     <x>162</x>
+     <y>414</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>aero_reduction_min_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_road_load_button</receiver>
+   <receiver>validate_aero_reduction_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -759,15 +857,15 @@
      <y>203</y>
     </hint>
     <hint type="destinationlabel">
-     <x>127</x>
-     <y>370</y>
+     <x>162</x>
+     <y>414</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>engine_sizing_max_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_road_load_button</receiver>
+   <receiver>validate_engine_sizing_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -775,15 +873,15 @@
      <y>172</y>
     </hint>
     <hint type="destinationlabel">
-     <x>127</x>
-     <y>370</y>
+     <x>162</x>
+     <y>454</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>engine_sizing_min_select</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>validate_road_load_button</receiver>
+   <receiver>validate_engine_sizing_button</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -791,8 +889,8 @@
      <y>203</y>
     </hint>
     <hint type="destinationlabel">
-     <x>127</x>
-     <y>370</y>
+     <x>162</x>
+     <y>454</y>
     </hint>
    </hints>
   </connection>
