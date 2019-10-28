@@ -22,7 +22,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         # Load the User Interface
-        uic.loadUi('ALPHA GUI V3.ui', self)
+        uic.loadUi('ALPHA GUI V4.ui', self)
         # Connect routines to events and any other needed initialization
         self.vehicle_type_select.currentIndexChanged.connect(self.displayvalue)
         # self.mass_reduction_step_select.valueChanged.connect(self.validate_road_load)
@@ -50,15 +50,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def validate_road_load(self):
         # Mass Reduction
         # Get selection range from ui
-        max_value = self.mass_reduction_max_select.value()
-        min_value = self.mass_reduction_min_select.value()
-        selection_range = max_value - min_value
+        selection_range = self.mass_reduction_max_select.value() - self.mass_reduction_min_select.value()
         # Clear the step selector on ui
         self.mass_reduction_step_select.clear()
         # Force selection ranges to be valid
-        if max_value < min_value:
-            min_value = max_value
-            selection_range = max_value - min_value
+        if self.mass_reduction_max_select.value() < self.mass_reduction_min_select.value():
+            selection_range = 0
             self.mass_reduction_min_select.setValue(self.mass_reduction_max_select.value())
         #  Determine what step values are possible given the max and min selections in the ui
         for a in range(1, selection_range + 1):
@@ -67,6 +64,57 @@ class MainWindow(QtWidgets.QMainWindow):
         if selection_range == 0:
             self.mass_reduction_step_select.clear()
             self.mass_reduction_step_select.addItem("0")
+
+        # Rolling Reduction
+        # Get selection range from ui
+        selection_range = self.rolling_reduction_max_select.value() - self.rolling_reduction_min_select.value()
+        # Clear the step selector on ui
+        self.rolling_reduction_step_select.clear()
+        # Force selection ranges to be valid
+        if self.rolling_reduction_max_select.value() < self.rolling_reduction_min_select.value():
+            selection_range = 0
+            self.rolling_reduction_min_select.setValue(self.rolling_reduction_max_select.value())
+        #  Determine what step values are possible given the max and min selections in the ui
+        for a in range(1, selection_range + 1):
+            if selection_range/a == int(selection_range/a):
+                self.rolling_reduction_step_select.addItem(str(a))
+        if selection_range == 0:
+            self.rolling_reduction_step_select.clear()
+            self.rolling_reduction_step_select.addItem("0")
+
+        # Aero Reduction
+        # Get selection range from ui
+        selection_range = self.aero_reduction_max_select.value() - self.aero_reduction_min_select.value()
+        # Clear the step selector on ui
+        self.aero_reduction_step_select.clear()
+        # Force selection ranges to be valid
+        if self.aero_reduction_max_select.value() < self.aero_reduction_min_select.value():
+            selection_range = 0
+            self.aero_reduction_min_select.setValue(self.aero_reduction_max_select.value())
+        #  Determine what step values are possible given the max and min selections in the ui
+        for a in range(1, selection_range + 1):
+            if selection_range/a == int(selection_range/a):
+                self.aero_reduction_step_select.addItem(str(a))
+        if selection_range == 0:
+            self.aero_reduction_step_select.clear()
+            self.aero_reduction_step_select.addItem("0")
+
+        # Engine Sizing
+        # Get selection range from ui
+        selection_range = self.engine_sizing_max_select.value() - self.engine_sizing_min_select.value()
+        # Clear the step selector on ui
+        self.engine_sizing_step_select.clear()
+        # Force selection ranges to be valid
+        if self.engine_sizing_max_select.value() < self.engine_sizing_min_select.value():
+            selection_range = 0
+            self.engine_sizing_min_select.setValue(self.engine_sizing_max_select.value())
+        #  Determine what step values are possible given the max and min selections in the ui
+        for a in range(1, selection_range + 1):
+            if selection_range/a == int(selection_range/a):
+                self.engine_sizing_step_select.addItem(str(a))
+        if selection_range == 0:
+            self.engine_sizing_step_select.clear()
+            self.engine_sizing_step_select.addItem("0")
 
 
 def main() -> object:
