@@ -3,14 +3,14 @@ import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 
-Ui_MainWindow, QtBaseClass = uic.loadUiType('ALPHA GUI V4.ui')
+Ui_MainWindow, QtBaseClass = uic.loadUiType('ALPHA GUI V5.ui')
 
 
 class MyApp(QMainWindow):
 
     mass_iterations = 1
-    aero_iterations = 1
     rolling_iterations = 1
+    aero_iterations = 1
     engine_iterations = 1
 
     def __init__(self):
@@ -23,18 +23,20 @@ class MyApp(QMainWindow):
         self.ui.validate_rolling_reduction_button.clicked.connect(self.validate_rolling_reduction)
         self.ui.validate_aero_reduction_button.clicked.connect(self.validate_aero_reduction)
         self.ui.validate_engine_sizing_button.clicked.connect(self.validate_engine_sizing)
-        self.ui.calculate_iterations_button.clicked.connect(self.calculate111)
+        self.ui.calculate_iterations_button.clicked.connect(self.calculate_iterations)
 
         # Initialize items
-        # Hide validate road load button
-        # self.validate_road_load_button.setVisible(0)
-        # self.calc_tax_button.clicked.connect(self.calculatetax)
-        # self.knob1.valueChanged.connect(self.calculateknob)
-        # self.knob1.setValue(10)
+        # Hide buttons not used for UI
+        self.ui.validate_mass_reduction_button.setVisible(0)
+        self.ui.validate_rolling_reduction_button.setVisible(0)
+        self.ui.validate_aero_reduction_button.setVisible(0)
+        self.ui.validate_engine_sizing_button.setVisible(0)
+        self.ui.calculate_iterations_button.setVisible(0)
+
+        self.ui.number_of_iterations.setText(str(1))
 
     def displayvalue(self):
-        # rotary = self.comboBox.currentText()
-        self.textEdit.setText(self.vehicle_type_select.currentText())
+        self.ui.textEdit.setText(self.ui.vehicle_type_select.currentText())
 
     # This function prevents invalid user selections on the Road Load UI page and then calculates
     # the possible step values given the valid max and min selections
@@ -56,11 +58,7 @@ class MyApp(QMainWindow):
             self.ui.mass_reduction_step_select.clear()
             self.ui.mass_reduction_step_select.addItem("0")
 
-        global mass_iterations
-        mass_iterations = (int(self.ui.mass_reduction_max_select.value()) - int(self.ui.mass_reduction_min_select.value()))
-        if int(self.ui.mass_reduction_step_select.currentText()) > 0:
-            mass_iterations = mass_iterations / int(self.ui.mass_reduction_step_select.currentText())
-        mass_iterations = mass_iterations + 1
+        self.calculate_iterations()
 
     def validate_rolling_reduction(self):
         # Rolling Reduction
@@ -80,12 +78,7 @@ class MyApp(QMainWindow):
             self.ui.rolling_reduction_step_select.clear()
             self.ui.rolling_reduction_step_select.addItem("0")
 
-        global rolling_iterations
-        rolling_iterations = int(self.ui.rolling_reduction_max_select.value())
-        rolling_iterations = rolling_iterations - int(self.ui.rolling_reduction_min_select.value())
-        if int(self.ui.rolling_reduction_step_select.currentText()) > 0:
-            rolling_iterations = rolling_iterations / int(self.ui.rolling_reduction_step_select.currentText())
-        rolling_iterations = rolling_iterations + 1
+        self.calculate_iterations()
 
     def validate_aero_reduction(self):
         # Aero Reduction
@@ -105,11 +98,7 @@ class MyApp(QMainWindow):
             self.ui.aero_reduction_step_select.clear()
             self.ui.aero_reduction_step_select.addItem("0")
 
-        global aero_iterations
-        aero_iterations = (int(self.ui.aero_reduction_max_select.value()) - int(self.ui.aero_reduction_min_select.value()))
-        if int(self.ui.aero_reduction_step_select.currentText()) > 0:
-            aero_iterations = aero_iterations / int(self.ui.aero_reduction_step_select.currentText())
-        aero_iterations = aero_iterations + 1
+        self.calculate_iterations()
 
     def validate_engine_sizing(self):
         # Engine Sizing
@@ -129,6 +118,29 @@ class MyApp(QMainWindow):
             self.ui.engine_sizing_step_select.clear()
             self.ui.engine_sizing_step_select.addItem("0")
 
+        self.calculate_iterations()
+
+    def calculate_iterations(self):
+
+        global mass_iterations
+        mass_iterations = (int(self.ui.mass_reduction_max_select.value()) - int(self.ui.mass_reduction_min_select.value()))
+        if int(self.ui.mass_reduction_step_select.currentText()) > 0:
+            mass_iterations = mass_iterations / int(self.ui.mass_reduction_step_select.currentText())
+        mass_iterations = mass_iterations + 1
+
+        global rolling_iterations
+        rolling_iterations = int(self.ui.rolling_reduction_max_select.value())
+        rolling_iterations = rolling_iterations - int(self.ui.rolling_reduction_min_select.value())
+        if int(self.ui.rolling_reduction_step_select.currentText()) > 0:
+            rolling_iterations = rolling_iterations / int(self.ui.rolling_reduction_step_select.currentText())
+        rolling_iterations = rolling_iterations + 1
+
+        global aero_iterations
+        aero_iterations = (int(self.ui.aero_reduction_max_select.value()) - int(self.ui.aero_reduction_min_select.value()))
+        if int(self.ui.aero_reduction_step_select.currentText()) > 0:
+            aero_iterations = aero_iterations / int(self.ui.aero_reduction_step_select.currentText())
+        aero_iterations = aero_iterations + 1
+
         global engine_iterations
         engine_iterations = int(self.ui.engine_sizing_max_select.value())
         engine_iterations = engine_iterations - int(self.ui.engine_sizing_min_select.value())
@@ -136,16 +148,22 @@ class MyApp(QMainWindow):
             engine_iterations = engine_iterations / int(self.ui.engine_sizing_step_select.currentText())
         engine_iterations = engine_iterations + 1
 
-    def calculate111(self):
-        global mass_iterations
-        # mass_iterations1 = mass_iterations + 5
-        self.ui.lineEdit.setText(str(mass_iterations))
+        iterations = mass_iterations * rolling_iterations * aero_iterations * engine_iterations
+        self.ui.number_of_iterations.setText(str(iterations))
+        calculation = iterations * 15
+        self.ui.calculation_time.setText(str(calculation))
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MyApp()
     window.show()
+    # Initialize variables
+    mass_iterations = 1
+    rolling_iterations = 1
+    aero_iterations = 1
+    engine_iterations = 1
+
     sys.exit(app.exec_())
 
 

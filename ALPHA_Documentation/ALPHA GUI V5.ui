@@ -654,11 +654,11 @@
        <string>Validate Mass Reduction</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="number_of_iterations">
       <property name="geometry">
        <rect>
-        <x>430</x>
-        <y>230</y>
+        <x>460</x>
+        <y>190</y>
         <width>113</width>
         <height>20</height>
        </rect>
@@ -714,6 +714,48 @@
       </property>
       <property name="text">
        <string>Calculate # of Iterations</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="number_of_iterations_label">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>170</y>
+        <width>151</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string># of Iterations</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="calculation_time_label">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>220</y>
+        <width>151</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Calculation Time</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="calculation_time">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>240</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
       </property>
      </widget>
     </widget>
@@ -902,6 +944,54 @@
    <hints>
     <hint type="sourcelabel">
      <x>123</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>402</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rolling_reduction_step_select</sender>
+   <signal>activated(int)</signal>
+   <receiver>calculate_iterations_button</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>273</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>402</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>aero_reduction_step_select</sender>
+   <signal>activated(int)</signal>
+   <receiver>calculate_iterations_button</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>423</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>402</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>engine_sizing_step_select</sender>
+   <signal>activated(int)</signal>
+   <receiver>calculate_iterations_button</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>577</x>
      <y>234</y>
     </hint>
     <hint type="destinationlabel">
