@@ -36,6 +36,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.validate_engine_sizing_button.clicked.connect(self.validate_engine_sizing)
         self.calculate_iterations_button.clicked.connect(self.calculate111)
 
+
         # Initialize items
         # Hide validate road load button
         # self.validate_road_load_button.setVisible(0)
@@ -159,9 +160,9 @@ class MainWindow(QtWidgets.QMainWindow):
         engine_iterations = engine_iterations + 1
 
     def calculate111(self):
-        global engine_iterations
-        # engine_iterations = 1
-        self.lineEdit.setText(str(engine_iterations))
+        global mass_iterations
+        # mass_iterations = mass_iterations + 5
+        self.lineEdit.setText(str(mass_iterations))
         # b = 1
 
 
