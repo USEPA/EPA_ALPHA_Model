@@ -10,6 +10,9 @@
     <height>609</height>
    </rect>
   </property>
+  <property name="cursor">
+   <cursorShape>BusyCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -706,7 +709,7 @@
      <widget class="QPushButton" name="calculate_iterations_button">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>260</x>
         <y>330</y>
         <width>221</width>
         <height>31</height>

@@ -1,13 +1,24 @@
+"""ALPHA GUI
+   -----
+
+   This code controls the ALPHA GUI
+
+       ::
+
+        A highlighted literal section may also be added here if needed.
+
+    """
 
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 
-Ui_MainWindow, QtBaseClass = uic.loadUiType('ALPHA_GUI_V5.ui')
+Ui_MainWindow, QtBaseClass = uic.loadUiType('ALPHA_GUI_V6.ui')
 
 
 class MyApp(QMainWindow):
 
+    # Define global variables
     mass_iterations = 1
     rolling_iterations = 1
     aero_iterations = 1
@@ -161,7 +172,7 @@ if __name__ == '__main__':
     window = MyApp()
     window.show()
 
-    # Initialize variables
+    # Initialize global variables
     mass_iterations = 1
     rolling_iterations = 1
     aero_iterations = 1
