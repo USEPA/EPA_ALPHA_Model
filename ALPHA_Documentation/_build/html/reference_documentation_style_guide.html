@@ -1,18 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>9. Reference Documentation Style Guide &#8212; ALPHA Documentation 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -34,7 +35,8 @@
         <li class="right" >
           <a href="agency_information.html" title="8. Agency Information"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">9. </span>Reference Documentation Style Guide</a></li> 
       </ul>
     </div>  
 
@@ -44,10 +46,10 @@
           <div class="body" role="main">
             
   <div class="section" id="reference-documentation-style-guide">
-<h1>9. Reference Documentation Style Guide<a class="headerlink" href="#reference-documentation-style-guide" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">9. </span>Reference Documentation Style Guide<a class="headerlink" href="#reference-documentation-style-guide" title="Permalink to this headline">¶</a></h1>
 <p>This document defines the style guide for creating ALPHA reference documentation using  reStructuredText and Sphinx tools.</p>
 <div class="section" id="defining-document-chapters-and-sub-chapters">
-<h2>9.1. Defining Document Chapters and Sub-Chapters<a class="headerlink" href="#defining-document-chapters-and-sub-chapters" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.1. </span>Defining Document Chapters and Sub-Chapters<a class="headerlink" href="#defining-document-chapters-and-sub-chapters" title="Permalink to this headline">¶</a></h2>
 <p>For ease of access and organization, a separate RST file is created for each chapter.  These chapter file names need to be listed in the <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> file in the order desired for the final document.</p>
 <p>The section numbers in the document are created automatically by Sphinx provided the     “:numbered:” option is present in the index.rst file.  The levels are determined by the characters below the section names:</p>
 <ul class="simple">
@@ -97,7 +99,7 @@
 </div>
 </div>
 <div class="section" id="creating-a-highlighted-section-of-text">
-<h2>9.2. Creating a Highlighted Section of Text<a class="headerlink" href="#creating-a-highlighted-section-of-text" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2. </span>Creating a Highlighted Section of Text<a class="headerlink" href="#creating-a-highlighted-section-of-text" title="Permalink to this headline">¶</a></h2>
 <p>To create a highlighted section of text that also ignores all RST formatting, a double colon is used to start the highlighted and unformatted section.  A blank line, followed by a double colon (::), followed by a blank line defines the section.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">highlighted</span> <span class="n">section</span> <span class="n">of</span> <span class="n">text</span> <span class="n">created</span> <span class="n">by</span> <span class="n">inserting</span> <span class="n">a</span> <span class="n">blank</span> <span class="n">line</span><span class="p">,</span> <span class="n">followed</span> <span class="n">by</span> <span class="n">a</span>
 <span class="n">double</span> <span class="n">colon</span> <span class="p">(::),</span> <span class="n">followed</span> <span class="n">by</span> <span class="n">a</span> <span class="n">blank</span> <span class="n">line</span> <span class="ow">and</span> <span class="n">then</span> <span class="n">entering</span> <span class="n">the</span> <span class="n">desired</span> <span class="n">text</span><span class="o">.</span>  <span class="n">The</span> <span class="n">RST</span>
@@ -106,7 +108,7 @@
 </div>
 </div>
 <div class="section" id="cross-references">
-<h2>9.3. Cross References<a class="headerlink" href="#cross-references" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.3. </span>Cross References<a class="headerlink" href="#cross-references" title="Permalink to this headline">¶</a></h2>
 <p>To reference a section, place a marker (<code class="docutils literal notranslate"><span class="pre">crossref1</span></code> in this case) above a section followed by a blank line.  Start the marker name with an underscore:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">_crossref1</span><span class="p">:</span>
 
@@ -121,7 +123,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">&quot;Refer</span> <span class="pre">to</span> <span class="pre">:ref:`crossref1`&quot;</span> <span class="pre">becomes</span> <span class="pre">&quot;Refer</span> <span class="pre">to</span> <span class="pre">Section</span> <span class="pre">Name&quot;</span> <span class="pre">when</span> <span class="pre">compiled.</span></code></p>
 </div>
 <div class="section" id="tables">
-<h2>9.4. Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.4. </span>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h2>
 <p>First task is to enable automatic numbering in the <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numfig</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
@@ -143,7 +145,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">&quot;Please</span> <span class="pre">refer</span> <span class="pre">to</span> <span class="pre">:numref:`Table</span> <span class="pre">%s</span> <span class="pre">&lt;mylabel&gt;`&quot;</span> <span class="pre">becomes</span> <span class="pre">&quot;Please</span> <span class="pre">refer</span> <span class="pre">to</span> <span class="pre">Table</span> <span class="pre">1&quot;</span> <span class="pre">when</span> <span class="pre">compiled.</span></code></p>
 </div>
 <div class="section" id="literal-text">
-<h2>9.5. Literal Text<a class="headerlink" href="#literal-text" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.5. </span>Literal Text<a class="headerlink" href="#literal-text" title="Permalink to this headline">¶</a></h2>
 <p>At times, text is needed exactly as typed ignoring all markup symbols and compiler directives.  Simply place a double back quote (``) at the beginning and end of the desired text.  This process also switches to a fixed space system font for clarity:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>``.. #$%^ This text is output exactly as typed.``
 </pre></div>
@@ -155,6 +157,7 @@
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -198,7 +201,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -218,12 +221,13 @@
         <li class="right" >
           <a href="agency_information.html" title="8. Agency Information"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">9. </span>Reference Documentation Style Guide</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, EPA.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>

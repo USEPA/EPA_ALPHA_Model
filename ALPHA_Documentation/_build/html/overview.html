@@ -1,18 +1,19 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2. Overview &#8212; ALPHA Documentation 1.0 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -34,7 +35,8 @@
         <li class="right" >
           <a href="introduction.html" title="1. Introduction"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Overview</a></li> 
       </ul>
     </div>  
 
@@ -44,9 +46,9 @@
           <div class="body" role="main">
             
   <div class="section" id="overview">
-<h1>2. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">2. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="running-alpha-quickstart">
-<h2>2.1. Running ALPHA - Quickstart<a class="headerlink" href="#running-alpha-quickstart" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.1. </span>Running ALPHA - Quickstart<a class="headerlink" href="#running-alpha-quickstart" title="Permalink to this headline">¶</a></h2>
 <p>Launch Matlab and make sure <code class="docutils literal notranslate"><span class="pre">REVS_Common</span></code> is on the Matlab path as described in the installation instructions.  As a quick check execute the following Matlab command and if successful, the path to the top-level ALPHA model should return:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">which</span> <span class="n">REVS_VM</span>
 </pre></div>
@@ -56,7 +58,7 @@
 <p>If <code class="docutils literal notranslate"><span class="pre">run_ALPHA_quickstart</span></code> is opened in the Matlab editor, only a handful of Matlab commands are needed to define and run a simulation that automatically produces standardized output summary files.  Examining the Matlab workspace after the model runs reveals a single variable, the <code class="docutils literal notranslate"><span class="pre">sim_batch</span> <span class="pre">object</span></code>.  The outputs from this model are contained in the output files.  More information on datalogging and model outputs will be discussed later.</p>
 </div>
 <div class="section" id="understanding-the-modeling-process">
-<h2>2.2. Understanding the Modeling Process<a class="headerlink" href="#understanding-the-modeling-process" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.2. </span>Understanding the Modeling Process<a class="headerlink" href="#understanding-the-modeling-process" title="Permalink to this headline">¶</a></h2>
 <p>The fundamental modeling process consists of creating a Matlab workspace that contains all the variables necessary to run the <code class="docutils literal notranslate"><span class="pre">REVS_VM</span></code> (REVS Vehicle Model) Simulink model.  There are several ways to accomplish this.  The first batch approach will be the primary focus of this document due to its numerous advantages as outlined below.</p>
 <ol class="arabic">
 <li><p>Create and execute a batch run using <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_batch</span></code>.</p>
@@ -82,13 +84,13 @@
 </ol>
 </div>
 <div class="section" id="controlling-the-modeling-process">
-<h2>2.3. Controlling the Modeling Process<a class="headerlink" href="#controlling-the-modeling-process" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3. </span>Controlling the Modeling Process<a class="headerlink" href="#controlling-the-modeling-process" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="what-is-a-sim-batch">
-<h3>2.3.1. What is a Sim Batch?<a class="headerlink" href="#what-is-a-sim-batch" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.1. </span>What is a Sim Batch?<a class="headerlink" href="#what-is-a-sim-batch" title="Permalink to this headline">¶</a></h3>
 <p>A <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_batch</span></code> object actually contains a vector of <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_case</span></code> objects stored in the <code class="docutils literal notranslate"><span class="pre">sim_case</span></code> property.  A <code class="docutils literal notranslate"><span class="pre">sim_case</span></code> could be created and run without a batch but there is no advantage to doing so since the batch process provides all the necessary pre- and post-processing and is much easier to use.  Typically the only reason to manipulate a particular <code class="docutils literal notranslate"><span class="pre">sim_case</span></code> would be to extract its local workspace to populate the top-level workspace for direct access.  This will be covered in more detail later in the discussion on working with workspaces.</p>
 </div>
 <div class="section" id="understanding-the-alpha-quickstart-script">
-<h3>2.3.2. Understanding the ALPHA Quickstart Script<a class="headerlink" href="#understanding-the-alpha-quickstart-script" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.2. </span>Understanding the ALPHA Quickstart Script<a class="headerlink" href="#understanding-the-alpha-quickstart-script" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">run_ALPHA_quickstart</span></code> M-script demonstrates the simplest possible batch process - a single simulation run with the default settings and only the minimum required input files and minimal outputs.</p>
 <blockquote>
 <div><p>run_ALPHA_quickstart.m:</p>
@@ -143,7 +145,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="understanding-simulation-pre-and-post-processing">
-<h3>2.3.3. Understanding Simulation Pre- and Post-Processing<a class="headerlink" href="#understanding-simulation-pre-and-post-processing" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.3. </span>Understanding Simulation Pre- and Post-Processing<a class="headerlink" href="#understanding-simulation-pre-and-post-processing" title="Permalink to this headline">¶</a></h3>
 <p>The goal of simulation pre-processing is to set up the simulation workspace before simulation, including any modifications to data loaded from the specified param files.  For example, users may load a particular vehicle param file and then want to change the test weight or roadload in some manner and then run the simulation, perhaps as part of a sweep of test weight values.  Any arbitrary M-script can be run in order to prepare the simulation workspace.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">REVS_VM</span></code> model itself performs some post-processing to create simulation results (phase integrated results, for example), datalogs, and to perform any auditing that may be desired.  These tasks are handled by creating result, datalog and audit objects in the workspace from <code class="docutils literal notranslate"><span class="pre">class_REVS_result</span></code>, <code class="docutils literal notranslate"><span class="pre">class_REVS_datalog</span></code> and <code class="docutils literal notranslate"><span class="pre">class_REVS_audit</span></code> classes respectively.  These objects are created in the model’s <code class="docutils literal notranslate"><span class="pre">StopFcn</span></code> callback which can be seen in the model’s Model Properties dialog box.</p>
 <p>Simulation post-processing may be used to take the raw simulation outputs and calculate fuel economy or GHG emissions.  The default simulation post-processing is generally used but any M-script may be run if desired.</p>
@@ -158,7 +160,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="understanding-config-strings-keys">
-<h3>2.3.4. Understanding Config Strings (Keys)<a class="headerlink" href="#understanding-config-strings-keys" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.4. </span>Understanding Config Strings (Keys)<a class="headerlink" href="#understanding-config-strings-keys" title="Permalink to this headline">¶</a></h3>
 <p>Formatting for the <code class="docutils literal notranslate"><span class="pre">batch</span> <span class="pre">config_set</span> <span class="pre">config</span></code> strings (also known as Keys in the output summary file) is defined by <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_config</span></code>.  The easiest way to see which config tags are available is to use this command:</p>
 <blockquote>
 <div><p>class_REVS_sim_config.show_tags</p>
@@ -194,7 +196,7 @@
 </div>
 <p>The arguments to the <code class="docutils literal notranslate"><span class="pre">class_REVS_config_element</span></code> constructor are the tag string, the tag type, and an optional default value.</p>
 <div class="section" id="literal-config-tags">
-<h4>2.3.4.1. Literal Config Tags<a class="headerlink" href="#literal-config-tags" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.4.1. </span>Literal Config Tags<a class="headerlink" href="#literal-config-tags" title="Permalink to this headline">¶</a></h4>
 <p>In the example above, the <code class="docutils literal notranslate"><span class="pre">drive_cycle</span></code> property holds a ‘literal’ tag, which means the part of the string associated with that tag will not automatically be evaluated (turned into a numeric or other value, but rather taken literally).  Typically this would be used for something like file names or other strings.  Literal tags may be evaluated in user scripts.  For example, if the literal tag was the name of a script, then that script may be called in the user pre- or post-processing scripts at the appropriate time to perform whatever its function is.  Literal tags can be used to hold a single value or, when combined with delayed evaluation (in a user script, instead of during config string parsing) may hold multiple values.  For example, within a config string, these are possible uses of the CYC: tag:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CYC</span><span class="p">:</span><span class="n">EPA_IM240</span>
 <span class="n">CYC</span><span class="p">:{</span><span class="s1">&#39;&#39;</span><span class="n">EPA_FTP_NOSOAK</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="n">EPA_HWFET</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="n">EPA_US06</span><span class="s1">&#39;&#39;</span><span class="p">}</span>
@@ -211,7 +213,7 @@
 <p>Drive cycle loading of a single cycle or the combining of multiple cycles into a single cycle is automatically handled in <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_case.load_drive_cycles()</span></code> but the same concept can apply to user-defined literal tags initiated by user scripts.  Drive cycle creation and handling will be discussed in further detail later.</p>
 </div>
 <div class="section" id="eval-config-tags">
-<h4>2.3.4.2. Eval Config Tags<a class="headerlink" href="#eval-config-tags" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.4.2. </span>Eval Config Tags<a class="headerlink" href="#eval-config-tags" title="Permalink to this headline">¶</a></h4>
 <p>As shown previously, the <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_config</span> <span class="pre">ETW_lbs</span></code> property is an ‘eval’ tag which means its value will be automatically evaluated by the <code class="docutils literal notranslate"><span class="pre">class_REV_sim_config</span></code> in the <code class="docutils literal notranslate"><span class="pre">parse_key()</span></code> method.  If the eval tag is created with a default value, that value will be used if the tag is not specified by the user.  Eval tags should be numeric or should refer to variables available in the workspace.  An eval tag may evaluate to a single value or a vector of multiple values to perform variable sweeps.  For example, the following would all be valid eval tags within a config string:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ETW_LBS</span><span class="p">:</span><span class="mi">3625</span>
 <span class="n">ETW_LBS</span><span class="p">:[</span><span class="mi">3000</span><span class="p">:</span><span class="mi">500</span><span class="p">:</span><span class="mi">5000</span><span class="p">]</span>
@@ -221,7 +223,7 @@
 <p>The first case evaluates to a single number, 3625.  The second case evaluates to a vector, [3000 3500 4000 4500 5000] as does the last case which becomes [3563.2 4454 5344.8].  Any valid Matlab syntax may be used in an eval tag including mathematical operations such as multiply, divide, etc.  If addition is used, there must not be any spaces surrounding the + sign because ‘ + ‘ (space,plus-sign,space) is the separator used to build composite config strings and will result in an erroneously split string.</p>
 </div>
 <div class="section" id="config-string-expansion">
-<h4>2.3.4.3. Config String Expansion<a class="headerlink" href="#config-string-expansion" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.4.3. </span>Config String Expansion<a class="headerlink" href="#config-string-expansion" title="Permalink to this headline">¶</a></h4>
 <p>Each string in the sim batch <code class="docutils literal notranslate"><span class="pre">config_set</span></code> cell array is evaluated to determine how many simulations are defined.  As previously explained, each tag may be used to define multiple values.  Each config string is expanded to a full factorial combination of all of its elements.  The expanded set of strings is stored in the sim batch <code class="docutils literal notranslate"><span class="pre">expanded_config_set</span></code> property after the <code class="docutils literal notranslate"><span class="pre">expand_config_set()</span></code> method is called.  Config set expansion is handled automatically by the <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_batch</span></code> <code class="docutils literal notranslate"><span class="pre">run_sim_cases()</span></code> method but under certain circumstances it may also be useful to manually expand the config set, although this is not typically done.  Manual expansion could be used to examine the number of cases represented by a config set without having to commit to running any simulations.</p>
 <p>For example, the following tag could be used within a config string to run simulations with and without engine start-stop:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+</span> <span class="n">SS</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span>
@@ -246,7 +248,7 @@
 <p>String expansion provides a simple and powerful method for defining entire sets of simulations within a single user-defined config string.</p>
 </div>
 <div class="section" id="config-string-left-hand-side-and-right-hand-side-and-unique-key-numbers">
-<h4>2.3.4.4. Config String Left-Hand-Side and Right-Hand-Side and Unique Key Numbers<a class="headerlink" href="#config-string-left-hand-side-and-right-hand-side-and-unique-key-numbers" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.4.4. </span>Config String Left-Hand-Side and Right-Hand-Side and Unique Key Numbers<a class="headerlink" href="#config-string-left-hand-side-and-right-hand-side-and-unique-key-numbers" title="Permalink to this headline">¶</a></h4>
 <p>A special string separator, || (double vertical bars), may be used to separate the left and right hand sides of a config string.  This is typically used for processing performance neutral runs but could also be used for any user-defined purpose.  For performance neutral runs the left hand side of the string defines the unique simulation case and the right hand side is used to define multiple engine scaling levels to evaluate for performance neutrality and GHG emissions.  The <code class="docutils literal notranslate"><span class="pre">REVS_postprocess_sim_batch</span></code> script considers all cases with the same left hand side to represent a single simulation case and then chooses the result from that set that meets performance criteria and has the lowest GHG emissions.  Each unique left hand side is assigned a unique key number through the UKN: tag by the <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_batch</span> <span class="pre">gen_unique_config_set()</span></code> method.</p>
 <p>For example, this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;SS:[1,0] + LU:[0,1]&#39;</span>
@@ -273,7 +275,7 @@
 <p>In this way, subsets of simulation batches may be considered as groups and the unique key number can be used to find these groups in the output file and then process them accordingly.  In either case, all four simulations will run and all four results will be available in the output summary file.</p>
 </div>
 <div class="section" id="creating-new-config-tags">
-<h4>2.3.4.5. Creating New Config Tags<a class="headerlink" href="#creating-new-config-tags" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.4.5. </span>Creating New Config Tags<a class="headerlink" href="#creating-new-config-tags" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">class_REVS_sim_config</span></code> defines quite a few useful tags that should cover many modeling applications but new ones are easy to add.  Adding a new tag is as simple as adding a new property to <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_config</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_config</span>  <span class="o">=</span> <span class="n">class_REVS_config_element</span><span class="p">(</span><span class="s1">&#39;NEWTAG:&#39;</span><span class="p">,</span> <span class="s1">&#39;eval&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
 </pre></div>
@@ -285,7 +287,7 @@
 <p>The default value (if provided) is shown next to the tag, in this case the default value for <code class="docutils literal notranslate"><span class="pre">sim_config.new_config</span></code> is 42.  The variable <code class="docutils literal notranslate"><span class="pre">sim_config.new_config</span></code> would now be available for use in user pre- and post- processing scripts.</p>
 </div>
 <div class="section" id="how-to-use-sim-config-values">
-<h4>2.3.4.6. How to Use <code class="docutils literal notranslate"><span class="pre">sim_config</span></code> Values<a class="headerlink" href="#how-to-use-sim-config-values" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.4.6. </span>How to Use <code class="docutils literal notranslate"><span class="pre">sim_config</span></code> Values<a class="headerlink" href="#how-to-use-sim-config-values" title="Permalink to this headline">¶</a></h4>
 <p>The value of a <code class="docutils literal notranslate"><span class="pre">sim_config</span></code> property is accessed through the value property.  In addition, the <code class="docutils literal notranslate"><span class="pre">has_value()</span></code> method can be used to check if a value has been set by the user before being used in a script.  For example, from <code class="docutils literal notranslate"><span class="pre">REVS_preprocess_sim_case</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">sim_config</span><span class="o">.</span><span class="n">adjust_A_lbs</span><span class="o">.</span><span class="n">has_value</span>
     <span class="n">vehicle</span><span class="o">.</span><span class="n">coastdown_adjust_A_lbf</span> <span class="o">=</span> <span class="n">sim_config</span><span class="o">.</span><span class="n">adjust_A_lbs</span><span class="o">.</span><span class="n">value</span><span class="p">;</span>
@@ -295,15 +297,15 @@
 <p>A default value, if provided, is always available even if the user has not provided a value (<code class="docutils literal notranslate"><span class="pre">has_value()</span></code> returns false).</p>
 </div>
 <div class="section" id="output-summary-file-keys">
-<h4>2.3.4.7. Output Summary File Keys<a class="headerlink" href="#output-summary-file-keys" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.4.7. </span>Output Summary File Keys<a class="headerlink" href="#output-summary-file-keys" title="Permalink to this headline">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">has_value()</span></code> method is also used to cull unnecessary tags from the config string that appear in the output summary file Key column.  Culling empty or default value tags from the Key column makes the strings easier to read and understand but still specifies the correct simulation parameters.</p>
 <p>Keys from the output file can be used directly in new config sets by cutting and pasting them into user batch file config sets.  In this way, an end-user of the simulation results can select runs to examine further or may even create new config strings to be run.  Because the output summary file is a .csv file, commas in the Key column are replaced with # symbols to prevent incorrect column breaks.  Even though the # symbol is not a valid Matlab operator, these strings can still be used directly in new config sets.  The batch process converts #’s to commas before parsing the strings.</p>
 </div>
 </div>
 <div class="section" id="controlling-datalogging-and-auditing">
-<h3>2.3.5. Controlling Datalogging and Auditing<a class="headerlink" href="#controlling-datalogging-and-auditing" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.5. </span>Controlling Datalogging and Auditing<a class="headerlink" href="#controlling-datalogging-and-auditing" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="controlling-datalogging">
-<h4>2.3.5.1. Controlling Datalogging<a class="headerlink" href="#controlling-datalogging" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.5.1. </span>Controlling Datalogging<a class="headerlink" href="#controlling-datalogging" title="Permalink to this headline">¶</a></h4>
 <p>Datalogging and auditing are controlled by the <code class="docutils literal notranslate"><span class="pre">logging_config</span></code> property of the <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_batch</span></code> object.  <code class="docutils literal notranslate"><span class="pre">logging_config</span></code> is an object of class <code class="docutils literal notranslate"><span class="pre">class_REVS_logging_config</span></code>.  The constructor of <code class="docutils literal notranslate"><span class="pre">class_REVS_sim_batch</span></code> takes a single optional argument which is the default log list.  A log list is a <code class="docutils literal notranslate"><span class="pre">class_REVS_log_package</span></code> object.  Many predefined log lists are contained in the <code class="docutils literal notranslate"><span class="pre">REVS_Common\log_packages</span></code> folder.</p>
 <p>The following are typical examples of creating a sim batch and setting up the default datalogging:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sim_batch</span> <span class="o">=</span> <span class="n">class_REVS_sim_batch</span><span class="p">(</span><span class="n">REVS_log_default</span><span class="p">);</span>
@@ -336,7 +338,7 @@
 </div>
 </div>
 <div class="section" id="understanding-the-datalog-and-model-data-objects">
-<h4>2.3.5.2. Understanding the Datalog and <code class="docutils literal notranslate"><span class="pre">model_data</span></code> Objects<a class="headerlink" href="#understanding-the-datalog-and-model-data-objects" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.5.2. </span>Understanding the Datalog and <code class="docutils literal notranslate"><span class="pre">model_data</span></code> Objects<a class="headerlink" href="#understanding-the-datalog-and-model-data-objects" title="Permalink to this headline">¶</a></h4>
 <p>The datalog object has hierarchical properties.  The top level should look something like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>datalog =
   class_REVS_datalog with properties:
@@ -405,7 +407,7 @@
 </div>
 </div>
 <div class="section" id="auditing">
-<h4>2.3.5.3. Auditing<a class="headerlink" href="#auditing" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.5.3. </span>Auditing<a class="headerlink" href="#auditing" title="Permalink to this headline">¶</a></h4>
 <p>Auditing can be controlled by setting a sim batch <code class="docutils literal notranslate"><span class="pre">logging_config</span></code> audit flag:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">logging_config</span><span class="o">.</span><span class="n">audit_total</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
 
@@ -481,10 +483,10 @@
 </div>
 </div>
 <div class="section" id="how-to-save-and-restore-simulation-workspaces">
-<h3>2.3.6. How to Save and Restore Simulation Workspaces<a class="headerlink" href="#how-to-save-and-restore-simulation-workspaces" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.6. </span>How to Save and Restore Simulation Workspaces<a class="headerlink" href="#how-to-save-and-restore-simulation-workspaces" title="Permalink to this headline">¶</a></h3>
 <p>There are several methods available to save and restore simulation workspaces.  Generally, only one approach will be used at a time, but it is possible to combine approaches if desired.</p>
 <div class="section" id="retain-workspaces-in-memory">
-<h4>2.3.6.1. Retain Workspaces in Memory<a class="headerlink" href="#retain-workspaces-in-memory" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.6.1. </span>Retain Workspaces in Memory<a class="headerlink" href="#retain-workspaces-in-memory" title="Permalink to this headline">¶</a></h4>
 <p>The simplest approach, for a relatively small number of simulations, is to retain the workspace in memory.  Set the sim batch <code class="docutils literal notranslate"><span class="pre">retain_output_workspace</span></code> property to true.  For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sim_batch</span><span class="o">.</span><span class="n">retain_output_workspace</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
 </pre></div>
@@ -496,7 +498,7 @@
 <p>The workspace is contained in the sim case workspace property but extracting the workspace to the top-level makes it easier to work with.</p>
 </div>
 <div class="section" id="saving-the-input-workspace">
-<h4>2.3.6.2. Saving the Input Workspace<a class="headerlink" href="#saving-the-input-workspace" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.6.2. </span>Saving the Input Workspace<a class="headerlink" href="#saving-the-input-workspace" title="Permalink to this headline">¶</a></h4>
 <p>The simulation workspace may be saved prior to simulation by setting the sim batch <code class="docutils literal notranslate"><span class="pre">save_input_workspace</span></code> property to true:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sim_batch</span><span class="o">.</span><span class="n">save_input_workspace</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
 </pre></div>
@@ -508,7 +510,7 @@
 <p>The workspace is saved after all pre-processing scripts have been run so the workspace contains everything required to replicate the simulation at a later time.  This can be useful when running too many simulations to retain the workspaces in memory while also providing the ability to run individual cases later without having to set up a sim batch.  The workspace may be loaded by using the load command, or double-clicking the filename in the Matlab Current Folder file browser.</p>
 </div>
 <div class="section" id="saving-the-output-workspace">
-<h4>2.3.6.3. Saving the Output Workspace<a class="headerlink" href="#saving-the-output-workspace" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.3.6.3. </span>Saving the Output Workspace<a class="headerlink" href="#saving-the-output-workspace" title="Permalink to this headline">¶</a></h4>
 <p>The simulation workspace may be saved after simulation by setting the sim batch <code class="docutils literal notranslate"><span class="pre">save_output_workspace</span></code> property to true:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sim_batch</span><span class="o">.</span><span class="n">save_output_workspace</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
 </pre></div>
@@ -521,7 +523,7 @@
 </div>
 </div>
 <div class="section" id="post-simulation-data-analysis">
-<h3>2.3.7. Post-Simulation Data Analysis<a class="headerlink" href="#post-simulation-data-analysis" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.7. </span>Post-Simulation Data Analysis<a class="headerlink" href="#post-simulation-data-analysis" title="Permalink to this headline">¶</a></h3>
 <p>As mentioned, a <code class="docutils literal notranslate"><span class="pre">model_data</span></code> object is created in the output workspace and may contain various model outputs.  One of the easiest ways to take a look at simulation data is to run a Data Observation Report (DOR) on the model data.  There are DORs for conventional (CVM), hybrid (HVM) and electric vehicles (EVM).  To run the default conventional vehicle model DOR, use the <code class="docutils literal notranslate"><span class="pre">REVS_DOR_CVM()</span></code> function:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">REVS_DOR_CVM</span><span class="p">({},</span><span class="n">model_data</span><span class="p">);</span>
 </pre></div>
@@ -614,6 +616,7 @@
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -683,7 +686,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -703,12 +706,13 @@
         <li class="right" >
           <a href="introduction.html" title="1. Introduction"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ALPHA Documentation 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Overview</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, EPA.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>
