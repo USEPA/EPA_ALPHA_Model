@@ -1,4 +1,5 @@
-# EPA_ALPHA_Model
+EPA_ALPHA_Model
+===============
 
 The Advanced Light-Duty Powertrain and Hybrid Analysis (ALPHA) tool was created by EPA to evaluate the Greenhouse Gas (GHG) emissions of Light-Duty (LD) vehicles. ALPHA is a physics-based, forward-looking, full vehicle computer simulation capable of analyzing various vehicle types combined with different powertrain technologies. The software tool is a MATLAB/Simulink based application.
 
