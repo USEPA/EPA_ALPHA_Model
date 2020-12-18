@@ -2,7 +2,6 @@
 
 block_cipher = None
 
-
 a = Analysis(['Alpha', 'GUI', 'V3.py'],
              pathex=['C:\\Users\\jcherr01\\Documents\\Jeff Documents\\GitHub\\EPA_ALPHA_Model\\ALPHA_Documentation'],
              binaries=[],
@@ -15,8 +14,10 @@ a = Analysis(['Alpha', 'GUI', 'V3.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
+
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
+
 exe = EXE(pyz,
           a.scripts,
           [],
@@ -27,6 +28,7 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           console=True )
+
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
