@@ -3,4 +3,4 @@ __pycache__
 /ALPHA_Documentation/_build/doctrees/
 /ALPHA_Documentation/_build/html/
 /venv/
-/ALPHA_Documentation/_build/*
+/ALPHA_Documentation/_build/html/*
