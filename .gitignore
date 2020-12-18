@@ -1,4 +1,6 @@
 .idea
 __pycache__
-build
-dist
+/ALPHA_Documentation/_build/doctrees/
+/ALPHA_Documentation/_build/html/
+/venv/
+/ALPHA_Documentation/_build/*
