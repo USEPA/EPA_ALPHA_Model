@@ -97,9 +97,3 @@ Auditing the energy flow in the model is a key factor in ensuring the plausibili
 Conventions and Guidelines
 --------------------------
 There are several conventions and guidelines that enhance the consistency and usability of the model, see :ref:`ad-crossref-1` under ALPHA Development.
-
-
-
-
-
-
