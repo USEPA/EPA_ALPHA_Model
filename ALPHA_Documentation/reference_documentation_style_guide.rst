@@ -114,7 +114,7 @@ If the optional user defined marker ("mylabel" in this case) is included, the ta
 
 ::
 
- :numref:`Table %s <mylabel>
+ :numref:`Table %s <mylabel>`
 
 ``"Please refer to :numref:`Table %s <mylabel>`" becomes "Please refer to Table 1" when compiled.``
 
