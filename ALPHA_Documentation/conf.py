@@ -18,11 +18,11 @@ sys.path.insert(0, os.path.abspath('.'))
 # -- Project information -----------------------------------------------------
 
 project = 'ALPHA Documentation'
-copyright = '2019, EPA'
+copyright = '2020, EPA'
 author = 'EPA'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = '0.0.1'
 
 
 # -- General configuration ---------------------------------------------------

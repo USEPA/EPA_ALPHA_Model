@@ -13,7 +13,7 @@ For more information, visit:
 
 https://www.epa.gov/regulations-emissions-vehicles-and-engines/advanced-light-duty-powertrain-and-hybrid-analysis-alpha
 
-This repository is the public home of ALPHA documentation
+This repository is the public home of the ALPHA documentation source code.
 
 The published documentation homepage is https://epa-alpha-model.readthedocs.io/en/latest/
 
