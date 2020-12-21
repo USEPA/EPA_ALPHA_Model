@@ -30,18 +30,18 @@ System Requirements for Installation
 
 System Requirements
 -------------------
-ALPHA REVS3 requires Matlab/Simulink with StateFlow 2016b, but should also work with later releases after library/model up-conversions.  Also required is a compiler, for compiling the StateFlow code, see http://www.mathworks.com/support/compilers/R2016b/index.html.
+ALPHA REVS3 requires Matlab/Simulink with Stateflow 2016b, but should also work with later releases after library/model up-conversions.  Also required is a compiler, for compiling the StateFlow code, see http://www.mathworks.com/support/compilers/R2016b/index.html.
 
 Installation
 ------------
-Install Matlab/Simulink and the Simulink StateFlow toolbox following MathWork's instructions.  Copy the ``REVS_Common`` folder (and ``Matlab Common`` if provided) to a suitable directory on your modeling machine.  ``Matlab Common`` is a directory of helpful Matlab scripts and functions which are commonly used for data analysis and visualization, etc.  If ``Matlab Common`` is provided, add it to your Matlab path in the same manner as ``REVS_Common``.
+Install Matlab/Simulink and the Simulink StateFlow toolbox following MathWork's instructions.  Copy the ``NVFEL_MATLAB_Tools`` repo (https://github.com/USEPA/NVFEL_MATLAB_Tools) to a suitable directory on your modeling machine.  ``NVFEL_MATLAB_Tools`` is a directory of helpful Matlab scripts and functions which are commonly used for data analysis and visualization, etc.  Launch Matlab and add ``NVFEL_MATLAB_Tools`` and its subfolders to your Matlab path (from the Matlab console, select "Set Path" from the "HOME" tab of the Matlab window, then select "Add with Subfolders..." and browse to ``NVFEL_MATLAB_Tools``).
 
-Launch Matlab and add ``REVS_Common`` and its subfolders to your Matlab path (from the Matlab console, select "Set Path" from the "HOME" tab of the Matlab window, then select "Add with Subfolders..." and browse to ``REVS_Common``).  The path may be saved for future sessions or it is also possible to write a simple script to add the required folders to your path on an as-needed basis.  For example:
+Similarly, add ``REVS_Common`` and its subfolders to your Matlab path.  The path may be saved for future sessions or it is also possible to write a simple script to add the required folders to your path on an as-needed basis.  For example:
 
 ::
 
     addpath(genpath('C:\dev\REVS3 localdev\REVS_Common'));
-    addpath(genpath('C:\dev\Matlab Common'));
+    addpath(genpath('C:\dev\NVFEL_MATLAB_Tools'));
 
 Directory Structure
 ^^^^^^^^^^^^^^^^^^^
@@ -52,15 +52,11 @@ A high-level description of the ``REVS_Common`` directory structure follows.  Us
 * datatypes
     * Contains Matlab class definitions for the Matlab objects that compose REVS and various enumerated datatypes.  Also contains ``REVS_fuel_table.csv`` that holds the fuel properties for known fuel types.
 * drive_cycles
-    * Contains ``.mat`` files that represent various compliance or custom drive cycles in the form of ``class_REVS_drive_cycle`` objects with the name ``drive_cycle``. The ``sim_xxx.m`` Matlab scripts are basically deprecated at this point and have been replaced by the use of tags in config strings within the batch process (more on that below).
-* executable_tools
-    * Contains tools for generating executable (binary) versions of the model.  Primarily used for developing the GEM compliance model.
+    * Contains ``.mat`` files that represent various compliance or custom drive cycles in the form of ``class_REVS_drive_cycle`` objects with the name ``drive_cycle``.
 * functions
     * Contains various Matlab functions used during the modeling process.   Also contains ``functionSignatures.json`` which Matlab can use to provide auto-completion assistance in the Editor.
 * helper_scripts
     * Primarily contains scripts related to pre- and post-processing simulation runs.
-* HIL_tools
-    * Tools related to building executable ALPHA models for Hardware-in-the-Loop (HIL) testing.
 * libraries
     * Contains the REVS Simulink component block models, separated into various libraries by component type.
 * log_packages
@@ -80,7 +76,7 @@ This section will lay out of the some high-level design principles that guide AL
 
 Object Oriented Design
 ----------------------
-REVS3 makes significant use of Matlab classes and objects in order to provide a well-defined, maintainable and re-usable set of data structures and model functionality.  Class definitions start with ``\class_`` and enumerated types start with ``\enum_``.  With a few exceptions, most of the classes start with ``class_REVS`` so that Matlab auto-completion provides a useful list of the available classes.
+REVS3 makes significant use of Matlab classes and objects in order to provide a well-defined, maintainable and re-usable set of data structures and model functionality.  Class definitions start with ``class_`` and enumerated types start with ``enum_``.  With a few exceptions, most of the classes start with ``class_REVS`` so that Matlab auto-completion provides a useful list of the available classes.
 
 Component Reuse
 ---------------
@@ -90,7 +86,7 @@ Generally speaking, model components have class definitions that correspond to t
 
 Datalogging and Auditing
 ------------------------
-Datalogging enables post-simulation data analysis and debugging.  Significant effort was applied to the creation of a datalogging framework that is both flexible and fast.  For that reason there are controls available to limit the amount of data logged by the model (excess datalogging significantly slows the model down and is therefore to be avoided).  For example, datalogging may be limited to the bare minimum required to calculate fuel economy, or datalogging may be limited to the bare minimum plus everything related to the engine or transmission.  It is also possible to log every available signal in the model, if desired and the associated performance slowdown is acceptable.  Datalogging should generally be limited to the signals or components required for the investigation at hand.  Datalogs are found in a workspace object named result at the end of simulation.
+Datalogging enables post-simulation data analysis and debugging.  Significant effort was applied to the creation of a datalogging framework that is both flexible and fast.  For that reason there are controls available to limit the amount of data logged by the model (excess datalogging significantly slows the model down and is therefore to be avoided).  For example, datalogging may be limited to the bare minimum required to calculate fuel economy, or datalogging may be limited to the bare minimum plus everything related to the engine or transmission.  It is also possible to log every available signal in the model, if desired and the associated performance slowdown is acceptable.  Datalogging should generally be limited to the signals or components required for the investigation at hand.  Datalogs are found in a workspace object named ``result`` at the end of simulation.
 
 The model is also set up to audit the energy flows throughout the model.  If auditing is enabled then a text file (or console output) is created that shows the energy sources and sinks that were simulated.  The total energy provided and absorbed should be equal if the model conserves energy.  Since the model runs at discrete time steps and since modeling is an exercise in approximation there is commonly some slight discrepancy which is noted as the Simulation Error in the audit report.  The Energy Conservation is reported as a percentage ratio between the Net Energy Provided and the Total Loss Energy.
 
