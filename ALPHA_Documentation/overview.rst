@@ -587,7 +587,7 @@ The various DORs support several optional arguments, known as varargs in Matlab.
 
     REVS_DOR_CVM({}, model_data, 'name of some vararg', vararg_value_if_required);
 
-The top-level DOR calls sub-DORs that are grouped by component, for example ``REVS_DOR_CVM()`` calls ``REVS_DOR_vehicle()``, ``REVS_DOR_engine()``, etc.  Each component DOR may have its own unique varargs in addition to supporting some common varargs.  Varargs passed to the top-level DOR are automatically passed to the component DORs.  Available varargs are listed in :numref:Table %s <mylabel>.
+The top-level DOR calls sub-DORs that are grouped by component, for example ``REVS_DOR_CVM()`` calls ``REVS_DOR_vehicle()``, ``REVS_DOR_engine()``, etc.  Each component DOR may have its own unique varargs in addition to supporting some common varargs.  Varargs passed to the top-level DOR are automatically passed to the component DORs.  Available varargs are listed in :numref:`Table %s <mylabel>`.
 
 .. _mylabel:
 
