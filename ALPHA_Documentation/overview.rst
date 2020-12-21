@@ -59,11 +59,11 @@ The ``run_ALPHA_quickstart`` M-script demonstrates the simplest possible batch p
 
     run_ALPHA_quickstart.m:
 
-1.	``clear; clear classes; clc;``
+1.  ``clear; clear classes; clc;``
 
     * Clears the Matlab workspace, classes and console which is highly recommended before running a batch.
 
-2.	``sim_batch = class_REVS_sim_batch(REVS_log_default);``
+2.  ``sim_batch = class_REVS_sim_batch(REVS_log_default);``
 
     * Creates ``sim_batch``, an object of class ``class_REVS_sim_batch``, and instructs it to log only the minimum required signals in the model.  Datalogging will be discussed in more detail later.
 
@@ -79,11 +79,11 @@ The ``run_ALPHA_quickstart`` M-script demonstrates the simplest possible batch p
 
     * Enables the simulation energy audit datalogging.  Disabling the audit speeds up model execution
 
-4.	``sim_batch.param_path = 'param_files/midsize_car';``
+6.  ``sim_batch.param_path = 'param_files/midsize_car';``
 
     * The batch needs to know where to find param files that are not in the ``REVS_Common`` folder.  In this case the param files are located in the ``midsize_car`` subfolder of the local ``param_files`` folder.
 
-5.	``sim_batch.config_set = { % define config_set
+7.  ``sim_batch.config_set = { % define config_set
 'VEH:vehicle_2020_midsize_car + ENG:engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10 + TRANS:TRX11_FWD + ELEC:electric_EPS + CYC:EPA_UDDS + CON:midsize_car_CVM_controls_param'
 };``
 
