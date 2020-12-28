@@ -38,6 +38,8 @@ There are a few guidelines that cover the use of variable names within the model
 
 * Simulink blocks that produce a signal bus should have ``bus_out`` as output port 1.
 
+* Whenever possible, variant subsystem blocks should be controlled by a ``variant`` string property that matches the name of the block to be selected.
+
 Customizing the Batch Process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -63,26 +65,40 @@ Understanding the Simulink Libraries
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 accessory_lib
 -------------
+Contains blocks for describing mechanical and electrical accessory loads.
+
 ambient_lib
 -----------
+The ``ambient`` variant block is the source of road grade (as a function of distance) and ambient temperature.  The time ``datalog`` is also created here.  Alternative ambient blocks can be created and selected using the ``ambient.version`` property
+
 controls_lib
 ------------
+Contains the ``controls`` variant block and other controls-related blocks.  The control blocks determine engine start-stop and control strategies for hybrid vehicles.
+
 driver_lib
 ----------
+Contains the ``driver`` variant block, which determines the closed-loop drive cycle follower.  The ``driver`` block produces the accelerator and brake pedal signals to the rest of the model as well as a few other signals such as the drive cycle speed, phase, and position in seconds.  Alternative driver blocks can be created and selected using the ``driver.version`` property
+
 electric_lib
 ------------
+Contains energy storage (battery) models and other electrical components such as starter, alternator, and e-machine (motor-generator) models.
+
 engine_lib
 ----------
+Contains the ``engine`` variant block and engine and engine-related models, such as cylinder deactivation logic.
+
 general_lib
 -----------
-HIL_lib
--------
+
 logging_lib
 -----------
+
 powertrain_lib
 --------------
+
 transmission_lib
 ----------------
+
 vehicle_lib
 -----------
 
