@@ -154,7 +154,7 @@ The double underscores, ``__``, define the hierarchical structure.  For example,
 
 The construction of the raw workspace variable names is handled by the mask of the datalog blocks and can determined by the structure of the model.  For example, datalogs in the ``engine`` block model will automatically be placed in the ``datalog.engine`` structure without having to be explicitly named as such.  For example, the ``datalog.engine.fuel_rate_gps`` signal is set up as follows:
 
-.. image:: <figures/engine fuel_rate_gps mask.png>
+.. image:: figures/engine_fuel_rate_gps_mask.jpg
 
 Understanding Auditing
 ^^^^^^^^^^^^^^^^^^^^^^
