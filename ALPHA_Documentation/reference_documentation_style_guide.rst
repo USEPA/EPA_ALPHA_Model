@@ -132,12 +132,15 @@ Outputs as:
 
 Notice all special characters are shown and ignored by the compiler.
 
+Images
+------
 
+Image files **cannot** have spaces in the filenames.
 
+::
 
+.. image:: figures/engine_fuel_rate_gps_mask.jpg
 
+results in:
 
-
-
-
-
+.. image:: figures/engine_fuel_rate_gps_mask.jpg
