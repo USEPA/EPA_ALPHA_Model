@@ -89,21 +89,72 @@ Contains the ``engine`` variant block and engine and engine-related models, such
 
 general_lib
 -----------
+Contains various utility blocks that may be used throughout the model, such as dynamic lookup tables, dynamic equations and other handy functions.
 
 logging_lib
 -----------
+Contains the blocks that handle dynamic data logging within the model, including ``audit`` logging and drive cycle phase ``result`` values.
 
 powertrain_lib
 --------------
+Contains the top-level ``powertrain`` variant block, and defines the available powertrains for conventional and hybrid vehicles.
 
 transmission_lib
 ----------------
+Contains transmission models for conventional and hybrid vehicles, and component models for things like clutches and torque converters.
 
 vehicle_lib
 -----------
+Contains models of brakes, tires and other driveline components like axles, as well as the vehicle roadload calculations.
 
 Understanding Datalogging
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+Logging Overview
+----------------
+Logging model internal signals is probably one of the most important things the model does, it is also one of the things that has the biggest impact on model run time.  Simulink seems to incur quite a bit of overhead related to logging data to the workspace.  As a result, ALPHA implements a flexible system to control how much or how little data is logged from the model.  In this way, the user can trade off run time speed and the logging of signals of interest.
+
+The ``REVS_Common\log_packages`` folder contains functions to define pre-made 'packages' of signals for datalogging, and also scripts for post-processing the data if required.
+
+``class_REVS_log_package`` defines the data structure used to define datalogs.  Each package has three properties:
+
+* ``log_list`` - a list of ``datalog`` or ``result`` signals to enable.  Signal names can include ``*`` wildcards.  For example, ``result.engine.crankshaft*`` would log all result signals that start contain ``engine.crankshaft`` such as ``result.phase.engine.crankshaft_tot_kWh`` or ``result.phase.engine.crankshaft_pos_kJ``.  Result signals are a unique form of datalog that record final values for each phase of the drive cycle.  So for each phase of the drive cycle a ``result`` will contain a scalar value for each signal.  The result may be a sum or an average or other statistical data such as a minimum or maximum.  See the ``logging_lib`` for more details.
+
+* ``package_list`` - a package may contain other packages, however in practice, each package lists itself in the ``package_list`` and the total package list is the unique set of all the individual packages.  So, each ``REVS_log_XXX.m`` will contain ``log_package.package_list = {mfilename};``.  Metapackages are formed by creating a list of packages, such as ``REVS_log_CVM_metapackage`` which creates the metapackage of conventional vehicle model (CVM) datalogs:
+
+::
+
+    function [log_package] = REVS_log_CVM_metapackage()
+
+    log_package = [
+                   REVS_log_vehicle_basics
+                   REVS_log_engine_basics
+                   REVS_log_transmission
+                   REVS_log_alternator
+                   REVS_log_accessory_battery
+                   REVS_log_mech_accessories
+                  ];
+
+    end
+
+* ``postprocess_list`` - contains a list of one or more post-processing scripts to run after the workspace has been populated with data.  For example, ``REVS_log_engine_basics`` lists ``REVS_postprocess_engine_basics_log`` to post-process data from raw simulation signals into the ``model_data`` structure for more universal use in post-processing scripts such as plotting simulation data versus real-world test data as in a ``DOR``.
+
+Logging Details
+---------------
+Since it's not possible for Simulink datalogs to directly create stuctured output, there is a process for populating hierarchical data structures from individual workspace datalog variables.  This possible through the naming scheme employed by the datalogging blocks.  For example, the raw post-simulation workspace will contain variables such as:
+
+::
+
+    audit__accessories__air_conditioner__elec_neg_kJ
+    dl__engine__crankshaft_trq_Nm
+    rsltp__engine__fuel_consumed_g
+
+The prefix determines the top-level data structure.  ``audit`` maps to the ``audit`` data structure, ``dl`` maps to ``datalog`` and ``rsltp`` maps to the ``phase`` property of the ``result`` data structure, as in ``result.phase``.
+
+The double underscores, ``__``, define the hierarchical structure.  For example, ``audit__accessories__air_conditioner__elec_neg_kJ`` will become ``audit.accessories.air_conditioner.elec_neg_kJ`` in the final workspace.  Single underscores are taken as part of the property name.
+
+The construction of the raw workspace variable names is handled by the mask of the datalog blocks and can determined by the structure of the model.  For example, datalogs in the ``engine`` block model will automatically be placed in the ``datalog.engine`` structure without having to be explicitly named as such.  For example, the ``datalog.engine.fuel_rate_gps`` signal is set up as follows:
+
+.. image:: figures/engine_fuel_rate_gps_mask.jpg
 
 Understanding Auditing
 ^^^^^^^^^^^^^^^^^^^^^^
