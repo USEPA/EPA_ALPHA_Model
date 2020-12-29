@@ -18,3 +18,8 @@ Agency Information
 | .. image:: images/alpha_logo_square.jpg | .. image:: images/epa_logo.jpg  |
 +-----------------------------------------+---------------------------------+
 
+.. image:: images/alpha_logo_square.jpg
+    :align: left
+
+.. image:: images/epa_logo.jpg
+    :align: right
