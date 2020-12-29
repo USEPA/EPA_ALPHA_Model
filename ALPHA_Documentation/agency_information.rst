@@ -3,7 +3,7 @@ Agency Information
 ===================
 
 .. image:: images/epa_logo.jpg
-    :align: right
+    :align: center
 
 ::
 
@@ -15,4 +15,4 @@ Agency Information
     www.epa.gov
 
 .. image:: images/alpha_logo_square.jpg
-    :align: left
+    :align: center
