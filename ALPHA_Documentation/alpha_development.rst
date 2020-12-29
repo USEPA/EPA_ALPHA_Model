@@ -156,8 +156,79 @@ The construction of the raw workspace variable names is handled by the mask of t
 
 .. image:: figures/engine_fuel_rate_gps_mask.jpg
 
+The only user-specified part of the name is ``fuel_rate_gps``, the rest is automatic, and the final result is previewed in the ``Datalog Name`` text box.
+
 Understanding Auditing
 ^^^^^^^^^^^^^^^^^^^^^^
+Auditing is controlled through the ``sim_batch`` object ``audit_total`` and ``audit_phase`` boolean properties.
+
+If ``audit_total`` is ``true`` then an audit for the drive cycle as a whole will be performed and the resulting summary will be sent the console or an output file.  This is the most commonly used approach for enabling an audit.
+
+If ``audit_phase`` is ``true`` then an audit for each drive cycle phase **and** the total drive cycle will be produced.
+
+Setting both ``audit_total`` and ``audit_phase`` to ``true`` results in the same output as setting ``audit_phase`` by itself.
+
+The ``audit`` structure, like the ``result`` structure, contains only scalar values.
+
+For example:
+
+::
+
+    >> audit.total.engine
+
+        ans =
+
+            class_REVS_logging_object with properties:
+
+                 crankshaft_delta_KE_kJ: 0.3309
+                crankshaft_delta_KE_kWh: 9.1911e-05
+                      crankshaft_neg_kJ: 604.0453
+                     crankshaft_neg_kWh: 0.1678
+                      crankshaft_pos_kJ: 7.4220e+03
+                     crankshaft_pos_kWh: 2.0617
+                      crankshaft_tot_kJ: 6.8180e+03
+                     crankshaft_tot_kWh: 1.8939
+                        fuel_consumed_g: 703.2932
+                           gross_neg_kJ: 450.6905
+                          gross_neg_kWh: 0.1252
+                           gross_pos_kJ: 8.0877e+03
+                          gross_pos_kWh: 2.2466
+                           gross_tot_kJ: 7.6371e+03
+                          gross_tot_kWh: 2.1214
+
+    >> audit.phase.engine
+
+        ans =
+
+          class_REVS_logging_object with properties:
+
+             crankshaft_delta_KE_kJ: [0.3321 -0.0017]
+            crankshaft_delta_KE_kWh: [9.2236e-05 -4.6631e-07]
+                  crankshaft_neg_kJ: [250.3882 353.6571]
+                 crankshaft_neg_kWh: [0.0696 0.0982]
+                  crankshaft_pos_kJ: [3.6640e+03 3.7581e+03]
+                 crankshaft_pos_kWh: [1.0178 1.0439]
+                  crankshaft_tot_kJ: [3.4136e+03 3.4044e+03]
+                 crankshaft_tot_kWh: [0.9482 0.9457]
+                    fuel_consumed_g: [319.6850 383.6047]
+                       gross_neg_kJ: [192.0876 258.6029]
+                      gross_neg_kWh: [0.0534 0.0718]
+                       gross_pos_kJ: [3.9019e+03 4.1858e+03]
+                      gross_pos_kWh: [1.0839 1.1627]
+                       gross_tot_kJ: [3.7098e+03 3.9272e+03]
+                      gross_tot_kWh: [1.0305 1.0909]
+
+It should be noted here that the total and phase audits may appear to have discrepancies.  In other words, the sum of the phase audit results may not add up to the total result for the same variable, such as ``fuel_consumed_g``.  This is because the phase audit results are only for phase numbers greater than zero.  In the case of a drive cycle where the engine start is not sampled (not part of the phase results), the first five seconds may be phase zero.  Also, it takes a couple of simulation time steps at the end of the drive cycle to shut down the model, and those are also phase zero.
+
+Enabling the audits populates the workspace with audit data, via the ``class_REVS_audit`` class.  ``class_REVS_audit`` is also responsible for calling the report generators for each unique powertrain type, as follows:
+
+* ``class_REVS_CVM_audit`` - calculates and reports energy balances for Conventional Vehicle Models
+
+* ``class_REVS_EVM_audit`` - calculates and reports energy balances for Electric Vehicle Models
+
+* ``class_REVS_HVM_audit`` - calculates and reports energy balances for Hybrid Vehicle Models
+
+There is no automatic method for the Simulink model itself to comprehend the correct sources and sinks of energy within the model, this is determined by the creator of the model and is based on the underlying physics of the powertrain components.
 
 Component Development
 ^^^^^^^^^^^^^^^^^^^^^
