@@ -15,6 +15,6 @@ Agency Information
 
 
 +----------------------------------+----------------------------------------+
-| .. image:: images/alpha_logo.jpg | .. image:: images/epa_logo_square.jpg  |
+| .. image:: images/alpha_logo_square.jpg | .. image:: images/epa_logo.jpg  |
 +----------------------------------+----------------------------------------+
 
