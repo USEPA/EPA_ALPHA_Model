@@ -230,6 +230,99 @@ Enabling the audits populates the workspace with audit data, via the ``class_REV
 
 There is no automatic method for the Simulink model itself to comprehend the correct sources and sinks of energy within the model, this is determined by the creator of the model and is based on the underlying physics of the powertrain components.
 
+The audit classes for the various powertrains inherit methods and properties from a base class, ``class_REVS_VM_audit``, which handles audit calculations common to all powertrains, i.e. brakes, tires, roadload losses, etc.
+
+The audit energy datalogs (as seen above) are tallied according to whether they are sources of energy or sinks of energy in the ``calc_audit`` methods of the audit classes.  If the model, audit datalogging and audit calculations are correct then the sum of the energy in the audit sinks will equal the sum of the energy in the audit sources.  The sources and sinks are tallied in the ``energy_balance`` property of the audit class.
+
+::
+
+    >> audit.total.energy_balance
+
+    ans =
+
+      struct with fields:
+
+                         source: [1×1 struct]
+                           sink: [1×1 struct]
+            simulation_error_kJ: -0.5840
+        energy_conservation_pct: 100.0157
+
+    >> audit.total.energy_balance.source
+
+    ans =
+
+      struct with fields:
+
+              KE_kJ: 0
+        gradient_kJ: 0
+              gross: [1×1 struct]
+                net: [1×1 struct]
+
+    >> audit.total.energy_balance.sink
+
+    ans =
+
+      struct with fields:
+
+            KE_kJ: 0.4379
+          vehicle: [1×1 struct]
+        accessory: [1×1 struct]
+         total_kJ: 3.7313e+03
+
+The audit sources consist of ``gross`` and ``net`` categories, where ``gross`` refers to fuel chemical energy and energy stored in batteries, for example.  ``net`` refers to energy used to power the vehicle and/or run electrical accessories, for example.
+
+::
+
+    >> audit.total.energy_balance.source.gross
+
+    ans =
+
+      struct with fields:
+
+          fuel_kJ: 1.3157e+04
+        stored_kJ: 8.0583
+         total_kJ: 1.3165e+04
+
+    >> audit.total.energy_balance.source.net
+
+    ans =
+
+      struct with fields:
+
+                    engine_kJ: 3.7237e+03
+        engine_efficiency_pct: 28.3017
+                    stored_kJ: 7.0347
+                     total_kJ: 3.7307e+03
+
+
+The difference between the net source energy and the total sink energy is the simulation error, which should be very small and is recorded as the energy balance ``energy_conservation_pct`` where 100% is the desired value.
+
+::
+
+    >> audit.total.energy_balance.source.net.total_kJ
+
+    ans =
+
+       3.7307e+03
+
+    >> audit.total.energy_balance.sink.total_kJ
+
+    ans =
+
+       3.7313e+03
+
+    >> audit.total.energy_balance.energy_conservation_pct
+
+    ans =
+
+      100.0157
+
+Typical sources of simulation error are clutch / driveline re-engagements where the small modeled disparity in speeds at lockup causes a small gain or loss of kinetic energy.  If the audit is off by a larger amount then either there is a problem with the model or a problem with the audit itself.  Most of the time the audit is incorrect when there's a discrepancy.  For example, a new component may have been added to the model but the ``calc_audit`` function has not been updated to include the energy as a source or sink, or perhaps the audit datalog has been placed on the wrong signal line or at the incorrect point in the model.  One technique for sorting out whether an error is a just a simulation error due to approximation (like the slightly mismatched speeds) or due to an actual or accounting error is to run the model at a finer timestep.  Generally, simulation errors should decrease as the step size decreases and audit or accounting errors should remain unchanged.
+
+When creating an audit for a new component it's very important to understand that the topology of the blocks in the model in most cases is not the same as the topology of the sources and sinks of energy in the model.  It's tempting to place an audit datalog at the inputs and outputs of the blocks in the model, but if the block is not properly a source or sink of energy then the audit will likely fail.  For example, torques and speeds may pass through several Simulink blocks, but each block is not necessarily a "source" of energy for the next block downstream.
+
+In any case, it's important to track down audit issues if and when they occur.
+
 Component Development
 ^^^^^^^^^^^^^^^^^^^^^
 
