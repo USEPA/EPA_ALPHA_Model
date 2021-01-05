@@ -303,6 +303,46 @@ At the time of this writing there are no config tags for setting drag coefficien
 Drive Cycles
 ^^^^^^^^^^^^
 
+ALPHA comes with a set of drive cycles, in the ``REVS_Common\drive_cycles`` folder.  The general naming convention is SOURCE_CYCLE, as in ``EPA_HWFET`` for the EPA highway cycle or ``UNECE_WHVC`` for the European World Harmonized Vehicle Cycle.  Each ``.mat`` file contains a single object of type ``class_REVS_drive_cycle`` named ``drive_cycle``.
+
+The drive cycle may be plotted using ``REVS_plot_drive_cycle`` as follows:
+
+::
+
+    >>  REVS_plot_drive_cycle % if `drive_cycle` is in the workspace
+
+    or
+
+    >>  REVS_plot_drive_cycle(drive_cycle_object)
+
+Which results in the following for ``EPA_UDDS``:
+
+.. image:: figures/drive_cycle_plot.jpg
+
+The data structure for the same cycle looks like:
+
+::
+
+    >> drive_cycle
+
+    drive_cycle =
+
+      class_REVS_drive_cycle with properties:
+
+                       name: 'EPA_UDDS'
+        sample_start_enable: 1
+                 phase_name: ["1"    "2"]
+                      phase: [1 2]
+                 phase_time: [0 505]
+                 cycle_time: [1370×1 double]
+            cycle_speed_mps: [1370×1 double]
+                    in_gear: [0 1]
+               in_gear_time: [0 15]
+                   ignition: [1 1]
+              ignition_time: [0 1369]
+               grade_dist_m: [0 11990.238656]
+                  grade_pct: [0 0]
+
 Turnkey Drive Cycles
 --------------------
 
