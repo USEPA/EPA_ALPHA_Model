@@ -317,7 +317,7 @@ The drive cycle may be plotted using ``REVS_plot_drive_cycle`` as follows:
 
 Which results in the following for ``EPA_UDDS``:
 
-.. image:: figures/drive_cycle_plot.jpg
+.. image:: images/drive_cycle_plot.jpg
 
 The data structure for the same cycle looks like:
 
