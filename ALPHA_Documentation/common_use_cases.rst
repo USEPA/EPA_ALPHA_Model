@@ -343,10 +343,59 @@ The data structure for the same cycle looks like:
                grade_dist_m: [0 11990.238656]
                   grade_pct: [0 0]
 
+Where
+
+* ``name`` is the name of the drive cycle
+* If ``sample_start_enable`` is true then datalogging begins immediately, otherwise datalogging drive cycle phase results doesn't start until time 0.  Simulation start time is set in the simulation workspace variable ``REVS.sim_start_time_secs``.  The default value is -5.
+* ``phase_name`` contains the names of the drive cycle phases as strings.
+* ``phase`` and ``phase_time`` define the phase numbers and start times of the drive cycle phases.  Drive cycle phase results are only logged for non-zero phase numbers.
+* ``cycle_time`` and ``cycle_speed_mps`` define the speed trace (in meters per second) versus time.
+* ``in_gear`` and ``in_gear_time`` determines when the vehicle driveline is engaged and active (as in the case of normal driving) or disengaged and deactivated (as in the case of a coastdown)
+* ``ignition`` and ``ignition_time`` define when the vehicle is meant to be running and the engine started (as for conventional vehicles).
+* ``grade_dist_m`` and ``grade_pct`` define the road grade as a function of distance in meters.  Grade is defined by distance and not time to cover the case where heavy vehicles may not be able to maintain the desired speed on high grades.  It is recommended to run the driver model (aka "cyberdriver") in distance compensated mode when running grade cycles by setting ``driver.distance_compensate_enable`` to ``true`` in the appropriate driver param file.  Distance compensation extends the drive cycle time when the vehicle falls behind the target speed and contracts it when the vehicle speed exceeds the target speed.  ``distance_compensate_enable`` defaults to ``false``, which is appropriate for zero-grade drive cycles.
+
 Turnkey Drive Cycles
 --------------------
+
+The following drive cycles are provided with ALPHA, as well as others.
+
+* ``EPA_FTP_NOSOAK`` defines a three-phase EPA "city" cycle, with no soak time between phases 2 and 3.
+* ``EPA_HWFET`` defines the EPA "highway" cycle
+* ``EPA_US06`` defines the EPA US06 cycle
+* ``REVS_Performance_cruise75mph`` defines a performance cycle meant to allow for measuring 0-60, 30-50 and 50-70 passing times followed by a 75 mph cruise that can be used to calculate top gear gradability.
+* ``EPA_FTP_2HWFET_PERF`` defines a combined cycle - a three phase FTP followed by a highway prep, the full warmed up highway and a performance drive cycle.
 
 Making Custom Drive Cycles
 --------------------------
 
+There are two ways to make new drive cycles: create one from scratch, filling in the drive cycle properties as outline above, or combine existing drive cycles in to a new combined cycle.
 
+To combine drive cycles, use the ``REVS_combine_drive_cycles`` function, as in:
+
+::
+
+    >> drive_cycle = REVS_combine_drive_cycles({'EPA_HWFET', 'EPA_US06'})
+
+    drive_cycle =
+
+      struct with fields:
+
+                       name: 'EPA_HWFET & EPA_US06'
+               grade_dist_m: [4×1 double]
+                  grade_pct: [4×1 double]
+                 phase_name: {'EPA_HWFET'  'EPA_US06_1'  'EPA_US06_2'}
+            cycle_speed_mps: [1365×1 double]
+                 cycle_time: [1365×1 double]
+                    in_gear: [3×1 double]
+               in_gear_time: [3×1 double]
+                   ignition: [3×1 double]
+              ignition_time: [3×1 double]
+                      phase: [5×1 double]
+                 phase_time: [5×1 double]
+        sample_start_enable: 0
+
+The ``drive_cycle`` variable can be saved to a new ``.mat`` file in the ``drive_cycles`` folder:
+
+::
+
+    >> save('EPA_new_cycle.mat', 'drive_cycle')
