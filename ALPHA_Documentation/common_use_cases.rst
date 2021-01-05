@@ -91,8 +91,8 @@ Roadloads in ALPHA can be specified either by "ABC" (or F0, F1, F2) coastdown cu
 
 A common source of ABC coefficients and test weights is the EPA's own test car data, such as at `<https://www.epa.gov/compliance-and-fuel-economy-data/data-cars-used-testing-fuel-economy>`_.
 
-Vehicle Weight and Inertia
---------------------------
+Setting Vehicle Weight and Inertia
+----------------------------------
 
 The test car list format varies somewhat over time, but the vehicle ETW is listed in the ``Equivalent Test Weight (lbs.)`` column in the 2020 test car data.
 
@@ -102,35 +102,62 @@ So ETW is fairly straightforward.  Where it gets more interesting is when the ax
 
 As a matter of EPA test procedure for a two-wheel-drive test, the dyno simulated inertia is set to the ETW (See `40 CFR § 1066.410 <https://www.ecfr.gov/cgi-bin/text-idx?SID=6905a22c26ff638cf36b0d0f0030eee9&mc=true&node=pt40.37.1066&rgn=div5#se40.37.1066_1410>`_).  As a result of the spinning front (or rear) axle, the effective total inertia is ETW * 1.015.
 
-For a 4WD (dual roll) test, if the dyno inertia were set to the ETW, the approximate total inertia would be ETW * 1.03, accounting for both axles spinning.  As a result, for a 4WD test, the dyno inertia is set to ETW * 0.985, since ETW * 1.03 * 0.985 is approximately ETW * 1.015, thereby maintaining the total test inertia.
+For a 4WD (dual roll) test, if the dyno inertia were set to the ETW, the approximate total inertia would be ETW * 1.03, accounting for both axles spinning.  As a result, for a 4WD test, the dyno inertia is set to ETW * 0.985, since ETW * 1.03 * 0.985 is approximately ETW * 1.015, thereby maintaining the total test inertia when compared with a 2WD certification test.
 
-Since a model run in ALPHA can be considered a 4WD test, setting the ETW results in the test weight being set to ETW * 0.985.
+For consistency with certification testing, setting the ETW results in the simulated inertia being set to ETW * 1.015.  If the intention is to model a vehicle with actual weights and component inertias then the ETW property should not be used, the individual masses and inertias should be set directly instead, as discussed below.
 
-Within ALPHA there are several parameters that determine the vehicle's weight and equivalent weight considering axle inertia.  It is possible to set the mass and inertias directly and independently.  It is also possible to set the ETW and allow for the standard 1.5% adjustment per axle.
+Within ALPHA there are several parameters that determine the vehicle's weight and equivalent weight considering axle inertia.  It is possible to set the mass and inertias directly and independently.  It is also possible to set the ETW and allow for the standard inertia adjustment as described above.
+
+To set ETW, either use the ``ETW_LBS:`` or ``ETW_KG:`` config string tags or set the vehicle's ``ETW_lbs`` or ``ETW_kg`` property in a param file, for example:
+
+::
+
+    vehicle = class_REVS_vehicle;
+    ...
+    vehicle.ETW_lbs = 3500;
+
+Vehicle Mass Properties
++++++++++++++++++++++++
 
 The ``class_REVS_vehicle`` properties related to mass are:
 
 ::
 
-		ETW_kg
-		mass_static_kg
-        mass_dynamic_kg
-		mass_curb_kg
-		mass_ballast_kg
+    ETW_kg
+    mass_static_kg
+    mass_dynamic_kg
+    mass_curb_kg
+    mass_ballast_kg
 
-		ETW_lbs
-		mass_curb_lbs
-		mass_ballast_lbs
-		mass_static_lbs
-		mass_dynamic_lbs
+    ETW_lbs
+    mass_curb_lbs
+    mass_ballast_lbs
+    mass_static_lbs
+    mass_dynamic_lbs
 
-Conversion between pounds and kilograms is automatic, so there is no need for the user to manually convert between SAE and SI units.
+Conversion between pounds and kilograms is automatic, so there is no need for the user to manually convert between SAE and SI units, just set the simulation settings based on the source data used.
 
-The ``curb`` and ``ballast`` masses are the vehicle curb mass and ballast mass as discussed above.  The ``static`` mass is the curb mass plus the ballast mass and the ``dynamic`` mass is the static mass plus weight-equivalent axle inertias, if desired.
+The ``curb`` and ``ballast`` masses are the vehicle curb mass and ballast mass as discussed above.  The ``static`` mass is the curb mass plus the ballast mass and the ``dynamic`` mass is the static mass plus weight-equivalent axle inertias, if desired.  The ``dynamic`` mass is used to calculate vehicle acceleration in the model.  The ``static`` mass is used to calculate roadload forces due to road grade and rolling resistance (if ABC coefficients are not used, see below), so both must be set correctly if the drive cycle grade is non-zero or if rolling resistance drag coefficients are used.
 
-Because the mass terms are interrelated, ``class_REVS_vehicle`` provides methods to try to keep them synchronized, such that a change in curb weight will result in a change in the dynamic weight, etc.
+Because the mass terms are interrelated, ``class_REVS_vehicle`` provides methods to try to keep them synchronized, such that a change in curb weight will result in a change in the dynamic weight, etc.  Setting the ETW sets the static mass to ETW *  0.985, dynamic mass to ETW * 1.015, ballast mass to 300 lbs and curb weight to static mass minus ballast.  In practice, the various terms can get out of sync depending on the order in which they are set, so it's best to just use the ETW property or set the individual non-ETW terms separately.
 
-**ARE THESE METHODS CORRECT??**
+Using Component Inertias
+++++++++++++++++++++++++
+
+If the goal is to simulate known inertias and actual vehicle weights then it is necessary to set the individual component inertias and masses directly.  For example:
+
+::
+
+    vehicle = class_REVS_vehicle;
+    ...
+    vehicle.mass_static_kg = 1000
+    vehicle.mass_dynamic_kg = 1000 % no default adjustment, actual inertias defined below
+
+    vehicle.drive_axle1.tire.inertia_kgm2 = 0.9 * 4 % for a single-axle-equivalent model
+    vehicle.drive_axle1.final_drive.inertia_kgm2 = 0.1
+    ... etc
+
+Setting ``mass_static_kg`` defaults the dynamic mass to 1.03 * mass_static, so it needs to also be set manually.
 
 ABC Coefficients
 ----------------
