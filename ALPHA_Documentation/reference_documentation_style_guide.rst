@@ -144,3 +144,22 @@ Image files **cannot** have spaces in the filenames.
 results in:
 
 .. image:: figures/engine_fuel_rate_gps_mask.jpg
+
+Hyperlinks
+----------
+
+Hyperlinks can be inserted using the <http...>_ markup.  Not the backquotes and trailing underscore:
+
+::
+
+    This is a link: `<https://www.epa.gov>`_
+
+    A link in a `label <https://www.epa.gov>`_.
+
+results in :
+
+This is a link: `<https://www.epa.gov>`_
+
+A link in a `label <https://www.epa.gov>`_.
+
+Note the space after the label, before the "<". If you have an underscore within the label/name, you have to escape it with a ‘\’ character.

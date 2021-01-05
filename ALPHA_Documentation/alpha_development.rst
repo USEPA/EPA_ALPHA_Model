@@ -2,7 +2,7 @@
 ALPHA Development
 =================
 
-.. _ad-crossref-1:
+.. _alpha_development:
 
 Conventions and Guidelines
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -45,9 +45,6 @@ Customizing the Batch Process
 
 Custom Pre- and Post-Processing
 -------------------------------
-
-Creating and Using Config String Tags
--------------------------------------
 
 Custom Output Summary File Formats
 ----------------------------------
