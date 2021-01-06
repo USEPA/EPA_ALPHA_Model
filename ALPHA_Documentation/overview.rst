@@ -83,9 +83,7 @@ The ``run_ALPHA_quickstart`` M-script demonstrates the simplest possible batch p
 
     * The batch needs to know where to find param files that are not in the ``REVS_Common`` folder.  In this case the param files are located in the ``midsize_car`` subfolder of the local ``param_files`` folder.
 
-7.  ``sim_batch.config_set = { % define config_set
-'VEH:vehicle_2020_midsize_car + ENG:engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10 + TRANS:TRX11_FWD + ELEC:electric_EPS + CYC:EPA_UDDS + CON:midsize_car_CVM_controls_param'
-};``
+7.  ``sim_batch.config_set = {'VEH:vehicle_2020_midsize_car + ENG:engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10 + TRANS:TRX11_FWD + ELEC:electric_EPS + CYC:EPA_UDDS + CON:midsize_car_CVM_controls_param'};``
 
     * The ``sim_batch.config_set`` defines the set of the simulations to be run by creating a cell array of one or more config strings.  Within the config string are the tags VEH:, ENG:, TRANS:, ELEC:, CYC: and CON:.  Following each tag is the name of a file that contains simulation inputs.  The VEH: tag loads the vehicle information such as roadload, test weight, etc.  The ENG: tag loads the engine information, in this case the engine is actually loaded from ``REVS_Common`` since it is one of the data packet engines, the other param files are loaded from the local param file directory.  The TRANS: tag loads the transmission parameters, in this case for a 6-speed automatic.  The ELEC: tag loads parameters that define the electrical system and accessories for this vehicle.  The CYC: tag tells the simulation which drive cycle to run, in this case an EPA UDDS drive cycle.  Lastly, the CON: tag tells the simulation which controls settings to use.  In this case, the controls settings show that start-stop is disabled for this run.  The CVM in ``MPW_LRL_CVM_controls_param`` stands for Conventional Vehicle Model.  Other abbreviations that may be encountered are EVM for Electric Vehicle Model and HVM for Hybrid Vehicle Model.  Electric vehicles and hybrid vehicles have their own control parameters.
 
