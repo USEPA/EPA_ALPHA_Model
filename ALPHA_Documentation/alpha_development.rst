@@ -46,9 +46,6 @@ Customizing the Batch Process
 Custom Pre- and Post-Processing
 -------------------------------
 
-Custom Output Summary File Formats
-----------------------------------
-
 REVS_VM
 ^^^^^^^
 
@@ -61,6 +58,7 @@ Powertrain Variants
 
 Understanding the Simulink Libraries
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 accessory_lib
 -------------
 Contains blocks for describing mechanical and electrical accessory loads.

@@ -1,6 +1,5 @@
-
 Model Outputs
-================
+=============
 
 When using the batch process, a standardized, customizable output file is created in the ``output`` folder.  When running from a saved workspace, or running from a batch, outputs are always produced in the simulation workspace.
 
@@ -26,7 +25,7 @@ The primary output file is the results file.  The filename format is ``YYYY_MM_D
 
 If ``sim_batch.verbose`` is > 0 then console outputs will also be produced in the ``output`` folder.  The filename format is ``YYYY_MM_DD_hh_mm_ss_BATCHNAME_N_console.csv``, as above, where ``N`` is the simulation number.  The console outputs will include basic information on the drive cycle results as well as audit results if they are enabled.  For more information on auditing, see :ref:`auditing`.
 
-The basic outputs for a simulation, look like:
+The basic outputs for a simulation look like:
 
 ::
 
@@ -60,3 +59,54 @@ The basic outputs for a simulation, look like:
        CO2 Emission                = 270.49 g/mile
 
 Where the "``1:``" represents the drive cycle phase, which in this case is named "1".  The First section outlines the SAEJ2951 drive quality metrics as produced by the ``REVS_SAEJ2951`` function.  See also `<https://www.sae.org/standards/content/j2951_201111/>`_.
+
+Post Processing Output File Scripts
+-----------------------------------
+
+The results output file is created within the ``postprocess_sim_case`` method of ``class_REVS_sim_batch``.  At this time there are three output scripts, depending on the type of vehicle powertrain: ``REVS_setup_data_columns_CVM``, ``REVS_setup_data_columns_HVM``, and ``REVS_setup_data_columns_EVM`` that are located in ``REVS_Common\helper_scripts``.  These output scripts call various sub-scripts for various output file column groups.  For example, ``REVS_setup_data_columns_CVM``:
+
+::
+
+    %% define standard CVM output columns
+
+    REVS_setup_data_columns_VM;
+
+    REVS_setup_data_columns_transmission;
+
+    REVS_setup_data_columns_engine;
+
+    REVS_setup_data_columns_MPG;
+
+    REVS_setup_data_columns_vehicle_performance;
+
+    REVS_setup_data_columns_audit;
+
+    REVS_setup_data_columns_battery;
+
+    REVS_setup_data_columns_driveline_stats;
+
+These scripts populate a variable called ``data_columns``, a vector of ``class_data_column`` objects.  Data column objects define the name and format of each output column.  An example instance of ``class_data_column``.
+
+::
+
+    >> class_data_column({'Test Weight lbs','lbs'},'%f','vehicle.ETW_lbs',2)
+
+    ans =
+
+      class_data_column with properties:
+
+        header_cell_str: {'Test Weight lbs'  'lbs'}
+             format_str: '%f'
+               eval_str: 'vehicle.ETW_lbs'
+                verbose: 2:
+
+::
+
+The ``data_columns`` vector is created by ``REVS_setup_data_columns_VM`` and appended with each data column object, as shown below:
+
+::
+
+    data_columns(end+1) = class_data_column({'Test Weight lbs','lbs'},'%f','vehicle.ETW_lbs',2);
+
+Custom Output Summary File Formats
+----------------------------------
