@@ -4,7 +4,7 @@ Model Inputs
 
 Every model requires inputs, and ALPHA is no exception.  In order to run the model it is necessary to populate the Matlab workspace with the data structures required to run the model.
 
-Model inputs can be provided from ``.m`` files, referred to as param files, or a previously saved workspace may be loaded from a ``.mat`` file.  For information on saving simulation workspaces, see :ref:`_saving_the_input_workspace` and :ref:`_saving_the_output_workspace`
+Model inputs can be provided from ``.m`` files, referred to as param files, or a previously saved workspace may be loaded from a ``.mat`` file.  For information on saving simulation workspaces, see :ref:`saving_the_input_workspace` and :ref:`saving_the_output_workspace`
 
 Param Files
 ^^^^^^^^^^^
