@@ -304,6 +304,8 @@ If a vehicle has multiple drive axles then the rolling resistance coefficient an
 
 At the time of this writing there are no config tags for setting drag coefficients so they must be specified in the vehicle param file as seen in the snippet above.
 
+.. _drive_cycles:
+
 Drive Cycles
 ^^^^^^^^^^^^
 

@@ -88,6 +88,33 @@ An instance of ``class_REVS_ambient`` which defines the ambient environmental co
 ``driver``
 ----------
 
+An instance of ``class_REVS_driver`` that defines the response of the drive cycle trace following driver model.  These settings typically won't need adjustment, with the exception of ``distance_compensate_enable`` which should be set ``true`` for drive cycles with road grade.  See :ref:`drive_cycles` for more information on drive cycles, including grade.
+
+::
+
+    >> driver
+
+    driver =
+
+      class_REVS_driver with properties:
+
+                                   variant: 'default driver'
+                                        Kp: 1
+                                        Ki: 1
+                                        Kd: 0
+                 proportional_fade_in_secs: 1
+        proportional_fade_in_min_speed_mps: 2
+                            lookahead_secs: 0.25
+                    launch_anticipate_secs: 0.5
+               dynamic_gain_lookahead_secs: 3.75
+                distance_compensate_enable: 0
+                              late_braking: 0
+                         human_mode_enable: 0
+                           brake_gain_norm: 0.13
+            accel_pedal_response_speed_mps: [0 5 20 70]
+                 accel_pedal_response_norm: [0.125 0.2 1 1]
+
+
 ``drive_cycle``
 ---------------
 
