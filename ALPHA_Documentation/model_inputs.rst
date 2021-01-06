@@ -16,7 +16,7 @@ The batch process canonical expected param file types are:
 * an engine param file, using the ``ENG:`` tag, for non battery-electric vehicles
 * a transmission file, using the ``TRANS:`` tag
 * a vehicle file, using the ``VEH:`` tag, that defines vehicle characterstics such as test weight, roadload, tire radius, etc
-* a param file to define the electrical system and/or accessory loads, using the ``ELEC:`` and/or ``ACC:``` tags.  The electrical and accessory files may be separate or are sometimes combined
+* a param file to define the electrical system and/or accessory loads, using the ``ELEC:`` and/or ``ACC:`` tags.  The electrical and accessory files may be separate or are sometimes combined
 * a controls param file, using the ``CON:`` tag, that defines the overall vehicle behavior such as engine start-top, etc
 * an optional driver param file, using the ``DRV:`` tag, that tunes the response of the "cyberdriver" drive cycle trace follower.  If none is provided then the batch process will load the default parameters
 * an optional ambient param file, using the ``AMB:`` tag, that defines the ambient test conditions.  If none is provided then the batch process will load the default parameters
