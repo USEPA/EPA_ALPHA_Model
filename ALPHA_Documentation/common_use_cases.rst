@@ -368,7 +368,9 @@ The following drive cycles are provided with ALPHA, as well as others.
 Making Custom Drive Cycles
 --------------------------
 
-There are two ways to make new drive cycles: create one from scratch, filling in the drive cycle properties as outline above, or combine existing drive cycles in to a new combined cycle.
+.. _making_custom_drive_cycles:
+
+There are two ways to make new drive cycles: create one from scratch, filling in the drive cycle properties as outline above, or combine existing drive cycles into a new combined cycle.
 
 To combine drive cycles, use the ``REVS_combine_drive_cycles`` function, as in:
 
