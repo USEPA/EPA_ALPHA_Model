@@ -593,7 +593,8 @@ The top-level DOR calls sub-DORs that are grouped by component, for example ``RE
 
 .. _dortable:
 
+":widths: 70 25 25 25"
+
 .. csv-table:: List of Available DOR Varargs
     :file: tables/DOR.csv
-    :widths: 25 25 25 70
     :header-rows: 1
