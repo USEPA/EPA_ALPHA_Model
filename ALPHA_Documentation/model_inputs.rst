@@ -289,5 +289,88 @@ For conventional or hybrid vehicles, an instance of ``class_REVS_engine`` that d
 ``transmission``
 ----------------
 
+An instance of ``class_REVS_AT_transmission``, ``class_REVS_CVT_transmission``, ``class_REVS_DCT_transmission``, ``class_REVS_AMT_transmission``, etc, that supports the powertrain of the vehicle to be modeled.  Below is an example for an automatic transmission.
+
+::
+
+    >> transmission
+
+    transmission =
+
+      class_REVS_AT_transmission with properties:
+
+                    type: automatic
+                 variant: 'automatic transmission system'
+          matrix_vintage: present
+                    name: 'transmission_6AT_FWD_midsize_car'
+         rated_torque_Nm: 291.9
+                    gear: [1×1 class_REVS_gearbox]
+        torque_converter: [1×1 class_REVS_torque_converter]
+                 control: [1×1 class_REVS_AT_control]
+                 thermal: [1×1 struct]
+            pump_loss_Nm: [1×1 class_REVS_dynamic_lookup]
+           gear_strategy: [1×1 class_REVS_ALPHAshift]
+            tcc_strategy: [1×1 class_REVS_uber_dynamic_lockup]
+
 ``vehicle``
 -----------
+
+An instance of ``class_REVS_vehicle`` that defines vehicle properties such as roadload, test weight, axle definitions, etc.
+
+::
+
+    >> vehicle
+
+    vehicle =
+
+      class_REVS_vehicle with properties:
+
+                               name: []
+                              class: 'midsize_car'
+                               fuel: [1×1 class_REVS_fuel]
+                            variant: 'default vehicle'
+                 powertrain_variant: 'CVM / BAS / ISG'
+                  driveline_variant: 'one axle drive'
+                   controls_variant: 'CVM control'
+                    powertrain_type: conventional
+               delta_mass_static_kg: [1×1 class_REVS_dynamic_lookup]
+              delta_mass_dynamic_kg: [1×1 class_REVS_dynamic_lookup]
+                   use_abc_roadload: 1
+               coastdown_target_A_N: 143.54412394
+            coastdown_target_B_Npms: 0.750259347709377
+           coastdown_target_C_Npms2: 0.443609648560335
+                       dyno_set_A_N: []
+                    dyno_set_B_Npms: []
+                   dyno_set_C_Npms2: []
+               coastdown_adjust_A_N: 0
+            coastdown_adjust_B_Npms: 0
+           coastdown_adjust_C_Npms2: 0
+                    frontal_area_m2: 0
+             aerodynamic_drag_coeff: 0
+                         driveshaft: [1×1 class_REVS_driveshaft]
+                      transfer_case: [1×1 class_REVS_transfer_case]
+                         steer_axle: [1×1 class_REVS_drive_axle]
+                        drive_axle1: [1×1 class_REVS_drive_axle]
+                        drive_axle2: [1×1 class_REVS_drive_axle]
+                      trailer_axle1: [1×1 class_REVS_drive_axle]
+                      trailer_axle2: [1×1 class_REVS_drive_axle]
+                  max_brake_force_N: 27783.921351508
+             coastdown_target_A_lbf: 32.27
+         coastdown_target_B_lbfpmph: 0.0754
+        coastdown_target_C_lbfpmph2: 0.01993
+                     dyno_set_A_lbf: []
+                 dyno_set_B_lbfpmph: []
+                dyno_set_C_lbfpmph2: []
+             coastdown_adjust_A_lbf: 0
+         coastdown_adjust_B_lbfpmph: 0
+        coastdown_adjust_C_lbfpmph2: 0
+                             ETW_kg: 1644.724592
+                     mass_static_kg: 1620.05372312
+                    mass_dynamic_kg: 1669.39546088
+                       mass_curb_kg: 1483.97612312
+                    mass_ballast_kg: 136.0776
+                            ETW_lbs: 3626
+                      mass_curb_lbs: 3271.61
+                   mass_ballast_lbs: 300
+                    mass_static_lbs: 3571.61
+                   mass_dynamic_lbs: 3680.39
