@@ -118,6 +118,30 @@ An instance of ``class_REVS_driver`` that defines the response of the drive cycl
 ``drive_cycle``
 ---------------
 
+An instance of ``class_REVS_drive_cycle`` that defines the simulation drive cycle.  For more information on drive cycles, see :ref:`drive_cycles`.
+
+::
+
+    >> drive_cycle
+
+    drive_cycle =
+
+      class_REVS_drive_cycle with properties:
+
+                       name: 'EPA_UDDS_505_ONLY'
+        sample_start_enable: 1
+                 phase_name: "1"
+                      phase: [1 1]
+                 phase_time: [0 505]
+                 cycle_time: [506×1 double]
+            cycle_speed_mps: [506×1 double]
+                    in_gear: [1 1]
+               in_gear_time: [0 1]
+                   ignition: [1 1]
+              ignition_time: [0 1]
+               grade_dist_m: [0 11990.238656]
+                  grade_pct: [0 0]
+
 ``accessories``
 ---------------
 
