@@ -36,3 +36,58 @@ As part of the batch process, each of the above tags may load multiple param fil
 Note the use of double single-quotes, ``''``, as opposed to single double-quotes, ``"``, this is required in order for the batch process to evaluate the cell array properly.
 
 If multiple files are provided, they are loaded in left-to-right order, so param files that have dependencies should be listed to the right of the files they depend on.
+
+Workspace Data Structures
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following variables must be present in the workspace prior to running the model, and are saved by ``class_REVS_sim_case`` in the ``preprocess_and_load_workspace`` mehtod if the ``save_input_workspace`` property of the ``sim_batch`` is set to ``true``.
+
+``REVS``
+--------
+
+An instance of ``class_REVS_setup`` that stores the top-level settings that control the simulation.  ``REVS`` is created by the ``preprocess_workspace`` method of ``class_REVS_sim_case``.
+
+::
+
+    >> REVS
+
+    REVS =
+
+      class_REVS_setup with properties:
+
+              current_model: 'REVS_VM'
+                    verbose: 1
+          global_decimation: 1
+                 output_fid: 1
+         sim_step_time_secs: 0.01
+        sim_start_time_secs: -5
+         sim_stop_time_secs: Inf
+             logging_config: [1×1 class_REVS_logging_config]
+
+
+``ambient``
+-----------
+
+``driver``
+----------
+
+``drive_cycle``
+---------------
+
+``accessories``
+---------------
+
+``electric``
+------------
+
+``controls``
+------------
+
+``engine``
+----------
+
+``transmission``
+----------------
+
+``vehicle``
+-----------
