@@ -315,7 +315,7 @@ An instance of ``class_REVS_AT_transmission``, ``class_REVS_CVT_transmission``, 
 ``vehicle``
 -----------
 
-An instance of ``class_REVS_vehicle`` that defines vehicle properties such as roadload, test weight, axle definitions, etc.
+An instance of ``class_REVS_vehicle`` that defines vehicle properties such as roadload, test weight, axle definitions, etc.  For more information on roadloads and test weight see :ref:`alpha_roadloads_and_test_weight`.
 
 ::
 
