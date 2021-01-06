@@ -164,11 +164,127 @@ An instance of ``class_REVS_ALPHA_accessories`` that defines electrical and mech
 ``electric``
 ------------
 
+An instance of ``class_REVS_electric`` that defines the vehicle's electrical system, for both hybrid and conventional vehicles.  Not all properties are populated, depending on the powertrain.
+
+::
+
+    >> electric
+
+    electric =
+
+      class_REVS_electric with properties:
+
+                      name: 'electric_EPS_midsize_car'
+            matrix_vintage: present
+                   starter: [1×1 class_REVS_starter]
+                alternator: [1×1 class_REVS_alternator]
+          low_voltage_DCDC: [1×1 class_REVS_DCDC_converter]
+         high_voltage_DCDC: [1×1 class_REVS_DCDC_converter]
+                   battery: [1×1 class_REVS_battery]
+         accessory_battery: [0×0 class_REVS_battery]
+        propulsion_battery: [0×0 class_REVS_battery]
+                    BAS_MG: [0×0 class_REVS_emachine_geared]
+               drive_motor: [0×0 class_REVS_emachine]
+                       MG1: [0×0 class_REVS_emachine_geared]
+                       MG2: [0×0 class_REVS_emachine_geared]
+
 ``controls``
 ------------
 
+A data structure that defines control system parameters.  The example below is for a conventional vehicle, that may or may not enable engine start-stop.
+
+::
+
+    >> controls
+
+    controls =
+
+      struct with fields:
+
+                    stop_delay_secs: 0
+                  start_stop_enable: 0
+        start_stop_warmup_condition: '(@cycle_pos_secs >= 100) && (@cycle_pos_secs <= 3406)'
+
 ``engine``
 ----------
+
+For conventional or hybrid vehicles, an instance of ``class_REVS_engine`` that defines engine properties such as torque limits, fuel consumption rates as a function of speed and load, etc.
+
+::
+
+    >> engine
+
+    engine =
+
+      class_REVS_engine with properties:
+
+                                              variant: 'basic engine'
+                                       matrix_vintage: present
+                                                 name: '2013 Chevrolet 2.5L Ecotec LCV Engine Reg E10 Fuel'
+                                      source_filename: 'engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10'
+                                                  doc: []
+                                     pedal_bus_signal: 'powertrain.trans.ctrl.eng_des_acl_norm'
+                                      combustion_type: spark_ignition
+                                       displacement_L: 2.457
+                                              bore_mm: 88
+                                            stroke_mm: 101
+                                        num_cylinders: 4
+                                    compression_ratio: 11.3
+                                        configuration: []
+                                         inertia_kgm2: 0.14285
+                                                 fuel: [1×1 class_REVS_fuel]
+                            full_throttle_speed_radps: [18×1 double]
+                              full_throttle_torque_Nm: [18×1 double]
+                      naturally_aspirated_speed_radps: [18×1 double]
+                        naturally_aspirated_torque_Nm: [18×1 double]
+                          closed_throttle_speed_radps: [6×1 double]
+                            closed_throttle_torque_Nm: [6×1 double]
+                             power_time_constant_secs: 0.2
+                             boost_time_constant_secs: 0.5
+                     boost_falling_time_constant_secs: 0.3
+                                     idle_speed_radps: [1×1 class_REVS_dynamic_lookup]
+                                      idle_control_Kp: 25
+                                      idle_control_Ki: 65
+                                      idle_control_Kd: 0
+                              idle_control_ramp_radps: 10.471975511966
+                          idle_control_ramp_time_secs: 2
+                       idle_control_torque_reserve_Nm: 10
+                  idle_control_activation_speed_radps: 1
+                idle_control_deactivation_speed_radps: 0
+                        idle_control_crank_delay_secs: 0.5
+                                       pedal_map_type: max_engine_power
+                                pedal_map_speed_radps: [1×100 double]
+                                 pedal_map_pedal_norm: [0 1]
+                                         pedal_map_Nm: [2×100 double]
+                                 fuel_map_speed_radps: [26×1 double]
+                                   fuel_map_torque_Nm: [27×1 double]
+                                         fuel_map_gps: [27×26 double]
+                                    deac_fuel_map_gps: [27×26 double]
+                                        deac_strategy: [1×1 struct]
+                                   deac_num_cylinders: 0
+                     deac_transition_on_duration_secs: 0.99
+                    deac_transition_off_duration_secs: 0.11
+                  deac_transition_off_fuel_multiplier: [1 1]
+        deac_transition_off_fuel_multiplier_time_secs: [0 0.1]
+        deac_transition_off_fuel_multiplier_limit_gps: Inf
+                         fast_torque_fuel_adjust_norm: 0
+                                DFCO_enable_condition: '@veh_spd_mps>5'
+                               DFCO_min_duration_secs: 2.1
+                               DFCO_refuel_multiplier: [1 1.3 1]
+                     DFCO_refuel_multiplier_time_secs: [0 0.1 1.1]
+                     DFCO_refuel_multiplier_limit_gps: Inf
+                            transient_correction_mult: 1.4
+                                full_throttle_power_W: [18×1 double]
+                            fuel_map_speed_mesh_radps: [27×26 double]
+                              fuel_map_torque_mesh_Nm: [27×26 double]
+                                        max_torque_Nm: 250.826
+                                        min_torque_Nm: -61.4254159880461
+                                          max_power_W: 137866.523307298
+                                  max_power_min_radps: 575.5
+                                  max_power_max_radps: 635
+                                  max_power_avg_radps: 605.25
+                                 max_test_speed_radps: 631.35
+
 
 ``transmission``
 ----------------
