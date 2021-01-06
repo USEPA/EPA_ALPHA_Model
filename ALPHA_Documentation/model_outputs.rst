@@ -100,7 +100,12 @@ These scripts populate a variable called ``data_columns``, a vector of ``class_d
                eval_str: 'vehicle.ETW_lbs'
                 verbose: 2:
 
-::
+``class_data_column`` objects have the following properties:
+
+* ``header_cell_str``, a cell array of strings.  The first string is the column name, located in the first row of the output file.  The second string is an optional string meant to represent the units of the variable or a supporting description of the variable.
+* ``format_str``, a standard Matlab ``fprintf`` ``formatSpec`` string.
+* ``eval_str`` is a string that gets evaluated by the Matlab ``evalin`` function and should return a numeric or string value that can be printed.  Any variable available in the simulation output workspace can be referenced in the ``eval_str``.
+* ``verbose`` is a numeric value that refers to the sim batch ``output_verbose`` property.  Output columns will be produced for columns where ``verbose`` is >= ``output_verbose``.  In this way the output file size and complexity can be controlled.  The value of ``verbose`` is ``0`` unless overridden during the definition, as it was above.  Columns with a ``verbose`` of ``0`` will always be output.
 
 The ``data_columns`` vector is created by ``REVS_setup_data_columns_VM`` and appended with each data column object, as shown below:
 
