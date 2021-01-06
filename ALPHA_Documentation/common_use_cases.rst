@@ -365,10 +365,10 @@ The following drive cycles are provided with ALPHA, as well as others.
 * ``REVS_Performance_cruise75mph`` defines a performance cycle meant to allow for measuring 0-60, 30-50 and 50-70 passing times followed by a 75 mph cruise that can be used to calculate top gear gradability.
 * ``EPA_FTP_2HWFET_PERF`` defines a combined cycle - a three phase FTP followed by a highway prep, the full warmed up highway and a performance drive cycle.
 
+.. _making_custom_drive_cycles:
+
 Making Custom Drive Cycles
 --------------------------
-
-.. _making_custom_drive_cycles:
 
 There are two ways to make new drive cycles: create one from scratch, filling in the drive cycle properties as outline above, or combine existing drive cycles into a new combined cycle.
 
