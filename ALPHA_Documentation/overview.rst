@@ -1,6 +1,7 @@
-
 Overview
 ========
+
+This chapter is meant to give a quick overview of how to run a pre-configured ALPHA simulation and understand the modeling process.
 
 Running ALPHA - Quickstart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -19,7 +20,6 @@ Examining the Matlab workspace after the model runs reveals a single variable, t
 ::
 
     sim_batch.sim_case(1).extract_workspace
-
 
 Understanding the Modeling Process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -45,9 +45,10 @@ The fundamental modeling process consists of creating a Matlab workspace that co
 
 3.	Create an ad-hoc script to load individual param files (Matlab scripts containing component data structures) and manually perform the pre- and post-processing.  This was the process prior to the standardized batch process, which can lead to duplication of effort and  inconsistent approaches across users and therefore should be avoided.
 
-
 Controlling the Modeling Process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This section describes how to set up a sim batch and gives an overview of how to control the modeling process and understand the pre- and post-processing that occurs during the batch process.
 
 What is a Sim Batch?
 --------------------
@@ -301,8 +302,12 @@ The ``has_value()`` method is also used to cull unnecessary tags from the config
 
 Keys from the output file can be used directly in new config sets by cutting and pasting them into user batch file config sets.  In this way, an end-user of the simulation results can select runs to examine further or may even create new config strings to be run.  Because the output summary file is a .csv file, commas in the Key column are replaced with # symbols to prevent incorrect column breaks.  Even though the # symbol is not a valid Matlab operator, these strings can still be used directly in new config sets.  The batch process converts #'s to commas before parsing the strings.
 
+.. _controlling_datalogging_and_auditing:
+
 Controlling Datalogging and Auditing
 ------------------------------------
+
+This section describes how to control the datalogging and auditing features of ALPHA.
 
 Controlling Datalogging
 +++++++++++++++++++++++
@@ -345,8 +350,8 @@ Log packages can also be combined by using the ``logging_config.add_log()`` meth
 
         Logs the minimum required signals and adds common engine and transmission datalogs
 
-Understanding the Datalog and ``model_data`` Objects
-++++++++++++++++++++++++++++++++++++++++++++++++++++
+Understanding the ``datalog`` and ``model_data`` Objects
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 The datalog object has hierarchical properties.  The top level should look something like this:
 
@@ -425,6 +430,8 @@ For example, the ``REVS_log_all`` package is:
                                     };
 
     end
+
+.. _auditing:
 
 Auditing
 ++++++++
@@ -514,6 +521,8 @@ How to Save and Restore Simulation Workspaces
 
 There are several methods available to save and restore simulation workspaces.  Generally, only one approach will be used at a time, but it is possible to combine approaches if desired.
 
+.. _retain_workspaces_in_memory:
+
 Retain Workspaces in Memory
 +++++++++++++++++++++++++++
 
@@ -568,6 +577,8 @@ This will create a timestamped ``.mat`` file in the sim batch output folder.  Th
     output\2019_02_11_16_52_39_sim_1_output_workspace.mat
 
 The workspace is saved after all post-processing scripts have been run so the workspace contains everything required to replicate the simulation at a later time and also all of the datalogs, audits, etc.  The simulation may be run again or the outputs examined directly without the need for running the simulation.  Keep in mind that output workspaces will always be bigger than input workspaces and also take longer to save.  The workspace may be loaded by using the load command or double-clicking the filename in the Matlab Current Folder file browser.
+
+.. _post_simulation_data_analysis:
 
 Post-Simulation Data Analysis
 -----------------------------

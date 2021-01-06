@@ -2,6 +2,61 @@
 Model Outputs
 ================
 
+When using the batch process, a standardized, customizable output file is created in the ``output`` folder.  When running from a saved workspace, or running from a batch, outputs are always produced in the simulation workspace.
+
+Workspace Outputs
+^^^^^^^^^^^^^^^^^
+
+From a batch, the simulation output workspace can be pulled up to the Matlab top-level workspace using the ``extract_workspace`` method of ``class_REVS_sim_case``:
+
 ::
 
-    TBD
+    sim_batch.sim_case(sim_number).extract_workspace
+
+where ``sim_number`` is a number >= 1 that represents the simulation to be investigated.
+
+For the workspace to be extractable, it must be retained in memory by setting the ``retain_output_workspace`` property of the sim batch to ``true``.  For more information see :ref:`retain_workspaces_in_memory`.  See :ref:`post_simulation_data_analysis` and :ref:`controlling_datalogging_and_auditing` for more information on controlling and using workspace outputs.
+
+File Outputs
+^^^^^^^^^^^^
+
+By default, when a batch file runs, it produces one or more files in the simulation ``output`` folder.
+
+The primary output file is the results file.  The filename format is ``YYYY_MM_DD_hh_mm_ss_BATCHNAME_results.csv`` where ``Y``/``M``/``D`` represent the year, month and day, and ``h``/``m``/``s`` are hour, minute, and seconds respectively.
+
+If ``sim_batch.verbose`` is > 0 then console outputs will also be produced in the ``output`` folder.  The filename format is ``YYYY_MM_DD_hh_mm_ss_BATCHNAME_N_console.csv``, as above, where ``N`` is the simulation number.  The console outputs will include basic information on the drive cycle results as well as audit results if they are enabled.  For more information on auditing, see :ref:`auditing`.
+
+The basic outputs for a simulation, look like:
+
+::
+
+    SAE J2951 Drive Quality Metrics:
+    Time secs         510.000000
+    CEt MJ            2.840796
+    CEt_dist J/m      491.558031
+    CEd MJ            2.834872
+    CEd_dist J/m      490.429212
+    ER %             -0.21
+    DR %             0.02
+    EER %            -0.23
+    ASCt              0.204903
+    ASCd              0.205609
+    ASCR %           0.34
+    Dt mi             3.591008
+    Dt m              5779.167465
+    Dd mi             3.591768
+    Dd m              5780.390388
+    Distance Error mi -0.000760
+    RMSSE_mph         0.104691
+
+       1: ------------------------
+       Percent Time Missed by 2mph =   0.00 %
+       Distance                    =  3.592 mi
+       Fuel Consumption            = 320.5339 grams
+       Fuel Consumption            = 0.1119 gallons
+       Fuel Economy (Volumetric)   = 32.111 mpg
+       Fuel Economy (CFR)          = 32.557 mpg
+       Fuel Consumption            = 89.240 g/mile
+       CO2 Emission                = 270.49 g/mile
+
+Where the "``1:``" represents the drive cycle phase, which in this case is named "1".  The First section outlines the SAEJ2951 drive quality metrics as produced by the ``REVS_SAEJ2951`` function.  See also `<https://www.sae.org/standards/content/j2951_201111/>`_.

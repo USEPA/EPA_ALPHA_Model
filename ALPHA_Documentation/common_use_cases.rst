@@ -1,7 +1,7 @@
-
-
 Common Use Cases
 ================
+
+This chapter will present a few common use cases of ALPHA as an aid to getting started.
 
 Running a Performance Neutral Batch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
