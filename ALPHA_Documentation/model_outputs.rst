@@ -14,7 +14,7 @@ From a batch, the simulation output workspace can be pulled up to the Matlab top
 
 where ``sim_number`` is a number >= 1 that represents the simulation to be investigated.
 
-For the workspace to be extractable, it must be retained in memory by setting the ``retain_output_workspace`` property of the sim batch to ``true``.  For more information see :ref:`retain_workspaces_in_memory`.  See :ref:`post_simulation_data_analysis` and :ref:`controlling_datalogging_and_auditing` for more information on controlling and using workspace outputs.
+For the workspace to be extractable, it must be retained in memory by setting the ``retain_output_workspace`` property of the ``class_REVS_sim_batch`` to ``true``.  For more information see :ref:`retain_workspaces_in_memory`.  See :ref:`post_simulation_data_analysis` and :ref:`controlling_datalogging_and_auditing` for more information on controlling and using workspace outputs.
 
 File Outputs
 ^^^^^^^^^^^^
@@ -102,10 +102,10 @@ These scripts populate a variable called ``data_columns``, a vector of ``class_d
 
 ``class_data_column`` objects have the following properties:
 
-* ``header_cell_str``, a cell array of strings.  The first string is the column name, located in the first row of the output file.  The second string is an optional string meant to represent the units of the variable or a supporting description of the variable.
+* ``header_cell_str``, a cell array of strings.  The first string is the column name, located in the first row of the output file.  The second string is an optional string meant to represent the units of the variable or a supporting description of the variable and occupies the second row of the output file.
 * ``format_str``, a standard Matlab ``fprintf`` ``formatSpec`` string.
 * ``eval_str`` is a string that gets evaluated by the Matlab ``evalin`` function and should return a numeric or string value that can be printed.  Any variable available in the simulation output workspace can be referenced in the ``eval_str``.
-* ``verbose`` is a numeric value that refers to the sim batch ``output_verbose`` property.  Output columns will be produced for columns where ``verbose`` is >= ``output_verbose``.  In this way the output file size and complexity can be controlled.  The value of ``verbose`` is ``0`` unless overridden during the definition, as it was above.  Columns with a ``verbose`` of ``0`` will always be output.
+* ``verbose`` is a numeric value that refers to the ``class_REVS_sim_batch`` ``output_verbose`` property.  Output columns will be produced for columns where ``verbose`` is >= ``output_verbose``.  In this way the output file size and complexity can be controlled.  The value of ``verbose`` is ``0`` unless overridden during the definition, as it was above.  Columns with a ``verbose`` of ``0`` will always be output.
 
 The ``data_columns`` vector is created by ``REVS_setup_data_columns_VM`` and appended with each data column object, as shown below:
 
@@ -113,5 +113,10 @@ The ``data_columns`` vector is created by ``REVS_setup_data_columns_VM`` and app
 
     data_columns(end+1) = class_data_column({'Test Weight lbs','lbs'},'%f','vehicle.ETW_lbs',2);
 
+The data_columns are evaluated one at a time by the ``class_REVS_sim_batch`` ``postprocess_sim_case`` method via the ``write_column_row`` function which is located in the ``NVFEL_MATLAB_TOOLS\utilities\export`` folder.
+
 Custom Output Summary File Formats
 ----------------------------------
+
+There are at least a couple methods to modify the output file format: edit the various ``setup_data_columns`` scripts, or populate the ``class_REVS_sim_batch`` ``setup_data_columns`` property with the name of a custom output column definition script, which can be populated using the default scripts as a guide.  The custom script will be called after the default columns are created and therefore the custom columns will appear to the right of the previously defined columns.
+
