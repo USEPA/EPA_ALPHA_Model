@@ -113,7 +113,7 @@ The ``data_columns`` vector is created by ``REVS_setup_data_columns_VM`` and app
 
     data_columns(end+1) = class_data_column({'Test Weight lbs','lbs'},'%f','vehicle.ETW_lbs',2);
 
-The data_columns are evaluated one at a time by the ``class_REVS_sim_batch`` ``postprocess_sim_case`` method via the ``write_column_row`` function which is located in the ``NVFEL_MATLAB_TOOLS\utilities\export`` folder.
+The data_columns are evaluated one at a time by the ``class_REVS_sim_batch`` ``postprocess_sim_case`` method via the ``write_column_row`` function which is located in the ``NVFEL_MATLAB_Tools\utilities\export`` folder.
 
 Custom Output Summary File Formats
 ----------------------------------
