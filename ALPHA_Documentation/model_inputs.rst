@@ -145,6 +145,22 @@ An instance of ``class_REVS_drive_cycle`` that defines the simulation drive cycl
 ``accessories``
 ---------------
 
+An instance of ``class_REVS_ALPHA_accessories`` that defines electrical and mechanical accessory loads.
+
+::
+
+    >> accessories
+
+    accessories =
+
+      class_REVS_ALPHA_accessories with properties:
+
+                   name: 'electric_EPS_midsize_car'
+           generic_loss: [1×1 class_REVS_accessory_load]
+                    fan: [1×1 class_REVS_accessory_load]
+         power_steering: [1×1 class_REVS_accessory_load]
+        air_conditioner: [1×1 class_REVS_accessory_load]
+
 ``electric``
 ------------
 
