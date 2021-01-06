@@ -531,6 +531,8 @@ The workspace will be contained in the sim batch ``sim_case`` property which hol
 
 The workspace is contained in the sim case workspace property but extracting the workspace to the top-level makes it easier to work with.
 
+.. _saving_the_input_workspace:
+
 Saving the Input Workspace
 ++++++++++++++++++++++++++
 
@@ -547,6 +549,8 @@ This will create a timestamped ``.mat`` file in the sim batch output folder's ``
     output\sim_input\2019_02_11_16_46_37_sim_1_input_workspace.mat
 
 The workspace is saved after all pre-processing scripts have been run so the workspace contains everything required to replicate the simulation at a later time.  This can be useful when running too many simulations to retain the workspaces in memory while also providing the ability to run individual cases later without having to set up a sim batch.  The workspace may be loaded by using the load command, or double-clicking the filename in the Matlab Current Folder file browser.
+
+.. _saving_the_output_workspace:
 
 Saving the Output Workspace
 +++++++++++++++++++++++++++
