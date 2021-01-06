@@ -68,6 +68,23 @@ An instance of ``class_REVS_setup`` that stores the top-level settings that cont
 ``ambient``
 -----------
 
+An instance of ``class_REVS_ambient`` which defines the ambient environmental conditions of the simulation.  The atmospheric properties come into play when using Cd / frontal area drag coefficients, as opposed to ABC roadload coefficients.  See :ref:`abc_coefficients` and :ref:`drag_coefficients` for more information on vehicle roadload calculations.
+
+::
+
+    >> ambient
+
+    ambient =
+
+      class_REVS_ambient with properties:
+
+                  variant: 'default ambient'
+         temperature_degC: 20
+              pressure_Pa: 98210
+        air_density_kgpm3: 1.16771071212578
+               Rgas_JpkgK: 286.9
+             gravity_mps2: 9.80665
+
 ``driver``
 ----------
 

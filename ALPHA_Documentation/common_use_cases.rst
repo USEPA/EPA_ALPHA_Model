@@ -159,6 +159,8 @@ If the goal is to simulate known inertias and actual vehicle weights then it is 
 
 Setting ``mass_static_kg`` defaults the dynamic mass to 1.03 * mass_static, so it needs to also be set manually.
 
+.. _abc_coefficients:
+
 ABC Coefficients
 ----------------
 
@@ -268,6 +270,8 @@ Automatic calculation of the roadload adjustments discussed above can be perform
 
     '... + CALC_ABC_ADJ:1 + ...'
 
+
+.. _drag_coefficients:
 
 Drag Coefficients
 -----------------
