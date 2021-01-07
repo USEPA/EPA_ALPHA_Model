@@ -5,11 +5,9 @@
 .. The chapters in the document are listed below (introduction, overview, etc.) that refer
 .. to the actual .rst files to be used when building the auto-documentation.
 
-
 EPA ALPHA Model Documentation
 =============================
 .. toctree::
-    :maxdepth: 4
     introduction
     overview
     modeling_process
