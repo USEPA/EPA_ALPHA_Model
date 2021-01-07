@@ -9,6 +9,7 @@ EPA ALPHA Model Documentation
 =============================
 .. toctree::
     :caption: Docs
+
     introduction
     overview
     modeling_process
@@ -21,6 +22,7 @@ Contact
 =======
 .. toctree::
     :caption: Contact
+
     contact_information
     agency_information
 
@@ -28,6 +30,7 @@ Reference
 =========
 .. toctree::
     :caption: Reference
+
     reference_documentation_style_guide
     python_documentation_style_guide
 
