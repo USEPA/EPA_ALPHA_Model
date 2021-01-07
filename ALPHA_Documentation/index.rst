@@ -31,7 +31,7 @@ Reference
     :caption: Reference
 
     reference_documentation_style_guide
-..  python_documentation_style_guide
+    python_documentation_style_guide
 
 Indices and Tables
 ==================
