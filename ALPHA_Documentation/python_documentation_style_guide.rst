@@ -21,5 +21,5 @@ For further information, please reference the ``xxx.py`` files named in the foll
 .. automodule:: Example_py_5
    :members:
 
-.. automodule:: Alpha_GUI_V6
+.. automodule:: gui/python/Alpha_GUI_V6
    :members:
