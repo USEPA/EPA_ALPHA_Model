@@ -63,10 +63,39 @@ Also at the top level of the model is the system bus and the vehicle speed chart
 Powertrain Variants
 -------------------
 
+The ``powertrain`` variant subsystem is in many ways the heart of the ALPHA model.  At this time there are two available powertrain variants:
 
+* ``CVM / BAS / ISG`` - implements CVM, the Conventional Vehicle Model and mild hybrid vehicles (BAS, Belt-Alternator-Starter and ISG, Integrated-Starter-Generator)
+* ``EVM`` - implements EVM, the Electric Vehicle Model
+
+Powersplit hybrid models are also under development (the component models of which are available for experimentation in the ``electric_lib`` and ``transmission_lib``)
+
+``CVM / BAS / ISG``
++++++++++++++++++++
+
+The top level of the conventional vehicle model contains the following blocks:
+
+* ``controls`` - handles engine start-stop logic and other control system algorithms.  This variant subsystem is determined by the ``vehicle.controls_variant`` string property.
+* ``engine`` - contains the engine model.  This variant subsystem is determined by the ``engine.variant`` string property.
+* ``transmission`` - contains the transmission model. This variant subsystem is determined by the ``transmission.variant`` string property.
+* ``driveline`` - contains the axle models which contain the wheels, tires, final drive and driveshafts, etc.  This variant subsystem is determined by the ``vehicle.driveline_variant`` string property.
+* ``electric & accessories`` - implements the vehicle's electrical energy storage system, electrical accessories and mechanical engine accessory loads.  The engine starting and battery charging system is also implemented here.  This block is not itself a variant subsystem but the ``starting / charging`` and ``energy storage`` subsystems are variants, determined by the ``vehicle.powertrain_type`` enumeration property.
+
+``EVM``
++++++++
+
+The top level of the electric vehicle model contains the following blocks:
+
+* ``controls`` - handles control system algorithms such as acceleration and regeneration limits.  This variant subsystem is determined by the ``vehicle.controls_variant`` string property.
+* ``drive_motor`` - implements a single propulsion motor-generator model.
+* ``transmission`` - contains the transmission model. This variant subsystem is determined by the ``transmission.variant`` string property.
+* ``driveline`` - contains the axle models which contain the wheels, tires, final drive and driveshafts, etc.  This variant subsystem is determined by the ``vehicle.driveline_variant`` string property.
+* ``electric & accessories`` - implements the vehicle's electrical energy storage system and electrical accessories.  This block is not itself a variant subsystem but the ``starting / charging`` and ``energy storage`` subsystems are variants, determined by the ``vehicle.powertrain_type`` enumeration property.
 
 Understanding the Simulink Libraries
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This section provides an overview of the several Simulink libraries that hold the various component models and subsystem blocks.
 
 accessory_lib
 -------------
