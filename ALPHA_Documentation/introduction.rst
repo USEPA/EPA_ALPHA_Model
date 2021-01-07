@@ -1,6 +1,3 @@
-One
-===
-
 Introduction
 ============
 
