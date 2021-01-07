@@ -21,5 +21,5 @@ For further information, please reference the ``xxx.py`` files named in the foll
     .. automodule:: Alpha_GUI_V6
        :members:
 
-.. mat:automodule:: python
+.. mat:function:: foo
    :members:
