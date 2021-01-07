@@ -12,17 +12,17 @@ The ``python_documentation_style_guide.rst`` file demonstrates how the subheadin
 
 For further information, please reference the ``xxx.py`` files named in the following sections.
 
-.. automodule:: Functions
-   :members:
+.. .. automodule:: Functions
+       :members:
 
-.. automodule:: code_1
-   :members:
+    .. automodule:: code_1
+       :members:
 
-.. automodule:: Example_py_5
-   :members:
+    .. automodule:: Example_py_5
+       :members:
 
-.. automodule:: Alpha_GUI_V6
-   :members:
+    .. automodule:: Alpha_GUI_V6
+       :members:
 
 .. mat:automodule:: .
    :members:
