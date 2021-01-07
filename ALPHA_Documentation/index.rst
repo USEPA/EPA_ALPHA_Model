@@ -22,12 +22,12 @@ EPA ALPHA Model Documentation
     model_outputs
     alpha_development
 
+Contact
+=======
 .. toctree::
-    :caption: Contact
     contact_information
     agency_information
 
-.. toctree::
     :caption: Reference
     reference_documentation_style_guide
     python_documentation_style_guide
