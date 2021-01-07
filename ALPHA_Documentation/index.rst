@@ -19,6 +19,7 @@ Contact
 =======
 
 .. toctree::
+    :caption: Contact
 
     contact_information
     agency_information
