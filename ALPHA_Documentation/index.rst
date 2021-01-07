@@ -8,9 +8,8 @@
 .. toctree::
     :caption: Model Documentation
     :maxdepth: 3
-
-    overview
     introduction
+    overview
     modeling_process
     common_use_cases
     model_inputs
@@ -28,3 +27,10 @@
 
     reference_documentation_style_guide
     python_documentation_style_guide
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
