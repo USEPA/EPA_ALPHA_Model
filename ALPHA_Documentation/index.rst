@@ -26,16 +26,9 @@ EPA ALPHA Model Documentation
     reference_documentation_style_guide
     python_documentation_style_guide
 
-
-
 Indices and Tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-
-
-

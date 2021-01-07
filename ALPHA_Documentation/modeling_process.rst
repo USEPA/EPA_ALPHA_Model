@@ -1,12 +1,12 @@
 .. _simulation_process:
 
-Modeling Process
-================
+Modeling Process Details
+========================
 
 This chapter describes how to set up a sim batch and gives an overview of how to control the modeling process and understand the pre- and post-processing that occurs during the batch process.
 
 Understanding Simulation Pre- and Post-Processing
--------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The goal of simulation pre-processing is to set up the simulation workspace before simulation, including any modifications to data loaded from the specified param files.  For example, users may load a particular vehicle param file and then want to change the test weight or roadload in some manner and then run the simulation, perhaps as part of a sweep of test weight values.  Any arbitrary M-script can be run in order to prepare the simulation workspace.
 
 The ``REVS_VM`` model itself performs some post-processing to create simulation results (phase integrated results, for example), datalogs, and to perform any auditing that may be desired.  These tasks are handled by creating result, datalog and audit objects in the workspace from ``class_REVS_result``, ``class_REVS_datalog`` and ``class_REVS_audit`` classes respectively.  These objects are created in the model's ``StopFcn`` callback which can be seen in the model's Model Properties dialog box.
@@ -24,7 +24,7 @@ There are a few ``class_REVS_sim_batch`` properties that control pre- and post-p
     * ``postprocess_script``: by default is set to ``REVS_postprocess_sim_batch`` which has code for finding performance-neutral runs out of a simulation set that provides a performance baseline for one or more sets of runs.  The selected runs, if any, are output to a separate output file.
 
 Understanding Config Strings (Keys)
------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Formatting for the ``batch config_set config`` strings (also known as Keys in the output summary file) is defined by ``class_REVS_sim_config``.  The easiest way to see which config tags are available is to use this command:
 
     class_REVS_sim_config.show_tags
@@ -67,7 +67,7 @@ Within ``class_REVS_sim_config`` each property is an instance of a ``class_REVS_
 The arguments to the ``class_REVS_config_element`` constructor are the tag string, the tag type, and an optional default value.
 
 Literal Config Tags
-+++++++++++++++++++
+-------------------
 In the example above, the ``drive_cycle`` property holds a 'literal' tag, which means the part of the string associated with that tag will not automatically be evaluated (turned into a numeric or other value, but rather taken literally).  Typically this would be used for something like file names or other strings.  Literal tags may be evaluated in user scripts.  For example, if the literal tag was the name of a script, then that script may be called in the user pre- or post-processing scripts at the appropriate time to perform whatever its function is.  Literal tags can be used to hold a single value or, when combined with delayed evaluation (in a user script, instead of during config string parsing) may hold multiple values.  For example, within a config string, these are possible uses of the CYC: tag:
 
 ::
@@ -90,7 +90,7 @@ which would evaluate (using the Matlab ``eval()`` or ``evalin()`` command) the c
 Drive cycle loading of a single cycle or the combining of multiple cycles into a single cycle is automatically handled in ``class_REVS_sim_case.load_drive_cycles()`` but the same concept can apply to user-defined literal tags initiated by user scripts.  Drive cycle creation and handling will be discussed in further detail later.
 
 Eval Config Tags
-++++++++++++++++
+----------------
 
 As shown previously, the ``class_REVS_sim_config ETW_lbs`` property is an 'eval' tag which means its value will be automatically evaluated by the ``class_REV_sim_config`` in the ``parse_key()`` method.  If the eval tag is created with a default value, that value will be used if the tag is not specified by the user.  Eval tags should be numeric or should refer to variables available in the workspace.  An eval tag may evaluate to a single value or a vector of multiple values to perform variable sweeps.  For example, the following would all be valid eval tags within a config string:
 
@@ -103,7 +103,7 @@ As shown previously, the ``class_REVS_sim_config ETW_lbs`` property is an 'eval'
 The first case evaluates to a single number, 3625.  The second case evaluates to a vector, [3000 3500 4000 4500 5000] as does the last case which becomes [3563.2 4454 5344.8].  Any valid Matlab syntax may be used in an eval tag including mathematical operations such as multiply, divide, etc.  If addition is used, there must not be any spaces surrounding the + sign because ' + ' (space, plus-sign, space) is the separator used to build composite config strings and will result in an erroneously split string.
 
 Config String Expansion
-+++++++++++++++++++++++
+-----------------------
 
 Each string in the sim batch ``config_set`` cell array is evaluated to determine how many simulations are defined.  As previously explained, each tag may be used to define multiple values.  Each config string is expanded to a full factorial combination of all of its elements.  The expanded set of strings is stored in the sim batch ``expanded_config_set`` property after the ``expand_config_set()`` method is called.  Config set expansion is handled automatically by the ``class_REVS_sim_batch`` ``run_sim_cases()`` method but under certain circumstances it may also be useful to manually expand the config set, although this is not typically done.  Manual expansion could be used to examine the number of cases represented by a config set without having to commit to running any simulations.
 
@@ -138,7 +138,7 @@ which would turn into four strings in the expanded config set, representing all 
 String expansion provides a simple and powerful method for defining entire sets of simulations within a single user-defined config string.
 
 Config String Left-Hand-Side and Right-Hand-Side and Unique Key Numbers
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----------------------------------------------------------------------
 
 A special string separator, || (double vertical bars), may be used to separate the left and right hand sides of a config string.  This is typically used for processing performance neutral runs but could also be used for any user-defined purpose.  For performance neutral runs the left hand side of the string defines the unique simulation case and the right hand side is used to define multiple engine scaling levels to evaluate for performance neutrality and GHG emissions.  The ``REVS_postprocess_sim_batch`` script considers all cases with the same left hand side to represent a single simulation case and then chooses the result from that set that meets performance criteria and has the lowest GHG emissions.  Each unique left hand side is assigned a unique key number through the UKN: tag by the ``class_REVS_sim_batch gen_unique_config_set()`` method.
 
@@ -175,7 +175,7 @@ becomes this four simulations that represent two unique cases:
 In this way, subsets of simulation batches may be considered as groups and the unique key number can be used to find these groups in the output file and then process them accordingly.  In either case, all four simulations will run and all four results will be available in the output summary file.
 
 Creating New Config Tags
-++++++++++++++++++++++++
+------------------------
 
 ``class_REVS_sim_config`` defines quite a few useful tags that should cover many modeling applications but new ones are easy to add.  Adding a new tag is as simple as adding a new property to ``class_REVS_sim_config``:
 
@@ -192,7 +192,7 @@ which would show up as the following when calling ``class_REVS_sim_config.show_t
 The default value (if provided) is shown next to the tag, in this case the default value for ``sim_config.new_config`` is 42.  The variable ``sim_config.new_config`` would now be available for use in user pre- and post- processing scripts.
 
 How to Use ``sim_config`` Values
-++++++++++++++++++++++++++++++++
+--------------------------------
 
 The value of a ``sim_config`` property is accessed through the value property.  In addition, the ``has_value()`` method can be used to check if a value has been set by the user before being used in a script.  For example, from ``REVS_preprocess_sim_case``:
 
@@ -205,7 +205,7 @@ The value of a ``sim_config`` property is accessed through the value property.  
 A default value, if provided, is always available even if the user has not provided a value (i.e. ``has_value()`` returns false).
 
 Output Summary File Keys
-++++++++++++++++++++++++
+------------------------
 
 The ``has_value()`` method is also used to cull unnecessary tags from the config string that appear in the output summary file Key column.  Culling empty or default value tags from the Key column makes the strings easier to read and understand but still specifies the correct simulation parameters.
 
@@ -214,12 +214,12 @@ Keys from the output file can be used directly in new config sets by cutting and
 .. _controlling_datalogging_and_auditing:
 
 Controlling Datalogging and Auditing
-------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section describes how to control the datalogging and auditing features of ALPHA.
 
 Controlling Datalogging
-+++++++++++++++++++++++
+-----------------------
 
 Datalogging and auditing are controlled by the ``logging_config`` property of the ``class_REVS_sim_batch`` object.  ``logging_config`` is an object of class ``class_REVS_logging_config``.  The constructor of ``class_REVS_sim_batch`` takes a single optional argument which is the default log list.  A log list is a ``class_REVS_log_package`` object.  Many predefined log lists are contained in the ``REVS_Common\log_packages`` folder.
 
@@ -260,7 +260,7 @@ Log packages can also be combined by using the ``logging_config.add_log()`` meth
         Logs the minimum required signals and adds common engine and transmission datalogs
 
 Understanding the ``datalog`` and ``model_data`` Objects
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--------------------------------------------------------
 
 The datalog object has hierarchical properties.  The top level should look something like this:
 
@@ -343,7 +343,7 @@ For example, the ``REVS_log_all`` package is:
 .. _auditing:
 
 Auditing
-++++++++
+--------
 
 Auditing can be controlled by setting a sim batch ``logging_config`` audit flag:
 
@@ -426,14 +426,14 @@ This should return something like the following for a conventional vehicle:
     Energy Conservation              =  100.009 %
 
 How to Save and Restore Simulation Workspaces
----------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are several methods available to save and restore simulation workspaces.  Generally, only one approach will be used at a time, but it is possible to combine approaches if desired.
 
 .. _retain_workspaces_in_memory:
 
 Retain Workspaces in Memory
-+++++++++++++++++++++++++++
+---------------------------
 
 The simplest approach, for a relatively small number of simulations, is to retain the workspace in memory.  Set the sim batch ``retain_output_workspace`` property to true.  For example:
 
@@ -452,7 +452,7 @@ The workspace is contained in the sim case workspace property but extracting the
 .. _saving_the_input_workspace:
 
 Saving the Input Workspace
-++++++++++++++++++++++++++
+--------------------------
 
 The simulation workspace may be saved prior to simulation by setting the sim batch ``save_input_workspace`` property to true:
 
@@ -471,7 +471,7 @@ The workspace is saved after all pre-processing scripts have been run so the wor
 .. _saving_the_output_workspace:
 
 Saving the Output Workspace
-+++++++++++++++++++++++++++
+---------------------------
 
 The simulation workspace may be saved after simulation by setting the sim batch ``save_output_workspace`` property to true:
 
@@ -490,7 +490,7 @@ The workspace is saved after all post-processing scripts have been run so the wo
 .. _post_simulation_data_analysis:
 
 Post-Simulation Data Analysis
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As mentioned, a ``model_data`` object is created in the output workspace and may contain various model outputs.  One of the easiest ways to take a look at simulation data is to run a Data Observation Report (DOR) on the model data.  There are DORs for conventional (CVM), hybrid (HVM) and electric vehicles (EVM).  To run the default conventional vehicle model DOR, use the ``REVS_DOR_CVM()`` function:
 
@@ -520,12 +520,12 @@ The top-level DOR calls sub-DORs that are grouped by component, for example ``RE
 
 
 Understanding Datalogging
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section will provide details on how to control and understand the datalogging process in ALPHA.
 
 Logging Overview
-++++++++++++++++
+----------------
 Logging model internal signals is probably one of the most important things the model does, it is also one of the things that has the biggest impact on model run time.  Simulink seems to incur quite a bit of overhead related to logging data to the workspace.  As a result, ALPHA implements a flexible system to control how much or how little data is logged from the model.  In this way, the user can trade off run time speed and the logging of signals of interest.
 
 The ``REVS_Common\log_packages`` folder contains functions to define pre-made 'packages' of signals for datalogging, and also scripts for post-processing the data if required.
@@ -554,7 +554,7 @@ The ``REVS_Common\log_packages`` folder contains functions to define pre-made 'p
 * ``postprocess_list`` - contains a list of one or more post-processing scripts to run after the workspace has been populated with data.  For example, ``REVS_log_engine_basics`` lists ``REVS_postprocess_engine_basics_log`` to post-process data from raw simulation signals into the ``model_data`` structure for more universal use in post-processing scripts such as plotting simulation data versus real-world test data as in a ``DOR``.
 
 Logging Details
-+++++++++++++++
+---------------
 Since it's not possible for Simulink datalogs to directly create stuctured output, there is a process for populating hierarchical data structures from individual workspace datalog variables.  This possible through the naming scheme employed by the datalogging blocks.  For example, the raw post-simulation workspace will contain variables such as:
 
 ::
@@ -574,7 +574,7 @@ The construction of the raw workspace variable names is handled by the mask of t
 The only user-specified part of the name is ``fuel_rate_gps``, the rest is automatic, and the final result is previewed in the ``Datalog Name`` text box.
 
 Understanding Auditing
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 Auditing is controlled through the ``sim_batch`` object ``audit_total`` and ``audit_phase`` boolean properties.
 
 If ``audit_total`` is ``true`` then an audit for the drive cycle as a whole will be performed and the resulting summary will be sent the console or an output file.  This is the most commonly used approach for enabling an audit.

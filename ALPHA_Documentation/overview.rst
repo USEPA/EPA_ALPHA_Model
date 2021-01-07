@@ -4,7 +4,7 @@ Overview
 This chapter is meant to give a quick overview of how to run a pre-configured ALPHA simulation and understand the modeling process.
 
 Running ALPHA - Quickstart
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 Launch Matlab and make sure ``REVS_Common`` and ``NVFEL_MATLAB_Tools`` are on the Matlab path as described in the installation instructions.  As a quick check execute the following Matlab command and if successful, the path to the top-level ALPHA model should return:
 
 ::
@@ -21,8 +21,8 @@ Examining the Matlab workspace after the model runs reveals a single variable, t
 
     sim_batch.sim_case(1).extract_workspace
 
-Understanding the Modeling Process
-----------------------------------
+Modeling Processes
+^^^^^^^^^^^^^^^^^^
 
 The fundamental modeling process consists of creating a Matlab workspace that contains all the variables necessary to run the ``REVS_VM`` (REVS Vehicle Model) Simulink model.  There are several ways to accomplish this.  The first approach below will be the primary focus of this document due to its numerous advantages as outlined below.
 
@@ -46,11 +46,11 @@ The fundamental modeling process consists of creating a Matlab workspace that co
 3.	Create an ad-hoc script to load individual param files (Matlab scripts containing component data structures) and manually perform the pre- and post-processing.  This was the process prior to the standardized batch process, which can lead to duplication of effort and  inconsistent approaches across users and therefore should be avoided.
 
 What is a Sim Batch?
---------------------
+^^^^^^^^^^^^^^^^^^^^
 A ``class_REVS_sim_batch`` object actually contains a vector of ``class_REVS_sim_case`` objects stored in the ``sim_case`` property.  A ``sim_case`` could be created and run without a batch but there is no advantage to doing so since the batch process provides all the necessary pre- and post-processing and is much easier to use.  Typically the only reason to manipulate a particular ``sim_case`` would be to extract its local workspace to populate the top-level workspace for direct access.  This will be covered in more detail later in the discussion on working with workspaces.
 
 Understanding the ALPHA Quickstart Script
------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The ``run_ALPHA_quickstart`` M-script demonstrates the simplest possible batch process - a single simulation run with the default settings and only the minimum required input files and minimal outputs.
 
     run_ALPHA_quickstart.m:

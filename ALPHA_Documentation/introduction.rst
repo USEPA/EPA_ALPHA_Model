@@ -25,7 +25,7 @@ Target Audience
 ^^^^^^^^^^^^^^^
 The target audience for this document is anyone who is interested in learning more about how to run EPA's ALPHA model.  Prior modeling experience or a good understanding of vehicle powertrains and some Matlab familiarity is assumed.  There are ample resources available to learn the basics of Matlab and Simulink in print and online from MathWorks and other third parties.
 
-System Requirements for Installation
+System Requirements and Installation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 System Requirements
@@ -47,28 +47,17 @@ Directory Structure
 ^^^^^^^^^^^^^^^^^^^
 A high-level description of the ``REVS_Common`` directory structure follows.  Use it as a rough guide to exploring the file system.  Not all releases of ALPHA may contain all subfolders (for example, the HIL-related files) but this should still provide the user a good idea of where common items are located.
 
-* REVS_Common  top level
-    * Contains ``REVS_VM.mdl``, the top-level ALPHA model and the ALPHA logo.
-* datatypes
-    * Contains Matlab class definitions for the Matlab objects that compose REVS and various enumerated datatypes.  Also contains ``REVS_fuel_table.csv`` that holds the fuel properties for known fuel types.
-* drive_cycles
-    * Contains ``.mat`` files that represent various compliance or custom drive cycles in the form of ``class_REVS_drive_cycle`` objects with the name ``drive_cycle``.
-* functions
-    * Contains various Matlab functions used during the modeling process.   Also contains ``functionSignatures.json`` which Matlab can use to provide auto-completion assistance in the Editor.
-* helper_scripts
-    * Primarily contains scripts related to pre- and post-processing simulation runs.
-* libraries
-    * Contains the REVS Simulink component block models, separated into various libraries by component type.
-* log_packages
-    * Contains scripts that are used in conjunction with the batch modeling process in order to control the datalogging and post-processing of datalogs into a standardized data object.
-* param_files
-    * Contains data for common model components such as engines or batteries which can be used across multiple modeling projects.  In particular, the engine files are part of the NCAT Test Data Package publishing process.
-* plots
-    * Can be used to store plots of common interest to REVS3 development.
-* publish_tools
-    * Contains tools related to publishing NCAT Test Data Packages, particularly for publishing engine data.
-* python
-    * Contains Python scripts related to the implementation of multi-core and/or multi-machine parallel modeling processes on a local network using Python packages.
+* ``REVS_Common`` top level - Contains ``REVS_VM.mdl``, the top-level ALPHA model and the ALPHA logo.
+* ``datatypes`` - contains Matlab class definitions for the Matlab objects that compose REVS and various enumerated datatypes.  Also contains ``REVS_fuel_table.csv`` that holds the fuel properties for known fuel types.
+* ``drive_cycles`` - contains ``.mat`` files that represent various compliance or custom drive cycles in the form of ``class_REVS_drive_cycle`` objects with the name ``drive_cycle``.
+* ``functions`` - contains various Matlab functions used during the modeling process.   Also contains ``functionSignatures.json`` which Matlab can use to provide auto-completion assistance in the Editor.
+* ``helper_scripts`` - primarily contains scripts related to pre- and post-processing simulation runs.
+* ``libraries`` - contains the REVS Simulink component block models, separated into various libraries by component type.
+* ``log_packages`` - contains scripts that are used in conjunction with the batch modeling process in order to control the datalogging and post-processing of datalogs into a standardized data object.
+* ``param_files`` - contains data for common model components such as engines or batteries which can be used across multiple modeling projects.  In particular, the engine files are part of the NCAT Test Data Package publishing process.
+* ``plots`` - can be used to store plots of common interest to REVS3 development.
+* ``publish_tools`` - contains tools related to publishing NCAT Test Data Packages, particularly for publishing engine data.
+* ``python`` - contains Python scripts related to the implementation of multi-core and/or multi-machine parallel modeling processes on a local network using Python packages.
 
 Design Principles
 ^^^^^^^^^^^^^^^^^
@@ -96,4 +85,4 @@ Auditing the energy flow in the model is a key factor in ensuring the plausibili
 
 Conventions and Guidelines
 --------------------------
-There are several conventions and guidelines that enhance the consistency and usability of the model, see :ref:`ad-crossref-1` under ALPHA Development.
+There are several conventions and guidelines that enhance the consistency and usability of the model, see :ref:`alpha_development`.
