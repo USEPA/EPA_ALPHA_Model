@@ -8,7 +8,8 @@
 EPA ALPHA Model Documentation
 =============================
 .. toctree::
-    :caption: Docs
+    :caption: Model Documentation
+    :maxdepth: 2
 
     introduction
     overview
