@@ -26,8 +26,8 @@ EPA ALPHA Model Documentation
     reference_documentation_style_guide
     python_documentation_style_guide
 
-    :hidden:
-    genindex
+.. toctree::
+    :hidden: genindex
 
 .. Indices and Tables
 .. ==================
