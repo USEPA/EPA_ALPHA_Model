@@ -6,8 +6,8 @@
 .. to the actual .rst files to be used when building the auto-documentation.
 
 
-.. EPA ALPHA Model Documentation
-.. =============================
+EPA ALPHA Model Documentation
+=============================
 
 .. toctree::
     :maxdepth: 4
