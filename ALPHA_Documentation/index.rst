@@ -8,12 +8,8 @@
 
 EPA ALPHA Model Documentation
 =============================
-
 .. toctree::
     :maxdepth: 4
-    :caption: ALPHA Documentation:
-    :numbered:
-
     introduction
     overview
     modeling_process
@@ -28,12 +24,13 @@ Contact
     contact_information
     agency_information
 
-    :caption: Reference
+Reference
+=========
+.. toctree::
     reference_documentation_style_guide
     python_documentation_style_guide
 
-.. toctree::
-    :hidden: genindex
+    genindex
 
 .. Indices and Tables
 .. ==================
