@@ -11,7 +11,7 @@ EPA ALPHA Model Documentation
 
 .. toctree::
     :maxdepth: 4
-    :caption: Contents:
+    :caption: ALPHA Documentation:
     :numbered:
 
     introduction
@@ -21,8 +21,14 @@ EPA ALPHA Model Documentation
     model_inputs
     model_outputs
     alpha_development
+
+.. toctree::
+    :caption: Contact
     contact_information
     agency_information
+
+.. toctree::
+    :caption: Reference
     reference_documentation_style_guide
     python_documentation_style_guide
 
