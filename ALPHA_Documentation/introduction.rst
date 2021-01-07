@@ -1,5 +1,5 @@
-# Introduction
-# ============
+Introduction
+============
 
 This is the introduction.
 
