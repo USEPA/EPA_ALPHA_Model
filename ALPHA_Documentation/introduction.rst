@@ -2,6 +2,8 @@
 Introduction
 ============
 
+This is the introduction.
+
 What is ALPHA?
 ^^^^^^^^^^^^^^
 
