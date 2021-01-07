@@ -12,8 +12,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('./gui/python'))
-sys.path.insert(0, os.path.abspath('.'))
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(path, '..', 'gui', 'python'))
 
 # -- Project information -----------------------------------------------------
 
@@ -48,10 +48,23 @@ numfig = True
 # a list of builtin themes.
 #
 html_theme = 'classic'
+
+# EPA Palette
 html_theme_options = {
     "stickysidebar": "true",
-    "sidebarwidth": "30em"
+    "sidebarwidth": "30em",
+    "sidebarbgcolor": "#0071BC",
+    "sidebartextcolor": "#FFFFFF",
+    "sidebarlinkcolor": "#FFFFFF",
+    "relbarbgcolor": "#205493",
+    "textcolor": "#205493",
+    "linkcolor": "#205493",
+    "visitedlinkcolor": "#205493",
+    "headtextcolor": "#205493",
+    "headlinkcolor": "#205493",
+    "footerbgcolor": "#112E51"
 }
+
 html_sidebars = {
    '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
    'using/windows': ['windowssidebar.html', 'searchbox.html'],

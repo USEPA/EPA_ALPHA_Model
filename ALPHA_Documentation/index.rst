@@ -30,11 +30,9 @@ ALPHA Documentation
     :caption: Reference
 
     reference_documentation_style_guide
-    python_documentation_style_guide
+..  python_documentation_style_guide
 
-    genindex
-
-Indices and tables
+Indices and Tables
 ==================
 
 * :ref:`genindex`
