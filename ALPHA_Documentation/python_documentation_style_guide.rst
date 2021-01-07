@@ -23,10 +23,3 @@ For further information, please reference the ``xxx.py`` files named in the foll
 
 .. automodule:: gui/python/Alpha_GUI_V6
    :members:
-
-
-
-
-
-
-
