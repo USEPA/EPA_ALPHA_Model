@@ -11,7 +11,7 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 
-mport os
+import os
 import sys
 path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(path, '..', 'gui', 'python'))
@@ -23,8 +23,7 @@ copyright = '2020, EPA'
 author = 'EPA'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
-
+release = '0.0.2'
 
 # -- General configuration ---------------------------------------------------
 
