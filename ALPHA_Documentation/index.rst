@@ -1,11 +1,11 @@
 .. The chapters in the document are listed below (introduction, overview, etc.) that refer
 .. to the actual .rst files to be used when building the auto-documentation.
 
-
-===================
+Documentation
+=============
 
 .. toctree::
-    :caption: Table of Contents
+..    :caption: Table of Contents
     :maxdepth: 3
 
     introduction
@@ -16,14 +16,20 @@
     model_outputs
     alpha_development
 
+Contact
+=======
+
 .. toctree::
-    :caption: Contact
+..    :caption: Contact
 
     contact_information
     agency_information
 
+Reference
+=========
+
 .. toctree::
-    :caption: Reference
+..    :caption: Reference
 
     reference_documentation_style_guide
 ..  python_documentation_style_guide
