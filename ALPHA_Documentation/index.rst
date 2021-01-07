@@ -5,8 +5,8 @@
 .. The chapters in the document are listed below (introduction, overview, etc.) that refer
 .. to the actual .rst files to be used when building the auto-documentation.
 
-ALPHA Model Documentation
-=========================
+EPA ALPHA Model Documentation
+=============================
 
 .. toctree::
     :caption: Model Documentation
