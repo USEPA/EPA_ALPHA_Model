@@ -14,6 +14,7 @@
 import os
 import sys
 path = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(path, '..', 'gui'))
 sys.path.insert(0, os.path.join(path, '..', 'gui', 'python'))
 
 matlab_src_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'gui', 'python')
