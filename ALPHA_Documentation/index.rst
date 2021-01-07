@@ -15,17 +15,11 @@ Documentation
     model_outputs
     alpha_development
 
-Contact
-^^^^^^^
-
 .. toctree::
     :caption: Contact
 
     contact_information
     agency_information
-
-Reference
-^^^^^^^^^
 
 .. toctree::
     :caption: Reference
