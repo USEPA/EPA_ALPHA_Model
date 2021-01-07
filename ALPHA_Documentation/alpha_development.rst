@@ -1,8 +1,9 @@
+.. _alpha_development:
 
 ALPHA Development
 =================
 
-.. _alpha_development:
+This chapter will give some information on ALPHA development guidelines and more details on the Simulink model itself and review some of the critical data structures.
 
 Conventions and Guidelines
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -40,20 +41,28 @@ There are a few guidelines that cover the use of variable names within the model
 
 * Whenever possible, variant subsystem blocks should be controlled by a ``variant`` string property that matches the name of the block to be selected.
 
-Customizing the Batch Process
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Custom Pre- and Post-Processing
--------------------------------
-
 REVS_VM
 ^^^^^^^
+
+This section will provide an overview of the Simulink model, ``REVS_VM``.  ALPHA represents various vehicle powertrains through the use of variant subsystems which are instantiated by the top-level model rather than by using separate models.
 
 Overview
 --------
 
+The top-level of ``REVS_VM`` consists of the following blocks:
+
+* ``ambient`` - provides the ambient test conditions, logs the time signal and provides the drive cycle road grade as a function of distance travelled.
+* ``driver`` - implements the trace-following driver model that produces the accelerator / brake pedal signals and other driver-related signals to the rest of the model.  ``driver`` also contains the drive cycle lookups for target vehicle speed.
+* ``powertrain`` - implements the various powertrains for conventional, hybrid or electric vehicles.
+* ``vehicle`` - contains the vehicle roadload calculations (except for tire rolling resistance and losses, which are handled in the ``powertrain`` subsystems) and the vehicle speed integrator.
+
+Each of the top-level blocks can be customized by the variant control properties ``ambient.variant``, ``driver.variant``, ``vehicle.variant`` and ``vehicle.powertrain_variant``.  These are string properties that contain the name of the desired variant subsystem to instantiate.
+
+Also at the top level of the model is the system bus and the vehicle speed chart which shows target and achieved vehicle speeds.
+
 Powertrain Variants
 -------------------
+
 
 
 Understanding the Simulink Libraries
@@ -105,6 +114,9 @@ Contains models of brakes, tires and other driveline components like axles, as w
 
 Understanding Datalogging
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This section will provide details on how to control and understand the datalogging process in ALPHA.
+
 Logging Overview
 ----------------
 Logging model internal signals is probably one of the most important things the model does, it is also one of the things that has the biggest impact on model run time.  Simulink seems to incur quite a bit of overhead related to logging data to the workspace.  As a result, ALPHA implements a flexible system to control how much or how little data is logged from the model.  In this way, the user can trade off run time speed and the logging of signals of interest.
