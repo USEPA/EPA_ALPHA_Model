@@ -5,7 +5,6 @@ Documentation
 =============
 
 .. toctree::
-..    :caption: Table of Contents
     :maxdepth: 3
 
     introduction
@@ -20,7 +19,6 @@ Contact
 =======
 
 .. toctree::
-..    :caption: Contact
 
     contact_information
     agency_information
