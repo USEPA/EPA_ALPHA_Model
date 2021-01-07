@@ -22,3 +22,4 @@ For further information, please reference the ``xxx.py`` files named in the foll
        :members:
 
 .. mat:automodule:: python
+    :members:
