@@ -9,7 +9,7 @@ ALPHA Documentation
 ===================
 
 .. toctree::
-    :caption: Model Documentation
+    :caption: Table of Contents
     :maxdepth: 3
 
     introduction
