@@ -4,7 +4,7 @@ Contact Information
 
 ALPHA Technical Issues
 ^^^^^^^^^^^^^^^^^^^^^^
-| Kevin Newman
+| **Kevin Newman**
 | United States Environmental Protection Agency
 | National Vehicle Fuel Emissions Laboratory (NVFEL)
 | 2565 Plymouth Road
@@ -12,7 +12,7 @@ ALPHA Technical Issues
 | Tel 734-214-4818
 | newman.kevin@epa.gov
 
-| Paul DeKraker
+| **Paul DeKraker**
 | United States Environmental Protection Agency
 | National Vehicle Fuel Emissions Laboratory (NVFEL)
 | 2565 Plymouth Road
@@ -22,7 +22,7 @@ ALPHA Technical Issues
 
 ALPHA Rulemaking Usage
 ^^^^^^^^^^^^^^^^^^^^^^
-| Jeff Cherry
+| **Jeff Cherry**
 | United States Environmental Protection Agency
 | National Vehicle Fuel Emissions Laboratory (NVFEL)
 | 2000 Traverwood Drive

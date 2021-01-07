@@ -5,7 +5,7 @@ Agency Information
 .. image:: images/epa_logo.jpg
     :align: center
 
-| United States Environmental Protection Agency
+| **United States Environmental Protection Agency**
 | National Vehicle Fuel Emissions Laboratory (NVFEL)
 | 2565 Plymouth Road
 | Ann Arbor, Michigan  48105
