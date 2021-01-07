@@ -6,6 +6,9 @@
 .. to the actual .rst files to be used when building the auto-documentation.
 .. :maxdepth: 3
 
+ALPHA Model Documentation
+=========================
+
 .. toctree::
     :caption: Model Documentation
 
