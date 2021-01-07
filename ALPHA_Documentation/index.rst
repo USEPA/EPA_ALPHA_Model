@@ -5,8 +5,6 @@
 .. The chapters in the document are listed below (introduction, overview, etc.) that refer
 .. to the actual .rst files to be used when building the auto-documentation.
 
-EPA ALPHA Model Documentation
-=============================
 .. toctree::
     :caption: Model Documentation
     :maxdepth: 3
@@ -19,16 +17,12 @@ EPA ALPHA Model Documentation
     model_outputs
     alpha_development
 
-Contact
-=======
 .. toctree::
     :caption: Contact
 
     contact_information
     agency_information
 
-Reference
-=========
 .. toctree::
     :caption: Reference
 
