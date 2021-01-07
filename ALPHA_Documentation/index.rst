@@ -27,6 +27,9 @@ Documentation
     reference_documentation_style_guide
     python_documentation_style_guide
 
+    genindex
+    modindex
+
 .. Indices and Tables
    ==================
     * :ref:`genindex`
