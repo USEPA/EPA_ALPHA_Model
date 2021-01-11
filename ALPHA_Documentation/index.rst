@@ -31,7 +31,7 @@ Documentation
 Indices and Tables
 ==================
 
-:ref:`genindex`
+:ref:`py-modindex`
 
 :ref:`mat-modindex`
 

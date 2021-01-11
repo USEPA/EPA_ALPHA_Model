@@ -140,9 +140,3 @@ Contains transmission models for conventional and hybrid vehicles, and component
 vehicle_lib
 -----------
 Contains models of brakes, tires and other driveline components like axles, as well as the vehicle roadload calculations.
-
-Component Development
-^^^^^^^^^^^^^^^^^^^^^
-
-Data Structures and Classes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
