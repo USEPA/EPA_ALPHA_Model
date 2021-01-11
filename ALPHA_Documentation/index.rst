@@ -28,8 +28,11 @@ Documentation
     matlab_code
     reference_documentation_style_guide
 
-.. Indices and Tables
-   ==================
-    * :ref:`genindex`
-    * :ref:`modindex`
-    * :ref:`search`
+Indices and Tables
+==================
+
+:ref:`genindex`
+
+:ref:`mat-modindex`
+
+:ref:`search`

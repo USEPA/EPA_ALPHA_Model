@@ -9,12 +9,13 @@
 
     """
 
-import sys
+import sys, os
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
 
-Ui_MainWindow, QtBaseClass = uic.loadUiType('ALPHA_GUI_V6.ui')
+# Ui_MainWindow, QtBaseClass = uic.loadUiType('ALPHA_GUI_V6.ui')
+Ui_MainWindow, QtBaseClass = uic.loadUiType(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ALPHA_GUI_V6.ui'))
 
 
 def test_routine():
