@@ -14,9 +14,6 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
 
-# Import functions from other files
-from include1 import *
-
 Ui_MainWindow, QtBaseClass = uic.loadUiType('ALPHA_GUI_V6.ui')
 
 
@@ -156,7 +153,6 @@ class MyApp(QMainWindow):
         self.calculate_iterations()
 
         test_routine()
-        test_routine1()
 
     def calculate_iterations(self):
 
