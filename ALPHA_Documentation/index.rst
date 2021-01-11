@@ -28,11 +28,11 @@ Documentation
     matlab_code
     reference_documentation_style_guide
 
-Indices and Tables
-==================
+.. Code Index
+   ==========
 
-:ref:`py-modindex`
+.. :ref:`py-modindex`
 
-:ref:`mat-modindex`
+.. :ref:`mat-modindex`
 
-:ref:`search`
+.. :ref:`search`
