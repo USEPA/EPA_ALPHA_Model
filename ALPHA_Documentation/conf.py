@@ -14,7 +14,6 @@
 import os
 import sys
 path = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(path, '..', 'gui'))
 sys.path.insert(0, os.path.join(path, '..', 'gui', 'python'))
 sys.path.insert(0, os.path.join(path, '..', 'model'))
 
@@ -27,7 +26,7 @@ copyright = '2020, EPA'
 author = 'EPA'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.2'
+release = '0.1.0'
 
 # -- General configuration ---------------------------------------------------
 
@@ -83,4 +82,4 @@ latex_elements = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+# html_static_path = ['_static']
