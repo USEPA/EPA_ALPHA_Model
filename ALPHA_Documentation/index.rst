@@ -26,7 +26,7 @@ Documentation
 
     python_code
     matlab_code
-    reference_documentation_style_guide
+..  reference_documentation_style_guide
 
 .. Code Index
    ==========
