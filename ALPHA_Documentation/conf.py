@@ -36,7 +36,19 @@ release = '0.1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 # extensions = ['sphinxcontrib.matlab', 'sphinx.ext.autodoc']
-extensions = ['sphinxcontrib.matlab', 'sphinx.ext.napoleon']
+# extensions = [
+#     'sphinxcontrib.matlab',
+#     'sphinx.ext.napoleon'
+# ]
+
+extensions = [
+    'sphinxcontrib.matlab',
+    'sphinx.ext.napoleon',
+    "sphinx.ext.intersphinx",
+    # "sphinx.ext.autodoc",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.viewcode",
+]
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['_templates']
@@ -53,7 +65,8 @@ numfig = True
 # The theme to use for HTML and HTML Help pages.   See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'classic'
+# html_theme = 'classic'
+html_theme = "sphinx_rtd_theme"
 
 # EPA Palette
 html_theme_options = {
