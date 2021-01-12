@@ -16,6 +16,8 @@ import sys
 path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(path, '..', 'gui', 'python'))
 sys.path.insert(0, os.path.join(path, '..', 'model'))
+sys.path.insert(0, os.path.join(path, '..', 'model', 'ALPHA_Projects'))
+sys.path.insert(0, os.path.join(path, '..', 'model', 'REVS_Common', 'functions'))
 
 matlab_src_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 
@@ -33,7 +35,8 @@ release = '0.1.0'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinxcontrib.matlab', 'sphinx.ext.autodoc']
+# extensions = ['sphinxcontrib.matlab', 'sphinx.ext.autodoc']
+extensions = ['sphinxcontrib.matlab', 'sphinx.ext.napoleon']
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['_templates']
@@ -41,7 +44,7 @@ extensions = ['sphinxcontrib.matlab', 'sphinx.ext.autodoc']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'model', 'archive', '_sequester', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'archive', '_sequester', 'Thumbs.db', '.DS_Store']
 
 numfig = True
 
