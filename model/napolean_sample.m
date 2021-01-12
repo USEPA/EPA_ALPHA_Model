@@ -21,6 +21,15 @@ function [answer] = napolean_sample(first_param, second_param, varargin)
 % Note:
 %   This is a note
 %
+% Tip:
+%   Always leave 20%
+%
+% Hint:
+%   This is a hint
+%
+% Important:
+%   This is important!
+%
 
 answer = true;
 
