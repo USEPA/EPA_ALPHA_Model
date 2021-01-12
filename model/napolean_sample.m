@@ -4,8 +4,8 @@ function [answer] = napolean_sample(first_param, second_param, varargin)
 %   For more information, see `www.epa.gov <https://www.epa.gov>`_
 %
 % Arguments:
-%   first_param: the first parameter
-%   second_param: the second parameter
+%   first_param: the ``first`` parameter
+%   second_param: the ``second`` parameter
 %   varargin: option keyword and name-value arguments
 %
 % Keyword Arguments:
