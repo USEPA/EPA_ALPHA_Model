@@ -15,6 +15,9 @@ https://www.epa.gov/regulations-emissions-vehicles-and-engines/advanced-light-du
 
 This repository is the public home of the ALPHA documentation source code.
 
+Documentation
+^^^^^^^^^^^^^
+
 The published documentation homepage is https://epa-alpha-model.readthedocs.io/en/latest/
 
 The latest .pdf docs are available at https://epa-alpha-model.readthedocs.io/_/downloads/en/latest/pdf/

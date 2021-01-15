@@ -29,23 +29,19 @@ author = 'EPA'
 
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
+version = '0.1.0'
 
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-# extensions = ['sphinxcontrib.matlab', 'sphinx.ext.autodoc']
-# extensions = [
-#     'sphinxcontrib.matlab',
-#     'sphinx.ext.napoleon'
-# ]
 
 extensions = [
     'sphinxcontrib.matlab',
     'sphinx.ext.napoleon',
     "sphinx.ext.intersphinx",
-    # "sphinx.ext.autodoc",
+    "sphinx.ext.todo",
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
 ]
@@ -65,7 +61,6 @@ numfig = True
 # The theme to use for HTML and HTML Help pages.   See the documentation for
 # a list of builtin themes.
 #
-# html_theme = 'classic'
 html_theme = "sphinx_rtd_theme"
 
 # EPA Palette

@@ -3,16 +3,20 @@ function [answer] = napolean_sample(first_param, second_param, varargin)
 %
 %   For more information, see `www.epa.gov <https://www.epa.gov>`_
 %
-% Arguments:
-%   first_param: the ``first`` parameter
-%   second_param: the ``second`` parameter
-%   varargin: option keyword and name-value arguments
-%
-% Keyword Arguments:
-%   'foo': turn foo on
+% Parameters:
+%   first_param (int): the ``first`` parameter
+%   second_param (int): the ``second`` parameter
+%   varargin (optional keyword and name-value arguments):
+%       * 'foo':
+%           turn ``foo`` on
+%       * 'bar', numeric: 
+%           set ``bar`` to the provided numeric value
 %
 % Returns:
 %   Returns true
+%
+% Attention:
+%   Rule number one: pay attention!!
 %
 % Caution:
 %   Use caution, handle with care
@@ -30,21 +34,18 @@ function [answer] = napolean_sample(first_param, second_param, varargin)
 %   Always leave 20%
 %
 % Hint:
-%   This is a hint
+%   Take a hint
 %
 % Important:
 %   This is important!
 %
 % See Also:
-%   See something else, also
+%   legend
 %
 % Example:
-%   This is an example code block:
-%
-%   ::
+%   This is an example code block::
 %
 %       foo = napolean_sample(1, 2, 'buckle_my_shoe');
-%
 %
 % Todo:
 %   Probably need to do something here
