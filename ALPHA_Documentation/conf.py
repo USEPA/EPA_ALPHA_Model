@@ -40,10 +40,10 @@ version = '0.2.0'
 extensions = [
     'sphinxcontrib.matlab',
     'sphinx.ext.napoleon',
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.todo",
-    "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
+    "sphinx.ext.todo",
+    # "sphinx.ext.intersphinx",
+    # "sphinx.ext.mathjax",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -78,6 +78,12 @@ html_theme = "sphinx_rtd_theme"
 #     "headlinkcolor": "#205493",
 #     "footerbgcolor": "#112E51"
 # }
+
+html_theme_options = {
+    'navigation_depth': 5,
+    'style_nav_header_background': '#0071BC',
+    'collapse_navigation': False,
+}
 
 html_sidebars = {
    '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
