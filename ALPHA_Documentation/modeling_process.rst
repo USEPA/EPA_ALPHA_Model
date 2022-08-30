@@ -243,25 +243,25 @@ The following are typical examples of creating a sim batch and setting up the de
 
     sim_batch = class_REVS_sim_batch(REVS_log_default);
 
-Logs only the bare minimum required to calculate fuel economy and GHG emissions, this runs the fastest
+``REVS_log_default`` logs only the bare minimum required to calculate fuel economy and GHG emissions, this runs the fastest
 
 ::
 
     sim_batch = class_REVS_sim_batch(REVS_log_all);
 
-Logs every available signal, this runs the slowest
+``REVS_log_all`` logs every available signal, this runs the slowest
 
 ::
 
     sim_batch = class_REVS_sim_batch(REVS_log_engine);
 
-Logs the most common engine signals of interest
+``REVS_log_engine`` logs the most common engine signals of interest
 
 ::
 
     sim_batch = class_REVS_sim_batch(REVS_log_engine_all);
 
-Logs every available engine signal
+``REVS_log_engine_all`` logs every available engine signal
 
 Log packages can also be combined by using the ``logging_config.add_log()`` method:
 
