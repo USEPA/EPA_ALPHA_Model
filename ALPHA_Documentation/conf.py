@@ -54,14 +54,14 @@ extensions = [
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'archive', '_sequester', 'Thumbs.db', '.DS_Store']
 
-numfig = True
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.   See the documentation for
 # a list of builtin themes.
 #
 html_theme = "sphinx_rtd_theme"
+html_logo = path + '/REVS_Common/ALPHA_logo.png'
+numfig = True
 
 # EPA Palette
 # html_theme_options = {
