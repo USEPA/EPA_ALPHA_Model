@@ -29,34 +29,42 @@ System Requirements and Installation
 
 System Requirements
 -------------------
-ALPHA REVS3 requires Matlab/Simulink with Stateflow 2016b, but should also work with later releases after library/model up-conversions.  Also required is a compiler, for compiling the StateFlow code, see http://www.mathworks.com/support/compilers/R2016b/index.html.
+ALPHA REVS3 requires Matlab/Simulink 2020a, but should also work with later releases after library/model up-conversions.
 
 Installation
 ------------
-Install Matlab/Simulink and the Simulink StateFlow toolbox following MathWork's instructions.  Copy the ``NVFEL_MATLAB_Tools`` repo (https://github.com/USEPA/NVFEL_MATLAB_Tools) to a suitable directory on your modeling machine.  ``NVFEL_MATLAB_Tools`` is a directory of helpful Matlab scripts and functions which are commonly used for data analysis and visualization, etc.  Launch Matlab and add ``NVFEL_MATLAB_Tools`` and its subfolders to your Matlab path (from the Matlab console, select "Set Path" from the "HOME" tab of the Matlab window, then select "Add with Subfolders..." and browse to ``NVFEL_MATLAB_Tools``).
+Install Matlab/Simulink following MathWork's instructions.  Copy the ``NVFEL_MATLAB_Tools`` repo (https://github.com/USEPA/NVFEL_MATLAB_Tools) to a suitable directory on your modeling machine.  ``NVFEL_MATLAB_Tools`` is a directory of helpful Matlab scripts and functions which are commonly used for data analysis and visualization, etc.  Launch Matlab and add ``NVFEL_MATLAB_Tools`` and its subfolders to your Matlab path (from the Matlab console, select "Set Path" from the "HOME" tab of the Matlab window, then select "Add with Subfolders..." and browse to ``NVFEL_MATLAB_Tools``).
 
-Similarly, add ``REVS_Common`` and its subfolders to your Matlab path.  The path may be saved for future sessions or it is also possible to write a simple script to add the required folders to your path on an as-needed basis.  For example:
+Similarly, add the ``REVS_Common``, ``Parameter Library`` and their subfolders to your Matlab path.  The path may be saved for future sessions or it is also possible to write a simple script to add the required folders to your path on an as-needed basis.  For example:
 
 ::
 
-    addpath(genpath('C:\dev\REVS3 localdev\REVS_Common'));
+    addpath(genpath('C:\dev\EPA_ALPHA_Model\REVS_Common'));
+    addpath(genpath('C:\dev\EPA_ALPHA_Model\Parameter Library'));
     addpath(genpath('C:\dev\NVFEL_MATLAB_Tools'));
 
 Directory Structure
 ^^^^^^^^^^^^^^^^^^^
 A high-level description of the ``REVS_Common`` directory structure follows.  Use it as a rough guide to exploring the file system.  Not all releases of ALPHA may contain all subfolders (for example, the HIL-related files) but this should still provide the user a good idea of where common items are located.
 
-* ``REVS_Common`` top level - Contains ``REVS_VM.mdl``, the top-level ALPHA model and the ALPHA logo.
-* ``datatypes`` - contains Matlab class definitions for the Matlab objects that compose REVS and various enumerated datatypes.  Also contains ``REVS_fuel_table.csv`` that holds the fuel properties for known fuel types.
-* ``drive_cycles`` - contains ``.mat`` files that represent various compliance or custom drive cycles in the form of ``class_REVS_drive_cycle`` objects with the name ``drive_cycle``.
-* ``functions`` - contains various Matlab functions used during the modeling process.   Also contains ``functionSignatures.json`` which Matlab can use to provide auto-completion assistance in the Editor.
+* ``REVS_Common`` top level - contains ``REVS_VM.mdl``, the top-level ALPHA model and the ALPHA logo.
+* ``config_packages`` - a set of pre-defined simulation configuration scripts which define simulation config tags and associated "loader" scripts which use the defined variables to set up the simulation input workspace.
+* ``datatypes`` - Matlab class definitions for the Matlab objects that compose REVS and various enumerated datatypes.  Also contains ``REVS_fuel_table.csv`` that holds the fuel properties for known fuel types.
+* ``drive_cycles`` - ``.mat`` files that represent various compliance or custom drive cycles in the form of ``class_REVS_drive_cycle`` objects with the name ``drive_cycle``.
+* ``functions`` - various Matlab functions used during the modeling process.
 * ``helper_scripts`` - primarily contains scripts related to pre- and post-processing simulation runs.
-* ``libraries`` - contains the REVS Simulink component block models, separated into various libraries by component type.
-* ``log_packages`` - contains scripts that are used in conjunction with the batch modeling process in order to control the datalogging and post-processing of datalogs into a standardized data object.
-* ``param_files`` - contains data for common model components such as engines or batteries which can be used across multiple modeling projects.  In particular, the engine files are part of the NCAT Test Data Package publishing process.
+* ``libraries`` - the REVS Simulink component block models, separated into various libraries by component type.
+* ``log_packages`` - scripts that are used in conjunction with the batch modeling process in order to control the datalogging and post-processing of datalogs into a standardized data object.
 * ``plots`` - can be used to store plots of common interest to REVS3 development.
-* ``publish_tools`` - contains tools related to publishing NCAT Test Data Packages, particularly for publishing engine data.
-* ``python`` - contains Python scripts related to the implementation of multi-core and/or multi-machine parallel modeling processes on a local network using Python packages.
+* ``postprocess_scripts`` - simulation post-processing scripts.
+* ``publish_tools`` - tools related to publishing NCAT Test Data Packages, particularly for publishing engine data.
+* ``python`` - Python scripts related to the implementation of multi-core and/or multi-machine parallel modeling processes on a local network using Python packages.
+
+A high-level description of the ``Parameter Library`` directory structure follows. In particular, the engine and emachine files are part of the NCAT Test Data Package publishing process.
+
+* ``EMotor`` - parameter files and data for common model components such as electrical motor/generators which can be used across multiple modeling projects.
+* ``Engines`` - parameter files and data for various Internal Combustion Engines tested at EPA or made publicly available from other sources
+* ``Extras`` - parameter files for various batteries (lead-acid and otherwise).
 
 Design Principles
 ^^^^^^^^^^^^^^^^^
@@ -74,11 +82,15 @@ Generally speaking, model components have class definitions that correspond to t
 
 Datalogging and Auditing
 ------------------------
-Datalogging enables post-simulation data analysis and debugging.  Significant effort was applied to the creation of a datalogging framework that is both flexible and fast.  For that reason there are controls available to limit the amount of data logged by the model (excess datalogging significantly slows the model down and is therefore to be avoided).  For example, datalogging may be limited to the bare minimum required to calculate fuel economy, or datalogging may be limited to the bare minimum plus everything related to the engine or transmission.  It is also possible to log every available signal in the model, if desired and the associated performance slowdown is acceptable.  Datalogging should generally be limited to the signals or components required for the investigation at hand.  Datalogs are found in a workspace object named ``result`` at the end of simulation.
+Datalogging enables post-simulation data analysis and debugging.  Significant effort was applied to the creation of a datalogging framework that is both flexible and fast.  For that reason there are controls available to limit the amount of data logged by the model (excess datalogging significantly slows the model down and is therefore to be avoided).  For example, datalogging may be limited to the bare minimum required to calculate fuel economy, or datalogging may be limited to the bare minimum plus everything related to the engine or transmission.  It is also possible to log every available signal in the model if desired and the associated performance slowdown is acceptable.  Datalogging should generally be limited to the signals or components required for the investigation at hand.  Datalogs are found in a workspace object named ``datalog`` at the end of simulation.
 
-The model is also set up to audit the energy flows throughout the model.  If auditing is enabled then a text file (or console output) is created that shows the energy sources and sinks that were simulated.  The total energy provided and absorbed should be equal if the model conserves energy.  Since the model runs at discrete time steps and since modeling is an exercise in approximation there is commonly some slight discrepancy which is noted as the Simulation Error in the audit report.  The Energy Conservation is reported as a percentage ratio between the Net Energy Provided and the Total Loss Energy.
+Simulation "results" are available in the simulation output workspace in the ``result`` object which contains scalar values by drive cycle phase.  Values of common interest can be displayed in the command console using the ``result.print`` command.
 
-If new components are added to the model then new audit blocks also need to be added and the corresponding audit scripts require updating in order to capture the new energy source or sink in the audit report.  Adding audits to the model is somewhat of an advanced topic, primarily because the block layout of the model and the mathematical structure of the model are not the same - although sometimes they are!  The primary principle is to remember that the purpose of the audit is to monitor the physical energy flows and not the energy flow through the Simulink blocks which may be distinct from the physics.
+.. sidebar:: Audit Notes
+
+    If new components are added to the model then new audit blocks also need to be added and the corresponding audit scripts will require updating in order to capture the new energy source or sink in the audit report.  Adding audits to the model is somewhat of an advanced topic, primarily because the block layout of the model and the mathematical structure of the model are not the same - although sometimes they are!  The primary principle is to remember that the purpose of the audit is to monitor the physical energy flows and not the energy flow through the Simulink blocks which may be distinct from the physics.
+
+The model is also set up to be able to audit the energy flows throughout the model.  If auditing is enabled then a text file (or console output) is created that shows the energy sources and sinks that were simulated.  The total energy provided and absorbed should be equal if the model conserves energy.  Since the model runs at discrete time steps and since modeling is an exercise in approximation there is commonly some slight discrepancy which is noted as the Simulation Error in the audit report.  The Energy Conservation is reported as a percentage ratio between the Net Energy Provided and the Total Loss Energy.  Audit summaries can be displayed in the command console using the ``audit.print`` command when auditing is enabled.
 
 Auditing the energy flow in the model is a key factor in ensuring the plausibility and function of the model.
 

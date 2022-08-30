@@ -9,7 +9,7 @@ Understanding Simulation Pre- and Post-Processing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The goal of simulation pre-processing is to set up the simulation workspace before simulation, including any modifications to data loaded from the specified param files.  For example, users may load a particular vehicle param file and then want to change the test weight or roadload in some manner and then run the simulation, perhaps as part of a sweep of test weight values.  Any arbitrary M-script can be run in order to prepare the simulation workspace.
 
-The ``REVS_VM`` model itself performs some post-processing to create simulation results (phase integrated results, for example), datalogs, and to perform any auditing that may be desired.  These tasks are handled by creating result, datalog and audit objects in the workspace from ``class_REVS_result``, ``class_REVS_datalog`` and ``class_REVS_audit`` classes respectively.  These objects are created in the model's ``StopFcn`` callback which can be seen in the model's Model Properties dialog box.
+The ``REVS_VM`` model itself performs some post-processing to create simulation results (phase integrated results, for example), datalogs, and to perform any auditing that may be desired.  These tasks are handled by creating ``result``, ``datalog`` and ``audit`` objects in the workspace from the ``class_REVS_result``, ``class_REVS_datalog`` and ``class_REVS_audit`` classes respectively.  These objects are created in the model's ``StopFcn`` callback which can be seen in the model's Model Properties dialog box.
 
 Simulation post-processing may be used to take the raw simulation outputs and calculate fuel economy or GHG emissions.  The default simulation post-processing is generally used but any M-script may be run if desired.
 
@@ -25,50 +25,64 @@ There are a few ``class_REVS_sim_batch`` properties that control pre- and post-p
 
 Understanding Config Strings (Keys)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Formatting for the ``batch config_set config`` strings (also known as Keys in the output summary file) is defined by ``class_REVS_sim_config``.  The easiest way to see which config tags are available is to use this command:
+Formatting for the config strings is defined by vectors of one or more instances of ``class_REVS_sim_config_options``.  The easiest way to see which config tags are available to a sim batch is to use the ``sim_batch.show_keys`` method.
 
-    class_REVS_sim_config.show_tags
-
-This will display a list of tags and the name of the workspace variable associated with them which can be used in processing scripts.  A partial list, for example:
+This will display a list of ``sim_config`` fieldnames in the 'Key' column, the key tags in the 'Tag' column, option default values, an optional description and the name of the script which defines the key in the 'Provided by' column.  A partial list, for example:
 
 ::
 
-    class_REVS_sim_config.show_tags
-    ans =
+    sim_batch.show_keys
 
 ::
 
-  87x1 cell array
-    'PKG:              -> sim_config.tech_package'
-    'UKN:              -> sim_config.unique_key_num'
-    'PTRAIN:           -> sim_config.powertrain_type'
-    'CYC:              -> sim_config.drive_cycle'
-    'ENG:              -> sim_config.engine'
-    'TRANS:            -> sim_config.transmission'
-    'VEH:              -> sim_config.vehicle'
-    'ELEC:             -> sim_config.electric'
-    'ACC:              -> sim_config.accessory'
-    'CON:              -> sim_config.controls'
-    'DRV:              -> sim_config.driver'
-    'AMB:              -> sim_config.ambient'
-    'VEH_LBS:          -> sim_config.vehicle_lbs'
+	   Key                                    |     Tag                |     Default Value                  |     Provided by                |     Description
+	-------------------------------------------------------------------------------------------------------------------------------------------------------
+	aggregation_keys                          |                        |                                    |  class_REVS_sim_batch          |
+	test_data                                 |  DATA                  |                                    |  REVS_config_external_data     |
+	test_data_index                           |  DATA_INDEX            |  1                                 |  REVS_config_external_data     |
+	external_drive_cycle                      |  XCYC                  |  0                                 |  REVS_config_external_data     |
+	external_trans_temp                       |  XTTMP                 |  false                             |  REVS_config_external_data     |
+	external_shift                            |  XSHFT                 |  false                             |  REVS_config_external_data     |
+	external_lockup                           |  XLOCK                 |  false                             |  REVS_config_external_data     |
+	external_accessory_elec                   |  XEACC                 |                                    |  REVS_config_external_data     |
+	external_accessory_mech                   |  XMACC                 |                                    |  REVS_config_external_data     |
+	external_cyl_deac                         |  XDEAC                 |  false                             |  REVS_config_external_data     |
+	ambient                                   |  AMB                   |  {ambient=class_REVS_ambient;}     |  REVS_config_ambient           |
+	package                                   |  PKG                   |                                    |  REVS_config_vehicle           |
+	drive_cycle                               |  CYC                   |                                    |  REVS_config_vehicle           |
+	vehicle                                   |  VEH                   |                                    |  REVS_config_vehicle           |
+	driver                                    |  DRV                   |  {driver=class_REVS_driver;}       |  REVS_config_vehicle           |
+	vehicle_lbs                               |  VEH_LBS               |                                    |  REVS_config_vehicle           |
+	vehicle_kg                                |  VEH_KG                |                                    |  REVS_config_vehicle           |
+	performance_mass_penalty_kg               |  PERF_KG               |  0                                 |  REVS_config_vehicle           |
+	ETW_lbs                                   |  ETW_LBS               |                                    |  REVS_config_vehicle           |
+	ETW_kg                                    |  ETW_KG                |                                    |  REVS_config_vehicle           |
+	ETW_multiplier                            |  ETW_MLT               |  1                                 |  REVS_config_vehicle           |
+	target_A_lbs                              |  TRGA_LBS              |                                    |  REVS_config_vehicle           |
+	target_B_lbs                              |  TRGB_LBS              |                                    |  REVS_config_vehicle           |
+	target_C_lbs                              |  TRGC_LBS              |                                    |  REVS_config_vehicle           |
     ...
 
-``sim_config`` is a variable created automatically by ``class_REVS_sim_batch`` and is made available to the simulation workspace prior to simulation. The ``sim_config`` property names give at least a preliminary understanding of what a tag means and can be further examined by taking a look at the default pre- and post-processing scripts.
+``sim_config`` is a struct variable created automatically by ``class_REVS_sim_batch`` and is made available to the simulation workspace prior to simulation. The ``sim_config`` fieldnames give at least a preliminary understanding of what a tag means and can be further examined by taking a look at the default pre- and post-processing scripts.
 
-Within ``class_REVS_sim_config`` each property is an instance of a ``class_REVS_config_element``.  For example:
+Within a ``class_REVS_sim_config_options`` package each key is an instance of a ``class_REVS_sim_config_key``.  For example:
 
 ::
 
-    drive_cycle     = class_REVS_config_element('CYC:',  'literal');
-    ETW_lbs         = class_REVS_config_element('ETW_LBS:', 'eval');
-    mass_multiplier = class_REVS_config_element('ETW_MLT:', 'eval', 1.0);
+    package = class_REVS_sim_config_options();
 
-The arguments to the ``class_REVS_config_element`` constructor are the tag string, the tag type, and an optional default value.
+    package.keys = [ ...
+        class_REVS_sim_config_key('drive_cycle',         'tag', 'CYC',    'eval', false);
+        class_REVS_sim_config_key('ETW_lbs',             'tag', 'ETW_LBS');
+        class_REVS_sim_config_key('roadload_multiplier', 'tag', 'RL_MLT', 'default', 1.0);
+        ...
+        ]
+
+The arguments to the ``class_REVS_sim_config_key`` constructor are the property name, optional 'tag' followed by the tag string, optional 'eval' followed by tag evaluation type, optional 'default' followed by a default value, and optional 'description' followed by a plaintext description of the key's purpose.
 
 Literal Config Tags
 -------------------
-In the example above, the ``drive_cycle`` property holds a 'literal' tag, which means the part of the string associated with that tag will not automatically be evaluated (turned into a numeric or other value, but rather taken literally).  Typically this would be used for something like file names or other strings.  Literal tags may be evaluated in user scripts.  For example, if the literal tag was the name of a script, then that script may be called in the user pre- or post-processing scripts at the appropriate time to perform whatever its function is.  Literal tags can be used to hold a single value or, when combined with delayed evaluation (in a user script, instead of during config string parsing) may hold multiple values.  For example, within a config string, these are possible uses of the CYC: tag:
+In the example above, the ``drive_cycle`` property holds a non-evaluated tag, which means the part of the string associated with that tag will not automatically be evaluated (turned into a numeric or other value, but rather taken as a string literal).  Typically this would be used for something like file names or other strings.  Literal tags may be evaluated in user scripts.  For example, if the literal tag was the name of a script, then that script may be called in the user pre- or post-processing scripts at the appropriate time to perform whatever its function is.  Literal tags can be used to hold a single value or, when combined with delayed evaluation (in a user script, instead of during config string parsing) may hold multiple values.  For example, within a config string, these are possible uses of the CYC: tag:
 
 ::
 
@@ -92,7 +106,7 @@ Drive cycle loading of a single cycle or the combining of multiple cycles into a
 Eval Config Tags
 ----------------
 
-As shown previously, the ``class_REVS_sim_config ETW_lbs`` property is an 'eval' tag which means its value will be automatically evaluated by the ``class_REV_sim_config`` in the ``parse_key()`` method.  If the eval tag is created with a default value, that value will be used if the tag is not specified by the user.  Eval tags should be numeric or should refer to variables available in the workspace.  An eval tag may evaluate to a single value or a vector of multiple values to perform variable sweeps.  For example, the following would all be valid eval tags within a config string:
+As shown previously, the ``ETW_lbs`` key is an 'eval' tag which means its value will be automatically evaluated during pre-processing.  If the eval tag is created with a default value, that value will be used if the tag is not specified by the user.  Eval tags should be numeric or should refer to variables available in the workspace.  An eval tag may evaluate to a single value or a vector of multiple values to perform variable sweeps.  For example, the following would all be valid eval tags within a config string:
 
 ::
 

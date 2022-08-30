@@ -24,12 +24,12 @@ matlab_src_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 # -- Project information -----------------------------------------------------
 
 project = 'ALPHA Documentation'
-copyright = '2020, EPA'
+copyright = '2022, EPA'
 author = 'EPA'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.0'
-version = '0.1.0'
+release = '0.2.0'
+version = '0.2.0'
 
 # -- General configuration ---------------------------------------------------
 

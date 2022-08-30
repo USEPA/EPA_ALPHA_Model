@@ -88,7 +88,7 @@ An instance of ``class_REVS_ambient`` which defines the ambient environmental co
 ``driver``
 ----------
 
-An instance of ``class_REVS_driver`` that defines the response of the drive cycle trace following driver model.  These settings typically won't need adjustment, with the exception of ``distance_compensate_enable`` which should be set ``true`` for drive cycles with road grade.  See :ref:`drive_cycles` for more information on drive cycles, including grade.
+An instance of ``class_REVS_driver`` that defines the response of the drive cycle trace-following driver model.  These settings typically won't need adjustment, with the exception of ``distance_compensate_enable`` which should be set ``true`` for drive cycles with road grade.  See :ref:`drive_cycles` for more information on drive cycles, including grade.
 
 ::
 
@@ -100,7 +100,7 @@ An instance of ``class_REVS_driver`` that defines the response of the drive cycl
 
                                    variant: 'default driver'
                                         Kp: 1
-                                        Ki: 1
+                                        Ki: 3
                                         Kd: 0
                  proportional_fade_in_secs: 1
         proportional_fade_in_min_speed_mps: 2
@@ -125,22 +125,24 @@ An instance of ``class_REVS_drive_cycle`` that defines the simulation drive cycl
     >> drive_cycle
 
     drive_cycle =
-
       class_REVS_drive_cycle with properties:
 
-                       name: 'EPA_UDDS_505_ONLY'
+                       name: 'EPA_UDDS'
         sample_start_enable: 1
-                 phase_name: "1"
-                      phase: [1 1]
+                 phase_name: ["1"    "2"]
+                      phase: [1 2]
                  phase_time: [0 505]
-                 cycle_time: [506×1 double]
-            cycle_speed_mps: [506×1 double]
-                    in_gear: [1 1]
-               in_gear_time: [0 1]
+                 cycle_time: [1370×1 double]
+            cycle_speed_mps: [1370×1 double]
+                    in_gear: [0 1]
+               in_gear_time: [0 15]
                    ignition: [1 1]
-              ignition_time: [0 1]
+              ignition_time: [0 1369]
                grade_dist_m: [0 11990.238656]
                   grade_pct: [0 0]
+          cfr_max_speed_mps: [1370×1 double]
+          cfr_min_speed_mps: [1370×1 double]
+
 
 ``accessories``
 ---------------
@@ -155,7 +157,7 @@ An instance of ``class_REVS_ALPHA_accessories`` that defines electrical and mech
 
       class_REVS_ALPHA_accessories with properties:
 
-                   name: 'electric_EPS_midsize_car'
+                   name: 'accessory_EPS_param'
            generic_loss: [1×1 class_REVS_accessory_load]
                     fan: [1×1 class_REVS_accessory_load]
          power_steering: [1×1 class_REVS_accessory_load]
@@ -183,7 +185,7 @@ An instance of ``class_REVS_electric`` that defines the vehicle's electrical sys
                    battery: [1×1 class_REVS_battery]
          accessory_battery: [0×0 class_REVS_battery]
         propulsion_battery: [0×0 class_REVS_battery]
-                    BAS_MG: [0×0 class_REVS_emachine_geared]
+                     P0_MG: [0×0 class_REVS_emachine_geared]
                drive_motor: [0×0 class_REVS_emachine]
                        MG1: [0×0 class_REVS_emachine_geared]
                        MG2: [0×0 class_REVS_emachine_geared]
@@ -198,12 +200,16 @@ A data structure that defines control system parameters.  The example below is f
     >> controls
 
     controls =
+      class_REVS_CVM_control with properties:
 
-      struct with fields:
-
-                    stop_delay_secs: 0
-                  start_stop_enable: 0
-        start_stop_warmup_condition: '(@cycle_pos_secs >= 100) && (@cycle_pos_secs <= 3406)'
+                      start_stop_enable: 0
+              start_stop_off_delay_secs: 0
+            start_stop_warmup_condition: '(@cycle_pos_secs >= 100) && (@cycle_pos_secs <= 3406)'
+        hot_soak_warmup_start_condition: '@cycle_pos_secs > 0 '
+                         pedal_map_type: max_engine_power
+             pedal_map_engine_torque_Nm: [1×1 class_REVS_dynamic_lookup]
+                 shift_inertia_est_kgm2: 0.187389225679636
+                                variant: ''
 
 ``engine``
 ----------
@@ -215,51 +221,32 @@ For conventional or hybrid vehicles, an instance of ``class_REVS_engine`` that d
     >> engine
 
     engine =
-
       class_REVS_engine with properties:
 
-                                              variant: 'basic engine'
-                                       matrix_vintage: present
-                                                 name: '2013 Chevrolet 2.5L Ecotec LCV Engine Reg E10 Fuel'
-                                      source_filename: 'engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10'
-                                                  doc: []
-                                     pedal_bus_signal: 'powertrain.trans.ctrl.eng_des_acl_norm'
-                                      combustion_type: spark_ignition
-                                       displacement_L: 2.457
-                                              bore_mm: 88
-                                            stroke_mm: 101
-                                        num_cylinders: 4
-                                    compression_ratio: 11.3
-                                        configuration: []
-                                         inertia_kgm2: 0.14285
-                                                 fuel: [1×1 class_REVS_fuel]
-                            full_throttle_speed_radps: [18×1 double]
-                              full_throttle_torque_Nm: [18×1 double]
-                      naturally_aspirated_speed_radps: [18×1 double]
-                        naturally_aspirated_torque_Nm: [18×1 double]
+                            full_throttle_speed_radps: [17×1 double]
+                              full_throttle_torque_Nm: [17×1 double]
                           closed_throttle_speed_radps: [6×1 double]
                             closed_throttle_torque_Nm: [6×1 double]
+                      naturally_aspirated_speed_radps: [17×1 double]
+                        naturally_aspirated_torque_Nm: [17×1 double]
                              power_time_constant_secs: 0.2
                              boost_time_constant_secs: 0.5
                      boost_falling_time_constant_secs: 0.3
-                                     idle_speed_radps: [1×1 class_REVS_dynamic_lookup]
+                     run_state_activation_speed_radps: 1
+                      run_state_activation_delay_secs: 0.5
+                   run_state_deactivation_speed_radps: 0
+                              idle_target_speed_radps: [1×1 class_REVS_dynamic_lookup]
                                       idle_control_Kp: 25
                                       idle_control_Ki: 65
-                                      idle_control_Kd: 0
+                                      idle_control_Kd: 1
                               idle_control_ramp_radps: 10.471975511966
-                          idle_control_ramp_time_secs: 2
+                          idle_control_ramp_time_secs: 1.5
                        idle_control_torque_reserve_Nm: 10
-                  idle_control_activation_speed_radps: 1
-                idle_control_deactivation_speed_radps: 0
-                        idle_control_crank_delay_secs: 0.5
-                                       pedal_map_type: max_engine_power
-                                pedal_map_speed_radps: [1×100 double]
-                                 pedal_map_pedal_norm: [0 1]
-                                         pedal_map_Nm: [2×100 double]
-                                 fuel_map_speed_radps: [26×1 double]
-                                   fuel_map_torque_Nm: [27×1 double]
-                                         fuel_map_gps: [27×26 double]
-                                    deac_fuel_map_gps: [27×26 double]
+              idle_control_slow_est_time_constant_sec: 0.2
+                                 fuel_map_speed_radps: [18×1 double]
+                                   fuel_map_torque_Nm: [26×1 double]
+                                         fuel_map_gps: [26×18 double]
+                                    deac_fuel_map_gps: [26×18 double]
                                         deac_strategy: [1×1 struct]
                                    deac_num_cylinders: 0
                      deac_transition_on_duration_secs: 0.99
@@ -274,17 +261,31 @@ For conventional or hybrid vehicles, an instance of ``class_REVS_engine`` that d
                      DFCO_refuel_multiplier_time_secs: [0 0.1 1.1]
                      DFCO_refuel_multiplier_limit_gps: Inf
                             transient_correction_mult: 1.4
-                                full_throttle_power_W: [18×1 double]
-                            fuel_map_speed_mesh_radps: [27×26 double]
-                              fuel_map_torque_mesh_Nm: [27×26 double]
-                                        max_torque_Nm: 250.826
-                                        min_torque_Nm: -61.4254159880461
-                                          max_power_W: 137866.523307298
-                                  max_power_min_radps: 575.5
-                                  max_power_max_radps: 635
-                                  max_power_avg_radps: 605.25
-                                 max_test_speed_radps: 631.35
-
+                                                 name: '2018 Toyota 2.5L A25A-FKS Engine Tier 3 Fuel converted to 2.46L'
+                                      source_filename: 'engine_2018_Toyota_A25AFKS_2L5_Tier3'
+                                       matrix_vintage: present
+                                              variant: 'basic engine'
+                                      combustion_type: spark_ignition
+                                       displacement_L: 2.46445235878698
+                                              bore_mm: 87.2347659681488
+                                            stroke_mm: 103.086569155504
+                                        num_cylinders: 4
+                                    compression_ratio: 13
+                                        configuration: []
+                                         inertia_kgm2: 0.143041293924769
+                                                 fuel: [1×1 class_REVS_fuel]
+                                            base_fuel: [0×0 class_REVS_fuel]
+                             nominal_idle_speed_radps: 61.7846555205993
+                                        max_torque_Nm: 247.20140331587
+                           max_torque_min_speed_radps: 504.1
+                           max_torque_max_speed_radps: 551
+                           max_torque_avg_speed_radps: 526.233333333333
+                                        min_torque_Nm: -50.7899054656206
+                                          max_power_W: 149994.914232163
+                            max_power_min_speed_radps: 660.6
+                            max_power_max_speed_radps: 698.4
+                            max_power_avg_speed_radps: 683.366666666667
+                                 max_test_speed_radps: 694.6
 
 ``transmission``
 ----------------
@@ -295,15 +296,14 @@ An instance of ``class_REVS_AT_transmission``, ``class_REVS_CVT_transmission``, 
 
     >> transmission
 
-    transmission =
-
+     transmission =
       class_REVS_AT_transmission with properties:
 
                     type: automatic
                  variant: 'automatic transmission system'
           matrix_vintage: present
                     name: 'transmission_6AT_FWD_midsize_car'
-         rated_torque_Nm: 291.9
+         rated_torque_Nm: 284.281613813251
                     gear: [1×1 class_REVS_gearbox]
         torque_converter: [1×1 class_REVS_torque_converter]
                  control: [1×1 class_REVS_AT_control]
@@ -322,23 +322,22 @@ An instance of ``class_REVS_vehicle`` that defines vehicle properties such as ro
     >> vehicle
 
     vehicle =
-
       class_REVS_vehicle with properties:
 
                                name: []
                               class: 'midsize_car'
                                fuel: [1×1 class_REVS_fuel]
                             variant: 'default vehicle'
-                 powertrain_variant: 'CVM / BAS / ISG'
+                 powertrain_variant: 'CVM / P0'
                   driveline_variant: 'one axle drive'
                    controls_variant: 'CVM control'
                     powertrain_type: conventional
                delta_mass_static_kg: [1×1 class_REVS_dynamic_lookup]
               delta_mass_dynamic_kg: [1×1 class_REVS_dynamic_lookup]
                    use_abc_roadload: 1
-               coastdown_target_A_N: 143.54412394
-            coastdown_target_B_Npms: 0.750259347709377
-           coastdown_target_C_Npms2: 0.443609648560335
+               coastdown_target_A_N: 133.44666
+            coastdown_target_B_Npms: 0
+           coastdown_target_C_Npms2: 0.445167735635058
                        dyno_set_A_N: []
                     dyno_set_B_Npms: []
                    dyno_set_C_Npms2: []
@@ -354,23 +353,24 @@ An instance of ``class_REVS_vehicle`` that defines vehicle properties such as ro
                         drive_axle2: [1×1 class_REVS_drive_axle]
                       trailer_axle1: [1×1 class_REVS_drive_axle]
                       trailer_axle2: [1×1 class_REVS_drive_axle]
-                  max_brake_force_N: 27783.921351508
-             coastdown_target_A_lbf: 32.27
-         coastdown_target_B_lbfpmph: 0.0754
-        coastdown_target_C_lbfpmph2: 0.01993
+                  max_brake_force_N: 26818.456903
+             coastdown_target_A_lbf: 30
+         coastdown_target_B_lbfpmph: 0
+        coastdown_target_C_lbfpmph2: 0.02
                      dyno_set_A_lbf: []
                  dyno_set_B_lbfpmph: []
                 dyno_set_C_lbfpmph2: []
              coastdown_adjust_A_lbf: 0
          coastdown_adjust_B_lbfpmph: 0
         coastdown_adjust_C_lbfpmph2: 0
-                             ETW_kg: 1644.724592
-                     mass_static_kg: 1620.05372312
-                    mass_dynamic_kg: 1669.39546088
-                       mass_curb_kg: 1483.97612312
+                             ETW_kg: 1587.572
+                     mass_static_kg: 1563.75842
+                    mass_dynamic_kg: 1611.38558
+                       mass_curb_kg: 1427.68082
                     mass_ballast_kg: 136.0776
-                            ETW_lbs: 3626
-                      mass_curb_lbs: 3271.61
+                            ETW_lbs: 3500
+                      mass_curb_lbs: 3147.5
                    mass_ballast_lbs: 300
-                    mass_static_lbs: 3571.61
-                   mass_dynamic_lbs: 3680.39
+                    mass_static_lbs: 3447.5
+                   mass_dynamic_lbs: 3552.5
+ß

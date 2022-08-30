@@ -65,12 +65,12 @@ Powertrain Variants
 
 The ``powertrain`` variant subsystem is in many ways the heart of the ALPHA model.  At this time there are two available powertrain variants:
 
-* ``CVM / BAS / ISG`` - implements CVM, the Conventional Vehicle Model and mild hybrid vehicles (BAS, Belt-Alternator-Starter and ISG, Integrated-Starter-Generator)
+* ``CVM / P0`` - implements CVM, the Conventional Vehicle Model and mild hybrid vehicles (BAS, Belt-Alternator-Starter and ISG, Integrated-Starter-Generator)
 * ``EVM`` - implements EVM, the Electric Vehicle Model
+* ``PS Hybrid`` - implements a Prius-type "powersplit" strong hybrid
+* ``P2 Hybrid`` - implements a "P2" (drive motor upstream of transmission) strong hybrid
 
-Powersplit hybrid models are also under development (the component models of which are available for experimentation in the ``electric_lib`` and ``transmission_lib``)
-
-``CVM / BAS / ISG``
+``CVM / P0``
 +++++++++++++++++++
 
 The top level of the conventional vehicle model contains the following blocks:
@@ -79,7 +79,8 @@ The top level of the conventional vehicle model contains the following blocks:
 * ``engine`` - contains the engine model.  This variant subsystem is determined by the ``engine.variant`` string property.
 * ``transmission`` - contains the transmission model. This variant subsystem is determined by the ``transmission.variant`` string property.
 * ``driveline`` - contains the axle models which contain the wheels, tires, final drive and driveshafts, etc.  This variant subsystem is determined by the ``vehicle.driveline_variant`` string property.
-* ``electric & accessories`` - implements the vehicle's electrical energy storage system, electrical accessories and mechanical engine accessory loads.  The engine starting and battery charging system is also implemented here.  This block is not itself a variant subsystem but the ``starting / charging`` and ``energy storage`` subsystems are variants, determined by the ``vehicle.powertrain_type`` enumeration property.
+* ``electric`` - implements the vehicle's electrical energy storage system.  The engine starting and battery charging system is also implemented here.  This block is not itself a variant subsystem but the ``starting / charging`` and ``energy storage`` subsystems are variants, determined by the ``vehicle.powertrain_type`` enumeration property.
+* ``mech & elec & accessories`` - implements the vehicle's electrical accessories and mechanical engine accessory loads.
 
 ``EVM``
 +++++++
@@ -90,7 +91,33 @@ The top level of the electric vehicle model contains the following blocks:
 * ``drive_motor`` - implements a single propulsion motor-generator model.
 * ``transmission`` - contains the transmission model. This variant subsystem is determined by the ``transmission.variant`` string property.
 * ``driveline`` - contains the axle models which contain the wheels, tires, final drive and driveshafts, etc.  This variant subsystem is determined by the ``vehicle.driveline_variant`` string property.
-* ``electric & accessories`` - implements the vehicle's electrical energy storage system and electrical accessories.  This block is not itself a variant subsystem but the ``starting / charging`` and ``energy storage`` subsystems are variants, determined by the ``vehicle.powertrain_type`` enumeration property.
+* ``xEV energy storage`` - implements the vehicle's electrical energy storage system.
+* ``mech & elec & accessories`` - implements the vehicle's electrical accessories and mechanical engine accessory loads.
+
+``PS Hybrid``
++++++++++++++++++++
+
+The top level of the powersplit hybrid vehicle model contains the following blocks:
+
+* ``controls`` - handles engine start-stop logic and other control system algorithms.  This variant subsystem is determined by the ``vehicle.controls_variant`` string property.
+* ``engine`` - contains the engine model.  This variant subsystem is determined by the ``engine.variant`` string property.
+* ``hybrid transmission`` - contains the planetary transmission model and "MG1" and "MG2" motor/generators.
+* ``driveline`` - contains the axle models which contain the wheels, tires, final drive and driveshafts, etc.  This variant subsystem is determined by the ``vehicle.driveline_variant`` string property.
+* ``electric`` - implements the vehicle's electrical energy storage system.  The engine starting and battery charging system is also implemented here.  This block is not itself a variant subsystem but the ``starting / charging`` and ``energy storage`` subsystems are variants, determined by the ``vehicle.powertrain_type`` enumeration property.
+* ``mech & elec & accessories`` - implements the vehicle's electrical accessories and mechanical engine accessory loads.
+
+``PS Hybrid``
++++++++++++++++++++
+
+The top level of the powersplit hybrid vehicle model contains the following blocks:
+
+* ``controls`` - handles engine start-stop logic and other control system algorithms.  This variant subsystem is determined by the ``vehicle.controls_variant`` string property.
+* ``engine`` - contains the engine model.  This variant subsystem is determined by the ``engine.variant`` string property.
+* ``p2 hybrid transmission`` - contains the transmission model, including the P2 motor and engagement clutch.
+* ``driveline`` - contains the axle models which contain the wheels, tires, final drive and driveshafts, etc.  This variant subsystem is determined by the ``vehicle.driveline_variant`` string property.
+* ``electric`` - implements the vehicle's electrical energy storage system.  The engine starting and battery charging system is also implemented here.  This block is not itself a variant subsystem but the ``starting / charging`` and ``energy storage`` subsystems are variants, determined by the ``vehicle.powertrain_type`` enumeration property.
+* ``mech & elec & accessories`` - implements the vehicle's electrical accessories and mechanical engine accessory loads.
+
 
 Understanding the Simulink Libraries
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

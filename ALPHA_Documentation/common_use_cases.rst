@@ -3,50 +3,6 @@ Common Use Cases
 
 This chapter will present a few common use cases of ALPHA as an aid to getting started.
 
-Running a Performance Neutral Batch
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-There are several possible approaches to running a set of performance neutral simulations.  All methods share the same basic approach:
-
-1.	Define a performance baseline simulation
-2.	Run a set of alternative simulations, sweeping the engine size (or potentially other parameters) across a range
-3.	Examine the simulation results and pick out the runs that meet the baseline performance
-
-The performance baseline is defined using the PB: (Performance Baseline) tag and must be defined prior to performance neutral simulations which use the PN: (Performance-Neutral) tag.  For example:
-
-::
-
-    sim_batch.config_set = {
-        ['PKG:BL  + PB:1 + ENG:' GDI_ENGINE ' ... ]
-        ['PKG:TDS + PN:1 + ENG:' TDS12_ENGINE ' ... ' || ES_PCT:[75:5:125]']
-        };
-
-The above example is abbreviated but demonstrates several points.
-
-* The use of the PKG: tag to define a quick reference name for each case - BL for the baseline and TDS for the turbo-downsized case
-* The baseline is defined prior to the performance neutral case
-* The performance neutral case sweeps engine size using the ``ES_PCT:`` tag, although it is possible to use other tags
-* The ``ES_PCT:`` tag is on the right hand side of the '||' separator
-* The engine names are stored as strings in two workspace variables, ``GDI_ENGINE`` and ``TDS12_ENGINE`` which keeps the config set concise and improves readability
-
-The ES in the ``ES_PCT:`` tag refers to Engine Scaling, in this case by percent.  The unique thing about this tag is that ``ES_PCT:100`` would be relative to an engine scaled `approximately` for performance neutrality, rather than an absolute scale.  The ``REVS_preprocess_sim_case`` script takes an initial guess at performance neutral engine sizing based on the engine's rated power and torque, the transmission and axle ratios, tire size, and roadload improvements, etc.  However, the approximation can't compensate for differences in transmission efficiency or other factors that might affect vehicle performance like torque converter strategy or transmission shift times, hence the need to run a set of simulations, typically both smaller and larger than the nominal sizing.
-
-Multiple baselines may be defined in a single batch, keeping in mind that each baseline precedes its performance neutral cases.
-
-``REVS_postprocess_sim_batch``, the default sim batch post-processing script, implements one possible method for picking out the "winning" performance neutral result from among a set of simulations.  This script finds the unique simulation cases and picks the one that meets or exceeds the baseline performance and has the lowest CO2 result.  Other strategies could be implemented as well, such as picking the smallest engine that meets performance, regardless of CO2.
-
-The default performance criteria is the total performance time, defined as the sum of zero-to-sixty time, thirty-to-fifty time, fifty-to-seventy time and quarter mile time.
-
-A relatively small performance neutral batch may be run on a single machine, simply running the batch as usual and using the default post processing.  For larger batches, a multi-pass / parallel simulation approach can be used.  The multi-pass methodology starts with an initial coarse sizing (typically something like 75% / 100% / 125%) then runs one or two more batches with successively narrower and finer scaling increments until the desired level of scaling and performance accuracy has been met.  The multi-pass method can also be applied without the parallel processing as long as appropriate script changes are made.
-
-.. raw:: html
-
-    <style> .red {color:#dd0000; font-weight:bold; font-size:16px} </style>
-
-.. role:: red
-
-:red:`These functions are not in the REVS_Common... maybe they should be?`
-
 Running a Batch with Various Engines
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -66,7 +22,7 @@ The typical method of running several engines is simply to define the engine nam
     ATK2p5_ENGINE          = 'ENG:engine_2016_Mazda_Skyactiv_Turbo_2L5_Tier2';
     ATK2p0_X_ENGINE        = 'ENG:engine_future_Mazda_Skyactiv_X_2L0_paper_image';
 
-    sim_batch.config_set = {
+    config_strings = {
         ['PKG:1a + ' base_config TDS11_ENGINE2 	    ...]
         ['PKG:1b + ' base_config TDS11_ENGINE  	    ...]
         ['PKG:1c + ' base_config TDS12_ENGINE2 	    ...]
@@ -80,7 +36,11 @@ The typical method of running several engines is simply to define the engine nam
     ...
     };
 
-In this abbreviated example, ``base_config`` refers to a workspace variable that holds a string of the config tags that all the cases have in common, for example roadload settings, drive cycle selection, fuel type, etc.  Grouping the common settings into a single variable makes it easier to change the setup and improves readability.  Matlab string concatenation does the rest (the use of brackets, [ ], tells Matlab to combine all the separate strings into one).   Another advantage of using workspace variables to hold engine definition strings is illustrated in the ``TNGA_ENGINE`` workspace variable which not only defines the engine but also uses the ``ES_CYL:`` tag to tell the simulation to run as a six-cylinder regardless of any engine resizing that may take place, such as during performance neutral sizing.  Breaking a config string down into smaller substrings and workspace variables is a good technique for managing complexity in larger batches.
+    sim_batch.load_config_strings(config_strings);
+
+In this abbreviated example, ``base_config`` refers to a workspace variable that holds a string of the config tags that all the cases have in common, for example roadload settings, drive cycle selection, fuel type, etc.  Grouping the common settings into a single variable makes it easier to change the setup and improves readability.  Matlab string concatenation does the rest (the use of brackets, [ ], tells Matlab to combine all the separate strings into one).   Another advantage of using workspace variables to hold engine definition strings is illustrated in the ``TNGA_ENGINE`` workspace variable which not only defines the engine but also uses the ``ES_CYL:`` tag to tell the simulation to run as a six-cylinder regardless of any engine resizing that may take place.  Breaking a config string down into smaller substrings and workspace variables is a good technique for managing complexity in larger batches.
+
+The use of the ``PKG:`` defines a quick reference name for each case.
 
 .. _alpha_roadloads_and_test_weight:
 
@@ -89,9 +49,9 @@ ALPHA Roadloads and Test Weight
 
 Vehicle weight / inertia is specified by setting the ETW (Equivalent Test Weight, which includes vehicle curb weight and a ballast of 300 pounds and is effectively tested with a 1.5% axle inertia penalty) or by setting the vehicle mass and inertias directly.
 
-Roadloads in ALPHA can be specified either by "ABC" (or F0, F1, F2) coastdown curve fit coefficients or by directly specifying the coefficients of rolling resistance and aerodynamic drag along with the vehicle's frontal area.
+Roadloads in ALPHA can be specified either by "ABC" (or "F0, F1, F2") coastdown curve fit coefficients or by directly specifying the coefficients of rolling resistance and aerodynamic drag along with the vehicle's frontal area.
 
-A common source of ABC coefficients and test weights is the EPA's own test car data, such as at `<https://www.epa.gov/compliance-and-fuel-economy-data/data-cars-used-testing-fuel-economy>`_.
+A convenient source of ABC coefficients and test weights is the EPA's own test car data, such as at `<https://www.epa.gov/compliance-and-fuel-economy-data/data-cars-used-testing-fuel-economy>`_.
 
 Setting Vehicle Weight and Inertia
 ----------------------------------
@@ -102,7 +62,7 @@ The ETW in the test car list is determined by vehicle curb weight (with a full t
 
 So ETW is fairly straightforward.  Where it gets more interesting is when the axle inertias are factored into the dyno settings.  As an engineering rule of thumb, the inertia of each axle (including wheels, tires, brakes, etc) acts as an effective 1.5% weight penalty.
 
-As a matter of EPA test procedure for a two-wheel-drive test, the dyno simulated inertia is set to the ETW (See `40 CFR § 1066.410 <https://www.ecfr.gov/cgi-bin/text-idx?SID=6905a22c26ff638cf36b0d0f0030eee9&mc=true&node=pt40.37.1066&rgn=div5#se40.37.1066_1410>`_).  As a result of the spinning front (or rear) axle, the effective total inertia is ETW * 1.015.
+As a matter of EPA test procedure for a two-wheel-drive test, the dyno simulated inertia is set to the ETW (See `40 CFR § 1066.410 <https://www.ecfr.gov/current/title-40/chapter-I/subchapter-U/part-1066/subpart-E/section-1066.410>`_).  As a result of the spinning front (or rear) axle, the effective total inertia is ETW * 1.015.
 
 For a 4WD (dual roll) test, if the dyno inertia were set to the ETW, the approximate total inertia would be ETW * 1.03, accounting for both axles spinning.  As a result, for a 4WD test, the dyno inertia is set to ETW * 0.985, since ETW * 1.03 * 0.985 is approximately ETW * 1.015, thereby maintaining the total test inertia when compared with a 2WD certification test.
 
@@ -236,35 +196,38 @@ To enable the use of ABC coefficients, the ``use_abc_roadload`` property should 
     vehicle.coastdown_target_B_lbfpmph     = 0.0754;
     vehicle.coastdown_target_C_lbfpmph2    = 0.01993;
 
-ABC coefficients can also be set using config tags. Sample output from ``class_REVS_sim_config.show_tags`` shown below:
+ABC coefficients can also be set using config tags. Sample output from ``sim_batch.show_tags`` is shown below (keys are defined in ``REVS_config_vehicle``, as seen in 'Provided by'):
 
 ::
 
     Target and dyno-set tags:
 
-    {'TRGA_LBS:         -> sim_config.target_A_lbs'                             }
-    {'TRGB_LBS:         -> sim_config.target_B_lbs'                             }
-    {'TRGC_LBS:         -> sim_config.target_C_lbs'                             }
-    {'DYNA_LBS:         -> sim_config.dyno_set_A_lbs'                           }
-    {'DYNB_LBS:         -> sim_config.dyno_set_B_lbs'                           }
-    {'DYNC_LBS:         -> sim_config.dyno_set_C_lbs'                           }
+       Key                                    |     Tag                |     Default Value                  |     Provided by                |     Description
+    -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    {'TRGA_N:           -> sim_config.target_A_N'                               }
-    {'TRGB_N:           -> sim_config.target_B_N'                               }
-    {'TRGC_N:           -> sim_config.target_C_N'                               }
-    {'DYNA_N:           -> sim_config.dyno_set_A_N'                             }
-    {'DYNB_N:           -> sim_config.dyno_set_B_N'                             }
-    {'DYNC_N:           -> sim_config.dyno_set_C_N'                             }
+    target_A_lbs                              |  TRGA_LBS              |                                    |  REVS_config_vehicle           |
+    target_B_lbs                              |  TRGB_LBS              |                                    |  REVS_config_vehicle           |
+    target_C_lbs                              |  TRGC_LBS              |                                    |  REVS_config_vehicle           |
+    dyno_set_A_lbs                            |  DYNA_LBS              |                                    |  REVS_config_vehicle           |
+    dyno_set_B_lbs                            |  DYNB_LBS              |                                    |  REVS_config_vehicle           |
+    dyno_set_C_lbs                            |  DYNC_LBS              |                                    |  REVS_config_vehicle           |
+
+    target_A_N                                |  TRGA_N                |                                    |  REVS_config_vehicle           |
+    target_B_N                                |  TRGB_N                |                                    |  REVS_config_vehicle           |
+    target_C_N                                |  TRGC_N                |                                    |  REVS_config_vehicle           |
+    dyno_set_A_N                              |  DYNA_N                |                                    |  REVS_config_vehicle           |
+    dyno_set_B_N                              |  DYNB_N                |                                    |  REVS_config_vehicle           |
+    dyno_set_C_N                              |  DYNC_N                |                                    |  REVS_config_vehicle           |
 
     Adjustment tags:
 
-    {'ADJA_LBS:0        -> sim_config.adjust_A_lbs'                             }
-    {'ADJB_LBS:0        -> sim_config.adjust_B_lbs'                             }
-    {'ADJC_LBS:0        -> sim_config.adjust_C_lbs'                             }
+    adjust_A_lbs                              |  ADJA_LBS              |                                    |  REVS_config_vehicle           |
+    adjust_B_lbs                              |  ADJB_LBS              |                                    |  REVS_config_vehicle           |
+    adjust_C_lbs                              |  ADJC_LBS              |                                    |  REVS_config_vehicle           |
 
-    {'ADJA_N:0          -> sim_config.adjust_A_N'                               }
-    {'ADJB_N:0          -> sim_config.adjust_B_N'                               }
-    {'ADJC_N:0          -> sim_config.adjust_C_N'                               }
+    adjust_A_N                                |  ADJA_N                |                                    |  REVS_config_vehicle           |
+    adjust_B_N                                |  ADJB_N                |                                    |  REVS_config_vehicle           |
+    adjust_C_N                                |  ADJC_N                |                                    |  REVS_config_vehicle           |
 
 Automatic calculation of the roadload adjustments discussed above can be performed, using the ``CALC_ABC_ADJ:`` tag, as in:
 
@@ -334,7 +297,6 @@ The data structure for the same cycle looks like:
     >> drive_cycle
 
     drive_cycle =
-
       class_REVS_drive_cycle with properties:
 
                        name: 'EPA_UDDS'
@@ -350,6 +312,8 @@ The data structure for the same cycle looks like:
               ignition_time: [0 1369]
                grade_dist_m: [0 11990.238656]
                   grade_pct: [0 0]
+          cfr_max_speed_mps: [1370×1 double]
+          cfr_min_speed_mps: [1370×1 double]
 
 Where
 
@@ -361,6 +325,7 @@ Where
 * ``in_gear`` and ``in_gear_time`` determines when the vehicle driveline is engaged and active (as in the case of normal driving) or disengaged and deactivated (as in the case of a coastdown)
 * ``ignition`` and ``ignition_time`` define when the vehicle is meant to be running and the engine started (as for conventional vehicles).
 * ``grade_dist_m`` and ``grade_pct`` define the road grade as a function of distance in meters.  Grade is defined by distance and not time to cover the case where heavy vehicles may not be able to maintain the desired speed on high grades.  It is recommended to run the driver model (aka "cyberdriver") in distance compensated mode when running grade cycles by setting ``driver.distance_compensate_enable`` to ``true`` in the appropriate driver param file.  Distance compensation extends the drive cycle time when the vehicle falls behind the target speed and contracts it when the vehicle speed exceeds the target speed.  ``distance_compensate_enable`` defaults to ``false``, which is appropriate for zero-grade drive cycles.
+* ``cfr_max_speed_mps`` and ``cfr_min_speed_mps`` are calculated values that represent the allowable minimum and maximum speeds (the speed tolerance) at each point in the drive cycle, as defined in `40 CFR § 86.115-78 <https://www.ecfr.gov/current/title-40/chapter-I/subchapter-C/part-86/subpart-B/section-86.115-78>`_
 
 Turnkey Drive Cycles
 --------------------
@@ -387,25 +352,26 @@ To combine drive cycles, use the ``REVS_combine_drive_cycles`` function, as in:
     >> drive_cycle = REVS_combine_drive_cycles({'EPA_HWFET', 'EPA_US06'})
 
     drive_cycle =
-
-      struct with fields:
+      class_REVS_drive_cycle with properties:
 
                        name: 'EPA_HWFET & EPA_US06'
-               grade_dist_m: [4×1 double]
-                  grade_pct: [4×1 double]
-                 phase_name: {'EPA_HWFET'  'EPA_US06_1'  'EPA_US06_2'}
-            cycle_speed_mps: [1365×1 double]
+        sample_start_enable: 0
+                 phase_name: ["EPA_HWFET"    "EPA_US06_1"    "EPA_US06_2"]
+                      phase: [5×1 double]
+                 phase_time: [5×1 double]
                  cycle_time: [1365×1 double]
+            cycle_speed_mps: [1365×1 double]
                     in_gear: [3×1 double]
                in_gear_time: [3×1 double]
                    ignition: [3×1 double]
               ignition_time: [3×1 double]
-                      phase: [5×1 double]
-                 phase_time: [5×1 double]
-        sample_start_enable: 0
+               grade_dist_m: [4×1 double]
+                  grade_pct: [4×1 double]
+          cfr_max_speed_mps: [1365×1 double]
+          cfr_min_speed_mps: [1365×1 double]
 
 The ``drive_cycle`` variable can be saved to a new ``.mat`` file in the ``drive_cycles`` folder:
 
 ::
 
-    >> save('EPA_new_cycle.mat', 'drive_cycle')
+    >> save('my_new_cycle.mat', 'drive_cycle')

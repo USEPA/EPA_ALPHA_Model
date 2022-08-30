@@ -19,34 +19,15 @@ For the workspace to be extractable, it must be retained in memory by setting th
 File Outputs
 ^^^^^^^^^^^^
 
-By default, when a batch file runs, it produces one or more files in the simulation ``output`` folder.
+By default, when a batch file runs, it produces several files in the simulation ``output`` folder.
 
 The primary output file is the results file.  The filename format is ``YYYY_MM_DD_hh_mm_ss_BATCHNAME_results.csv`` where ``Y``/``M``/``D`` represent the year, month and day, and ``h``/``m``/``s`` are hour, minute, and seconds respectively.
 
-If ``sim_batch.verbose`` is > 0 then console outputs will also be produced in the ``output`` folder.  The filename format is ``YYYY_MM_DD_hh_mm_ss_BATCHNAME_N_console.csv``, as above, where ``N`` is the simulation number.  The console outputs will include basic information on the drive cycle results as well as audit results if they are enabled.  For more information on auditing, see :ref:`auditing`.
+If ``sim_batch.verbose`` is > 0 then console outputs will also be produced in the ``output`` folder.  The filename format is ``YYYY_MM_DD_hh_mm_ss_BATCHNAME_N_console.txt``, as above, where ``N`` is the simulation number.  The console outputs will include basic information on the drive cycle results as well as audit results if they are enabled.  For more information on auditing, see :ref:`auditing`.
 
-The basic outputs for a simulation look like:
+The basic console outputs for a drive cycle phase look like:
 
 ::
-
-    SAE J2951 Drive Quality Metrics:
-    Time secs         510.000000
-    CEt MJ            2.840796
-    CEt_dist J/m      491.558031
-    CEd MJ            2.834872
-    CEd_dist J/m      490.429212
-    ER %             -0.21
-    DR %             0.02
-    EER %            -0.23
-    ASCt              0.204903
-    ASCd              0.205609
-    ASCR %           0.34
-    Dt mi             3.591008
-    Dt m              5779.167465
-    Dd mi             3.591768
-    Dd m              5780.390388
-    Distance Error mi -0.000760
-    RMSSE_mph         0.104691
 
        1: ------------------------
        Percent Time Missed by 2mph =   0.00 %
@@ -54,11 +35,13 @@ The basic outputs for a simulation look like:
        Fuel Consumption            = 320.5339 grams
        Fuel Consumption            = 0.1119 gallons
        Fuel Economy (Volumetric)   = 32.111 mpg
-       Fuel Economy (CFR)          = 32.557 mpg
+       Fuel Economy (CAFE)         = 32.557 mpg
        Fuel Consumption            = 89.240 g/mile
        CO2 Emission                = 270.49 g/mile
 
-Where the "``1:``" represents the drive cycle phase, which in this case is named "1".  The First section outlines the SAEJ2951 drive quality metrics as produced by the ``REVS_SAEJ2951`` function.  See also `<https://www.sae.org/standards/content/j2951_201111/>`_.
+Where the "``1:``" represents the drive cycle phase, which in this case is named "1".
+
+SAEJ2951 drive quality metrics are available in ``result.phase.drive_quality`` as produced by the ``REVS_SAEJ2951`` function.  See also `<https://www.sae.org/standards/content/j2951_201111/>`_.
 
 .. _post_processing_output_file_scripts:
 
@@ -122,4 +105,23 @@ The data_columns are evaluated one at a time by the ``class_REVS_sim_batch`` ``p
 Custom Output Summary File Formats
 ----------------------------------
 
-There are at least a couple methods to modify the output file format: edit the various ``setup_data_columns`` scripts, or populate the ``class_REVS_sim_batch`` ``setup_data_columns`` property with the name of a custom output column definition script, which can be created using the default scripts as a guide.  The custom script will be called after the default columns are created and therefore the custom columns will appear to the right of the previously defined columns.
+There are at least a couple methods to modify the output file format: edit the various ``setup_data_columns`` scripts, or populate the ``class_REVS_sim_batch`` ``setup_data_columns`` property with the name of a custom output column definition script, which can be created using the default scripts as a guide.  The custom script will be called after the default columns are created and therefore the custom columns will appear to the right of the previously defined columns in the output file.
+
+For example, in the batch script:
+
+::
+
+    sim_batch.setup_data_columns = 'setup_custom_data_columns';
+
+In ``setup_custom_data_columns.m``:
+
+::
+
+    % setup up custom data columns
+
+    data_columns(end+1) = class_data_column({' ',' '}, separator, '0');
+    data_columns(end+1) = class_data_column({'ETW_HP','LB/HP'}, '%.3f', 'sim_config.pounds_per_hp', 1);
+    data_columns(end+1) = class_data_column({'RLHP20','HP/LB'}, '%.3f', 'sim_config.roadload_hp20plb', 1);
+    data_columns(end+1) = class_data_column({'RLHP60','HP/LB'}, '%.3f', 'sim_config.roadload_hp60plb', 1);
+    data_columns(end+1) = class_data_column({'HP_ETW','HP/LB'}, '%.3f', '1/sim_config.pounds_per_hp', 1);
+    data_columns(end+1) = class_data_column({'ETW','lbs'},'%f','vehicle.ETW_lbs',2);

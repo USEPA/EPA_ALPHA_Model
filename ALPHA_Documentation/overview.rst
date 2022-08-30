@@ -5,7 +5,7 @@ This chapter is meant to give a quick overview of how to run a pre-configured AL
 
 Running ALPHA - Quickstart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-Launch Matlab and make sure ``REVS_Common`` and ``NVFEL_MATLAB_Tools`` are on the Matlab path as described in the installation instructions.  As a quick check execute the following Matlab command and if successful, the path to the top-level ALPHA model should return:
+Launch Matlab and make sure ``NVFEL_MATLAB_Tools``, ``REVS_Common`` and the ``Parameter Library" folders are on the Matlab path as described in the installation instructions.  As a quick check execute the following Matlab command and if successful, the path to the top-level ALPHA model should be returned:
 
 ::
 
@@ -13,9 +13,9 @@ Launch Matlab and make sure ``REVS_Common`` and ``NVFEL_MATLAB_Tools`` are on th
 
 If the command fails, double check the path setup.
 
-Change the Matlab working directory to the ``ALPHA_Projects\ALPHA_DEMO`` folder and run ``run_ALPHA_quickstart``.  The ``REVS_VM`` model will open up (to watch the vehicle speed trace in real-time), compile and then run an EPA UDDS drive cycle.  When the simulation is complete there will be two files in the output folder.  The file names are prefixed with a timestamp, \YYYY_MM_DD_hh_mm_ss_, followed by ``quickstart_results.csv`` and ``quickstart_1_console.txt``.  For example, ``2019_02_01_09_36_23_ALPHA_quickstart_results.csv`` and ``2019_02_01_09_36_23_quickstart_1_console.txt``, for files created on February 1st 2019, 23 seconds after 9:36 AM.  The ``sim_results`` file contains a summary of the simulation inputs, settings and outputs.  The ``console.txt`` file captures anything that would have been output to the Matlab console window.  In this case the file contains the UDDS cycle phase summaries and the energy audit.
+Change the Matlab working directory to the ``ALPHA_DEMO`` folder and run ``run_ALPHA_quickstart`` ("CVM" is shorthand for Conventional Vehicle Model).  The ``REVS_VM`` model will open up (to watch the vehicle speed trace in real-time), compile and then run a drive cycle.  When the simulation is complete there will be three files in the output folder.  The file names are prefixed with a timestamp, \YYYY_MM_DD_hh_mm_ss_, followed by ``ALPHA_quickstart_results.csv``, ``ALPHA_quickstart_1_console.txt`` and ``ALPHA_quickstart.log``.  For example, ``2022_02_01_09_36_23_ALPHA_quickstart_results.csv``,  ``2022_02_01_09_36_23_ALPHA_quickstart_1_console.txt`` and ``2022_02_01_09_36_23_ALPHA_quickstart.log`` for files created on February 1st 2022, 23 seconds after 9:36 AM.  The ``results`` file contains a summary of the simulation inputs, settings and outputs.  The ``console.txt`` file captures anything that would have been output to the Matlab console window.  In this case the console file contains the UDDS cycle phase summaries and the energy audit.  The ``.log`` file has information regarding the batch process itself such as which simulation configuration tags are available and which pre- and post-process scripts were run.
 
-Examining the Matlab workspace after the model runs reveals a single variable, the ``sim_batch`` object.  The outputs from this model are contained in the output files.  More information on datalogging and model outputs will be discussed later.  To populate the top-level workspace with the simulation input and output data structures, execute the following command:
+Examining the Matlab workspace after the model runs reveals some string variables used to define the simulation configuration and the ``sim_batch`` object.  To populate the top-level workspace with the simulation input and output data structures, execute the following command:
 
 ::
 
@@ -26,14 +26,13 @@ Modeling Processes
 
 The fundamental modeling process consists of creating a Matlab workspace that contains all the variables necessary to run the ``REVS_VM`` (REVS Vehicle Model) Simulink model.  There are several ways to accomplish this.  The first approach below will be the primary focus of this document due to its numerous advantages as outlined below.
 
-1. Create and execute a batch run using ``class_REVS_sim_batch``.
+1. Create and execute a batch run using an instance of ``class_REVS_sim_batch``.
 
     * Consistent approach to the modeling process
     * Ability with sim batch to run any number of simulations
     * Standard output summary results
     * Framework for pre- and post-processing simulations
     * Convenient capability to sweep variables and define multiple simulation scenarios
-    * Framework for running "performance neutral" simulations
     * Capability to run simulations in parallel, on one or multiple computers 
     * Automatically collates the results into a single output summary file
     * Framework for controlling simulation datalogging and auditing
@@ -51,7 +50,7 @@ A ``class_REVS_sim_batch`` object actually contains a vector of ``class_REVS_sim
 
 Understanding the ALPHA Quickstart Script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The ``run_ALPHA_quickstart`` M-script demonstrates the simplest possible batch process - a single simulation run with the default settings and only the minimum required input files and minimal outputs.
+The ``run_ALPHA_quickstart`` M-script demonstrates a simple batch process - a single simulation run with the default settings and only the minimum required input files and minimal outputs.
 
     run_ALPHA_quickstart.m:
 
