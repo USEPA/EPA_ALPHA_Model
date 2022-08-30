@@ -60,7 +60,7 @@ exclude_patterns = ['_build', 'archive', '_sequester', 'Thumbs.db', '.DS_Store']
 # a list of builtin themes.
 #
 html_theme = "sphinx_rtd_theme"
-html_logo = path + 'images/alpha_logo.jpg'
+html_logo = path + '/images/alpha_logo.jpg'
 numfig = True
 
 # EPA Palette
