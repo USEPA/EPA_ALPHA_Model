@@ -35,7 +35,7 @@ Installation
 ------------
 Install Matlab/Simulink following MathWork's instructions.  Copy the ``NVFEL_MATLAB_Tools`` repo (https://github.com/USEPA/NVFEL_MATLAB_Tools) to a suitable directory on your modeling machine.  ``NVFEL_MATLAB_Tools`` is a directory of helpful Matlab scripts and functions which are commonly used for data analysis and visualization, etc.  Launch Matlab and add ``NVFEL_MATLAB_Tools`` and its subfolders to your Matlab path (from the Matlab console, select "Set Path" from the "HOME" tab of the Matlab window, then select "Add with Subfolders..." and browse to ``NVFEL_MATLAB_Tools``).
 
-Similarly, add the ``REVS_Common``, ``Parameter Library`` and their subfolders to your Matlab path.  The path may be saved for future sessions or it is also possible to write a simple script to add the required folders to your path on an as-needed basis.  For example:
+Similarly, add the ``REVS_Common`` and ``Parameter Library`` folders and their subfolders to your Matlab path.  The path may be saved for future sessions or it is also possible to write a simple script to add the required folders to your path on an as-needed basis.  For example:
 
 ::
 
@@ -45,7 +45,7 @@ Similarly, add the ``REVS_Common``, ``Parameter Library`` and their subfolders t
 
 Directory Structure
 ^^^^^^^^^^^^^^^^^^^
-A high-level description of the ``REVS_Common`` directory structure follows.  Use it as a rough guide to exploring the file system.  Not all releases of ALPHA may contain all subfolders (for example, the HIL-related files) but this should still provide the user a good idea of where common items are located.
+A high-level description of the ``REVS_Common`` directory structure follows.  Use it as a rough guide to exploring the file system.  Not all releases of ALPHA may contain all subfolders (for example, HIL-related files) but this should still provide the user a good idea of where common items are located.
 
 * ``REVS_Common`` top level - contains ``REVS_VM.mdl``, the top-level ALPHA model and the ALPHA logo.
 * ``config_packages`` - a set of pre-defined simulation configuration scripts which define simulation config tags and associated "loader" scripts which use the defined variables to set up the simulation input workspace.
