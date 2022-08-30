@@ -373,4 +373,3 @@ An instance of ``class_REVS_vehicle`` that defines vehicle properties such as ro
                    mass_ballast_lbs: 300
                     mass_static_lbs: 3447.5
                    mass_dynamic_lbs: 3552.5
-ß
