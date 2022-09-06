@@ -3,35 +3,90 @@
 Modeling Process Details
 ========================
 
-This chapter describes how to set up a sim batch and gives an overview of how to control the modeling process and understand the pre- and post-processing that occurs during the batch process.
+This chapter contains a more detailed description of ALPHA batch simulation, how it is set up and gives an overview of how to use the provided features to conduct multiple simulations, perhaps sweeping model parameters or implementing custom pre or post processing to a batch run.
 
-Understanding Simulation Pre- and Post-Processing
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The goal of simulation pre-processing is to set up the simulation workspace before simulation, including any modifications to data loaded from the specified param files.  For example, users may load a particular vehicle param file and then want to change the test weight or roadload in some manner and then run the simulation, perhaps as part of a sweep of test weight values.  Any arbitrary M-script can be run in order to prepare the simulation workspace.
+Batch Simulation Overview
+^^^^^^^^^^^^^^^^^^^^^^^^^
+ALPHA batch simulation is implemented via ``class_REVS_sim_batch`` which contains a variety of properties that control the simulation process. The following list is a summary of the contents of the more prominent class members which are detailed subsequently:
+  
+    * Configuration Key Definitions - What options are available to construct or modify the individual simulations
 
-The ``REVS_VM`` model itself performs some post-processing to create simulation results (phase integrated results, for example), datalogs, and to perform any auditing that may be desired.  These tasks are handled by creating ``result``, ``datalog`` and ``audit`` objects in the workspace from the ``class_REVS_result``, ``class_REVS_datalog`` and ``class_REVS_audit`` classes respectively.  These objects are created in the model's ``StopFcn`` callback which can be seen in the model's Model Properties dialog box.
+    * Configuration Set - List of simulations requested to be run defined via configuration Keys
 
-Simulation post-processing may be used to take the raw simulation outputs and calculate fuel economy or GHG emissions.  The default simulation post-processing is generally used but any M-script may be run if desired.
+    * Pre-processing Scripts - Scripts used to transform the configuration set into the model input workspace
 
-Batch post-processing may be used to examine the total set of simulation results and perform additional processing such as finding performance-neutral results from among a set of runs and then outputting those results to a separate file.  Any arbitrary M-script may be run if desired.
+    * Logging Configuration - What signals are to be logged and outputs generated
 
-There are a few ``class_REVS_sim_batch`` properties that control pre- and post-processing of the simulation data by determining which processing scripts to run.
+    * Post-processing Scripts - Scripts used to alter or interpret the simulation output data
 
-    * ``sim_case_preprocess_script``: by default is set to ``REVS_preprocess_sim_case`` which performs pre-processing for the most common overrides that should apply to pretty much any simulation case, regardless of the type of project being worked on.  The overrides/modifiers come from optional config string tags.  For example, the ``ETW_LBS:`` tag may be used to override the vehicle test weight from the vehicle param file.  For application-specific pre-processing, create a custom script that would (generally) call ``REVS_preprocess_sim_case`` and then perform additional pre-processing.  The custom script may handle user-defined application-specific config tags.  For example, regarding 2025 Mid-Term Evaluation work, the ``MTE_batch_sim_case_preprocess`` script calls ``REVS_preprocess_sim_case`` and then performs MTE-related overrides and defaults for aspects such as transmission sizing or behavior.
+These many different pieces work in concert to complete the batch simulation process. An analogy may be helpful in understanding how the different pieces work together. The configuration keys define the available knobs the user can turn to influence the simulation. The configuration set is a list of settings for each knob. The scripts (pre and post) are the linkage that connects the knobs to the model and output processing. 
 
-    * ``sim_case_postprocess_script``: by default is set to ``REVS_postprocess_sim_case`` which handles calculating fuel economy for the three main powertrain types (Conventional, Hybrid, and Electric).  This script calculates cold-corrected FTP and weighted FTP-HWFET results from the raw phase results, among other things.
 
-    * ``postprocess_script``: by default is set to ``REVS_postprocess_sim_batch`` which has code for finding performance-neutral runs out of a simulation set that provides a performance baseline for one or more sets of runs.  The selected runs, if any, are output to a separate output file.
+.. The goal of simulation pre-processing is to set up the simulation workspace, loading the data from specified param files and making requested modifications.  For example, users may load a particular vehicle param file and then want to change the test weight or roadload in some manner, perhaps as part of a sweep of test weight values.  A variety of predefined modifiers exist and user defined script can be run as well.
 
-Understanding Config Strings (Keys)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Formatting for the config strings is defined by vectors of one or more instances of ``class_REVS_sim_config_options``.  The easiest way to see which config tags are available to a sim batch is to use the ``sim_batch.show_keys`` method.
+.. The ``REVS_VM`` model itself performs some post-processing to create simulation results (phase integrated results, for example), datalogs, and to perform any auditing that may be desired.  These tasks are handled by creating ``result``, ``datalog`` and ``audit`` objects in the workspace from the ``class_REVS_result``, ``class_REVS_datalog`` and ``class_REVS_audit`` classes respectively.  These objects are created in the model's ``StopFcn`` callback which can be viewed in the ``REVS_VM`` model properties.
 
-This will display a list of ``sim_config`` fieldnames in the 'Key' column, the key tags in the 'Tag' column, option default values, an optional description and the name of the script which defines the key in the 'Provided by' column.  A partial list, for example:
+.. The post-processing included with ALPHA calculates many commonly desired outputs such as fuel economy or GHG emissions.  Other values that need to be calculated from or modify the data from a simulation can be implemented via case post-processing functions.
+
+.. Batch post-processing may be used to examine the total set of simulation results and perform additional processing such as filtering the results from a set of runs and then outputting those results to a separate file.  
+
+Understanding Config Keys, Config Scripts & Config Options
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ALPHA batch simulation process, organized in ``class_REVS_sim_batch``, is is controlled via configuration keys. The keys defined for a for a given batch are stored in the ``sim_batch.config_keys`` property and can be viewed in a tabular format via the ``sim_batch.show_keys`` method. 
+
+Config keys influence the simulation process through the pre- and post-processing scripts. The pre-processing scripts are stored the the ``sim_batch.case_preprocess_scripts``. These scripts may handle loading data for the simulation, modifying simulation parameters. Similarly, the ``sim_batch.case_postprocess_scripts`` and ``sim_batch.batch_postprocess_scripts`` enable some post processing or aggregation of the output data.
+
+Given that Config Keys and Config Scripts work together to produce the simulation results they are commonly organized into config option packages. The packages included with ALPHA that can provide many commonly requested operations are stored in ``REVS_Common\config_packages``, with some metapackages, bundles of config options, covering each powertrain type.
+
+The set of simulations to be run is defined using the config keys. The desired simulations (config set) are loaded into ``sim_batch.config_set``. This can be accomplished via two different methods that are discussed further in this section. The config set can be entered directly, or via config strings which are interpreted is the ``sim_batch.load_config_strings`` method. ALPHA also includes the capability to perform full-factorial expansion for given simulation configurations. This expanded set is accessible as an N x 1 structure in ``sim_batch.sim_configs``.  The example below shows a sample config string where a variety of tags are used. This string is then loaded into the batch which can then be viewed
 
 ::
 
-    sim_batch.show_keys
+    >> config_string = 'VEH:vehicle_FWD_midsize_car + ENG:engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10 + 
+    TRANS:transmission_6AT_FWD_midsize_car + ELEC:electric_starter_alternator_param + ACC:accessory_HPS_param + 
+    CYC:{''EPA_FTP_NOSOAK'',''EPA_HWFET''} + CON:CVM_controls_param_midsize_car + TRGA_LBS:30.62 + 
+    TRGB_LBS:-0.0199 + TRGC_LBS:0.01954';
+
+    >> sim_batch.load_config_strings(config_strings); % parse config strings
+    >> sim_batch.config_set{1}
+
+        struct with fields:
+
+        aggregation_keys: {}
+             drive_cycle: {{1×2 cell}}
+                 vehicle: {'vehicle_FWD_midsize_car'}
+            target_A_lbs: 30.6200
+            target_B_lbs: -0.0199
+            target_C_lbs: 0.0195
+                  engine: {'engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10'}
+            transmission: {'transmission_6AT_FWD_midsize_car'}
+                electric: {'electric_starter_alternator_param'}
+               accessory: {'accessory_HPS_param'}
+                controls: {'CVM_controls_param_midsize_car'}
+
+
+Config Keys & Tags
+------------------
+As mentioned previously the config keys are stored in ``sim_batch.config_keys`` and can be viewed via the ``sim_batch.show_keys`` method, an example of this is shown below. This will display a list of potential ``sim_config`` fieldnames in the 'Key' column, the key tags, for use in the config string, in the 'Tag' column, optional default values, an optional description and the name of the script which defined the key in the 'Provided by' column.
+
+.. There are a few ``class_REVS_sim_batch`` properties that control pre- and post-processing of the simulation data by determining which processing scripts to run.
+
+..     * ``sim_case_preprocess_script``: by default is set to ``REVS_preprocess_sim_case`` which performs pre-processing for the most common overrides that should apply to pretty much any simulation case, regardless of the type of project being worked on.  The overrides/modifiers come from optional config string tags.  For example, the ``ETW_LBS:`` tag may be used to override the vehicle test weight from the vehicle param file.  For application-specific pre-processing, create a custom script that would (generally) call ``REVS_preprocess_sim_case`` and then perform additional pre-processing.  The custom script may handle user-defined application-specific config tags.  For example, regarding 2025 Mid-Term Evaluation work, the ``MTE_batch_sim_case_preprocess`` script calls ``REVS_preprocess_sim_case`` and then performs MTE-related overrides and defaults for aspects such as transmission sizing or behavior.
+
+..     * ``sim_case_postprocess_script``: by default is set to ``REVS_postprocess_sim_case`` which handles calculating fuel economy for the three main powertrain types (Conventional, Hybrid, and Electric).  This script calculates cold-corrected FTP and weighted FTP-HWFET results from the raw phase results, among other things.
+
+..     * ``postprocess_script``: by default is set to ``REVS_postprocess_sim_batch`` which has code for finding performance-neutral runs out of a simulation set that provides a performance baseline for one or more sets of runs.  The selected runs, if any, are output to a separate output file.
+
+.. Understanding Config Strings (Keys)
+.. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. Formatting for the config strings is defined by vectors of one or more instances of ``class_REVS_sim_config_options``.  The easiest way to see which config tags are available to a sim batch is to use the ``sim_batch.show_keys`` method.
+
+.. This will display a list of ``sim_config`` fieldnames in the 'Key' column, the key tags in the 'Tag' column, option default values, an optional description and the name of the script which defines the key in the 'Provided by' column.  A partial list, for example:
+
+::
+
+    >> sim_batch.show_keys
 
 ::
 
@@ -65,7 +120,7 @@ This will display a list of ``sim_config`` fieldnames in the 'Key' column, the k
 
 ``sim_config`` is a struct variable created automatically by ``class_REVS_sim_batch`` and is made available to the simulation workspace prior to simulation. The ``sim_config`` fieldnames give at least a preliminary understanding of what a tag means and can be further examined by taking a look at the default pre- and post-processing scripts.
 
-Within a ``class_REVS_sim_config_options`` package each key is an instance of a ``class_REVS_sim_config_key``.  For example:
+As mentioned previousy config keys are generally defined with their processing scripts within a pacakge constructed from ``class_REVS_sim_config_options`` where each key is an instance of a ``class_REVS_sim_config_key``.  For example:
 
 ::
 
@@ -78,11 +133,21 @@ Within a ``class_REVS_sim_config_options`` package each key is an instance of a 
         ...
         ]
 
-The arguments to the ``class_REVS_sim_config_key`` constructor are the property name, optional 'tag' followed by the tag string, optional 'eval' followed by tag evaluation type, optional 'default' followed by a default value, and optional 'description' followed by a plaintext description of the key's purpose.
+The arguments to the ``class_REVS_sim_config_key`` constructor are the property name, followed by optional name value pairs of 'tag' for the tag used in config strings, 'eval' for the tag evaluation type,  'default' for the default value to use if not provided in the config set, and 'description' to provide a plaintext description of the key's purpose.
 
-Literal Config Tags
--------------------
-In the example above, the ``drive_cycle`` property holds a non-evaluated tag, which means the part of the string associated with that tag will not automatically be evaluated (turned into a numeric or other value, but rather taken as a string literal).  Typically this would be used for something like file names or other strings.  Literal tags may be evaluated in user scripts.  For example, if the literal tag was the name of a script, then that script may be called in the user pre- or post-processing scripts at the appropriate time to perform whatever its function is.  Literal tags can be used to hold a single value or, when combined with delayed evaluation (in a user script, instead of during config string parsing) may hold multiple values.  For example, within a config string, these are possible uses of the CYC: tag:
+Literal vs Eval Config Tags
+---------------------------
+When defining simulations via config strings the contents of some tags (keys) need to be evaluated while in other situations it may be preferred the value is retained in its string form. In the above example ``ETW_lbs`` key is an 'eval' tag which means its value will be automatically evaluated when loading the config strings.  If the eval tag is created with a default value, that value will be used if the tag is not specified by the user.  Eval tags are generally numeric, and must be an evaluatable expression.  An eval tag may evaluate to a single value or a vector of multiple values to perform variable sweeps.  For example, the following would all be valid eval tags within a config string:
+
+::
+
+    ETW_LBS:3625
+    ETW_LBS:[3000:500:5000]
+    ETW_LBS:4454*[0.8,1,1.2]
+
+The first case evaluates to a single number, 3625.  The second case evaluates to a vector, [3000 3500 4000 4500 5000] as does the last case which becomes [3563.2 4454 5344.8].  Any valid Matlab syntax may be used in an eval tag including mathematical operations such as multiply, divide, etc.  If addition is used, there must not be any spaces surrounding the + sign because ' + ' (space, plus-sign, space) is the separator used to build composite config strings and will result in an erroneously split string.
+
+In the previously referenced example above, the ``drive_cycle`` property holds a non-evaluated tag, which means the part of the string associated with that tag will not automatically be evaluated (turned into a numeric or other value, but rather taken as a string literal).  Typically this would be used for something like file names or other strings.  Literal tags may be evaluated in user scripts.  For example, if the literal tag was the name of a script, then that script may be called in the user pre- or post-processing scripts at the appropriate time to perform whatever its function is.  Literal tags can be used to hold a single value or, when combined with delayed evaluation (in a user script, instead of during config string parsing) may hold multiple values.  For example, within a config string, these are possible uses of the CYC: tag:
 
 ::
 
@@ -103,93 +168,226 @@ which would evaluate (using the Matlab ``eval()`` or ``evalin()`` command) the c
 
 Drive cycle loading of a single cycle or the combining of multiple cycles into a single cycle is automatically handled in ``class_REVS_sim_case.load_drive_cycles()`` but the same concept can apply to user-defined literal tags initiated by user scripts.  Drive cycle creation and handling will be discussed in further detail later.
 
-Eval Config Tags
-----------------
-
-As shown previously, the ``ETW_lbs`` key is an 'eval' tag which means its value will be automatically evaluated during pre-processing.  If the eval tag is created with a default value, that value will be used if the tag is not specified by the user.  Eval tags should be numeric or should refer to variables available in the workspace.  An eval tag may evaluate to a single value or a vector of multiple values to perform variable sweeps.  For example, the following would all be valid eval tags within a config string:
-
-::
-
-    ETW_LBS:3625
-    ETW_LBS:[3000:500:5000]
-    ETW_LBS:4454*[0.8,1,1.2]
-
-The first case evaluates to a single number, 3625.  The second case evaluates to a vector, [3000 3500 4000 4500 5000] as does the last case which becomes [3563.2 4454 5344.8].  Any valid Matlab syntax may be used in an eval tag including mathematical operations such as multiply, divide, etc.  If addition is used, there must not be any spaces surrounding the + sign because ' + ' (space, plus-sign, space) is the separator used to build composite config strings and will result in an erroneously split string.
-
-Config String Expansion
------------------------
-
-Each string in the sim batch ``config_set`` cell array is evaluated to determine how many simulations are defined.  As previously explained, each tag may be used to define multiple values.  Each config string is expanded to a full factorial combination of all of its elements.  The expanded set of strings is stored in the sim batch ``expanded_config_set`` property after the ``expand_config_set()`` method is called.  Config set expansion is handled automatically by the ``class_REVS_sim_batch`` ``run_sim_cases()`` method but under certain circumstances it may also be useful to manually expand the config set, although this is not typically done.  Manual expansion could be used to examine the number of cases represented by a config set without having to commit to running any simulations.
-
-For example, the following tag could be used within a config string to run simulations with and without engine start-stop:
+Building Config Set Directly
+----------------------------
+One workflow option is to build the config set by directly setting the ``sim_batch.config_set`` property. This property must be either a structure or cell array of structures. The latter allows a batch consisting of multiple groups of simulations to be constructed from different config keys. An example of a batch config set configured directly can be seen below:
 
 ::
 
-    + SS:[1,0] +
+    >> sim_batch.config_set.drive_cycle = {{'EPA_FTP_NOSOAK','EPA_HWFET'}}
+    >> sim_batch.config_set.vehicle = {'vehicle_FWD_midsize_car'};
+    >> sim_batch.config_set.engine = {'engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10'};
+    >> sim_batch.config_set.transmission = {'transmission_6AT_FWD_midsize_car'};
+    >> sim_batch.config_set.electric = {'electric_starter_alternator_param'};
+    >> sim_batch.config_set.accessory = {'accessory_EPS_param'};
+    >> sim_batch.config_set.controls = {'CVM_controls_param_midsize_car'};
+    >> sim_batch.config_set.ETW_lbs = [3000:1000:5000];
+    >> sim_batch.config_set.start_stop = [false, true];
 
-which would turn into two strings in the expanded config set:
 
-::
+In this example many of the config keys are set directly. Notice that the various string based keys are stored as cell arrays of strings. The reason for this will be discussed in the next section. It should also be noted that not all config keys need to be specified, and those not specified will use the default value established when that config key was defined. 
 
-    + SS:1 +
-    + SS:0 +
-
-An example with multiple tags with multiple values, this time for start-stop and normalized torque converter lockup:
-
-::
-
-    + SS:[1,0] + LU:[0,1] +
-
-which would turn into four strings in the expanded config set, representing all four cases:
-
-::
-
-    + SS:0 + LU:0 +
-    + SS:0 + LU:1 +
-    + SS:1 + LU:0 +
-    + SS:1 + LU:1 +
-
-String expansion provides a simple and powerful method for defining entire sets of simulations within a single user-defined config string.
-
-Config String Left-Hand-Side and Right-Hand-Side and Unique Key Numbers
------------------------------------------------------------------------
-
-A special string separator, || (double vertical bars), may be used to separate the left and right hand sides of a config string.  This is typically used for processing performance neutral runs but could also be used for any user-defined purpose.  For performance neutral runs the left hand side of the string defines the unique simulation case and the right hand side is used to define multiple engine scaling levels to evaluate for performance neutrality and GHG emissions.  The ``REVS_postprocess_sim_batch`` script considers all cases with the same left hand side to represent a single simulation case and then chooses the result from that set that meets performance criteria and has the lowest GHG emissions.  Each unique left hand side is assigned a unique key number through the UKN: tag by the ``class_REVS_sim_batch gen_unique_config_set()`` method.
-
-For example, this:
+Config Set Expansion
+--------------------
+Individual config set entries are expanded full factorial to create multiple sim configs which become the cases in ``sim_batch.sim_case`` when the batch is executed. In the example above this single config set will yield 6 simulations, three different ETW values multiplied by two options for start stop. Note that while drive cycle may appear to contain multiple entries it is contained within an outer cell array and thus is a single entry. The expanded config set is accessible via ``sim_batch.sim_configs`` and each index represents a planned simulation. As shown below the the sim configs contain entries for all defined config keys, not just those specified in the config set.
 
 ::
 
-    'SS:[1,0] + LU:[0,1]'
+    >> sim_batch.sim_configs
 
-becomes this, representing four unique cases:
+ans = 
+
+  6×1 struct array with fields:
+
+    test_data
+    test_data_index
+    external_drive_cycle
+    external_trans_temp
+    external_shift
+    external_lockup
+    external_accessory_elec
+    external_accessory_mech
+    external_cyl_deac
+    ambient
+    package
+    drive_cycle
+    vehicle
+    driver
+    vehicle_lbs
+    vehicle_kg
+    performance_mass_penalty_kg
+    ETW_lbs
+    ETW_kg
+    ETW_multiplier
+    target_A_lbs
+    target_B_lbs
+    target_C_lbs
+    dyno_set_A_lbs
+    dyno_set_B_lbs
+    dyno_set_C_lbs
+    calc_ABC_adjustment
+    target_A_N
+    target_B_N
+    target_C_N
+    dyno_set_A_N
+    dyno_set_B_N
+    dyno_set_C_N
+    adjust_A_lbs
+    adjust_B_lbs
+    adjust_C_lbs
+    adjust_A_N
+    adjust_B_N
+    adjust_C_N
+    roadload_multiplier
+    NV_ratio
+    FDR
+    FDR_efficiency_norm
+    powertrain_type
+    vehicle_type
+    vehicle_manufacturer
+    vehicle_model
+    vehicle_description
+    tire_radius_mm
+    engine
+    fuel
+    engine_vintage
+    engine_modifiers
+    engine_scale_pct
+    engine_scale_kW
+    engine_scale_hp
+    engine_scale_Nm
+    engine_scale_ftlbs
+    engine_scale_L
+    engine_scale_adjust_BSFC
+    engine_scale_num_cylinders
+    engine_deac_type
+    engine_deac_num_cylinders
+    engine_deac_scale_pct
+    engine_deac_max_reduction_pct
+    engine_deac_reduction_curve
+    engine_deac_activation_delay_secs
+    engine_DCP
+    engine_CCP
+    engine_GDI
+    engine_transient_fuel_penalty
+    engine_fuel_octane_compensation
+    transmission
+    transmission_vintage
+    TC_K_factor
+    TC_stall_rpm
+    TC_torque_ratio
+    TC_lockup_efficiency_pct
+    transmission_autoscale
+    electric
+    propulsion_battery
+    accessory_battery
+    propulsion_battery_initial_soc_norm
+    propulsion_battery_reference_soc_norm
+    accessory_battery_initial_soc_norm
+    propulsion_battery_cells_in_series
+    propulsion_battery_cells_in_parallel
+    propulsion_battery_cell_capacity_Ah
+    MG1
+    MG2
+    P0_MG
+    P2_MG
+    MOT
+    MG1_max_power_kW
+    MG2_max_power_kW
+    P0MG_max_power_kW
+    P2MG_max_power_kW
+    MOT_max_power_kW
+    MG1_max_torque_Nm
+    MG2_max_torque_Nm
+    P0MG_max_torque_Nm
+    P2MG_max_torque_Nm
+    MOT_max_torque_Nm
+    accessory
+    controls
+    start_stop
+    base_hash
+    aggregation_hash
+    simulation_hash
+
+A deeper look into the ``sim_batch.sim_configs`` structure array shows how some of the keys supplied vary across the cases providing full factorial coverage.
 
 ::
 
-    'UKN:1 + SS:1 + LU:0'
-    'UKN:2 + SS:1 + LU:1'
-    'UKN:3 + SS:0 + LU:0'
-    'UKN:4 + SS:0 + LU:1'
+    >> [sim_batch.sim_configs.vehicle]
 
-On the other hand, this:
+    ans =
+
+        'vehicle_FWD_midsize_carvehicle_FWD_midsize_carvehicle_FWD_midsize_carvehicle_FWD_midsize_carvehicle_FWD_midsize_carvehicle_FWD_midsize_car'
+
+    >> {sim_batch.sim_configs.vehicle}
+
+    ans =
+
+    1×6 cell array
+
+        {'vehicle_FWD_midsize_car'}    {'vehicle_FWD_midsize_car'}    {'vehicle_FWD_midsize_car'}    {'vehicle_FWD_midsize_car'}    {'vehicle_FWD_midsize_car'}    {'vehicle_FWD_midsize_car'}
+
+    >> {sim_batch.sim_configs.ETW_lbs}
+
+    ans =
+
+    1×6 cell array
+
+        {[3000]}    {[4000]}    {[5000]}    {[3000]}    {[4000]}    {[5000]}
+
+    >> {sim_batch.sim_configs.start_stop}
+
+    ans =
+
+    1×6 cell array
+
+        {[0]}    {[0]}    {[0]}    {[1]}    {[1]}    {[1]}
+
+
+One note regarding config set expansion is that only the horizontal dimension of a matrix or cell array is considered. Thus a column vector would not be expanded and the entire vector would be passed to each configuration. Similarly, if a 4 x 5 matrix was passed into a config set it would yield 5 different cases each passed a 4 x 1 vector.
+
+Config Set Aggregation
+----------------------
+When conducting a large number of simulations it may be desirable to examine or aggregate the results over different subsets of the full collection of sim configs.  In the above example it can be noted that there are three hashes computed in relation to the sim configs. ``base_hash`` corresponds to the original (unexpanded) config set entry that created the resulting sim config. ``simulation_hash`` corresponds to the specific sim config or sim_case to be run. ``aggregation_hash`` is supplied to allow the user to specify groups by which they may want to aggregate the results. The ``sim_batch.config_set`` object by default includes a special member ``aggregation_keys`` where the string for each key the user wants to aggregate over can be included. Each unique set of values for the keys not specified in ``aggregation_keys`` will end up with the same ``aggregation_hash``, which can then be used to the batch post processing the generate the desired outputs.
+
+
+Building Config Set via Config Strings
+--------------------------------------
+Config strings offer the ability to construct a simulation or set of simulations via a one line string. As seen above it can be tedious to set a large number of config keys individually. A config string is constructed via tag-value pairs separated by : and joined by the + symbol.  Within each element spaces cannot be used.  The config string representation of the above config set would look like:
 
 ::
 
-    'SS:[1,0] || LU:[0,1]'
+    >> config_string = 'VEH:vehicle_FWD_midsize_car + ENG:engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10 + 
+    TRANS:transmission_6AT_FWD_midsize_car + ELEC:electric_starter_alternator_param + ACC:accessory_EPS_param + 
+    CYC:{''EPA_FTP_NOSOAK'',''EPA_HWFET''} + CON:CVM_controls_param_midsize_car + ETW_LBS:[3000:1000:5000] + SS:[0,1];
+    
+As mentioned previously the ``sim_batch.load_config_strings`` method is used to load these strings and would set the ``sim_batch.config_set`` matching the prior example and would also result in matching ``sim_bat.sim_configs`` output.  
 
-becomes this four simulations that represent two unique cases:
+If multiple config strings are desired they can be provided as a cell array. This would be analogous to config set being a cell array as well.
 
-::
+The aggregation of sim configs / sim cases is implemented in config strings via the \|\| operator. All tags are expanded, but only those to the left of the \|\| are used to generate the aggregation hash meaning all combinations to the right of the \|\| can used to compute each aggregate result. Again, it is good to note that how this aggregation is handled depends on the batch postprocessing and by default no processing is conducted. As shown below this example generates the same six simulation cases, but only two aggregation cases are generated. In this exammple one would correspond to ``SS:0`` and the other to ``SS:1``.
 
-    'UKN:1 + SS:1 || LU:0'
-    'UKN:1 + SS:1 || LU:1'
-    'UKN:2 + SS:0 || LU:0'
-    'UKN:2 + SS:0 || LU:1'
+    >> config_string = 'VEH:vehicle_FWD_midsize_car + ENG:engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10 + 
+    TRANS:transmission_6AT_FWD_midsize_car + ELEC:electric_starter_alternator_param + ACC:accessory_EPS_param + 
+    CYC:{''EPA_FTP_NOSOAK'',''EPA_HWFET''} + CON:CVM_controls_param_midsize_car + SS:[0,1] || ETW_LBS:[3000:1000:5000]';
 
-In this way, subsets of simulation batches may be considered as groups and the unique key number can be used to find these groups in the output file and then process them accordingly.  In either case, all four simulations will run and all four results will be available in the output summary file.
+    >> sim_batch.load_config_strings(config_string);
 
-Creating New Config Tags
-------------------------
+    >> {sim_batch.sim_configs.aggregation_hash}'
+
+    ans =
+
+    6×1 cell array
+
+        {'dfd9bb5cce637383ef2e7d668d2fd9649f0acf72'}
+        {'dfd9bb5cce637383ef2e7d668d2fd9649f0acf72'}
+        {'dfd9bb5cce637383ef2e7d668d2fd9649f0acf72'}
+        {'97b691b8a096dffec2b5ac6fc85d436ab5142ef2'}
+        {'97b691b8a096dffec2b5ac6fc85d436ab5142ef2'}
+        {'97b691b8a096dffec2b5ac6fc85d436ab5142ef2'}
+
+Creating New Config Keys or Config Options
+------------------------------------------
 
 ``class_REVS_sim_config`` defines quite a few useful tags that should cover many modeling applications but new ones are easy to add.  Adding a new tag is as simple as adding a new property to ``class_REVS_sim_config``:
 
@@ -567,25 +765,7 @@ The ``REVS_Common\log_packages`` folder contains functions to define pre-made 'p
 
 * ``postprocess_list`` - contains a list of one or more post-processing scripts to run after the workspace has been populated with data.  For example, ``REVS_log_engine_basics`` lists ``REVS_postprocess_engine_basics_log`` to post-process data from raw simulation signals into the ``model_data`` structure for more universal use in post-processing scripts such as plotting simulation data versus real-world test data as in a ``DOR``.
 
-Logging Details
----------------
-Since it's not possible for Simulink datalogs to directly create stuctured output, there is a process for populating hierarchical data structures from individual workspace datalog variables.  This possible through the naming scheme employed by the datalogging blocks.  For example, the raw post-simulation workspace will contain variables such as:
 
-::
-
-    audit__accessories__air_conditioner__elec_neg_kJ
-    dl__engine__crankshaft_trq_Nm
-    rsltp__engine__fuel_consumed_g
-
-The prefix determines the top-level data structure.  ``audit`` maps to the ``audit`` data structure, ``dl`` maps to ``datalog`` and ``rsltp`` maps to the ``phase`` property of the ``result`` data structure, as in ``result.phase``.
-
-The double underscores, ``__``, define the hierarchical structure.  For example, ``audit__accessories__air_conditioner__elec_neg_kJ`` will become ``audit.accessories.air_conditioner.elec_neg_kJ`` in the final workspace.  Single underscores are taken as part of the property name.
-
-The construction of the raw workspace variable names is handled by the mask of the datalog blocks and can determined by the structure of the model.  For example, datalogs in the ``engine`` block model will automatically be placed in the ``datalog.engine`` structure without having to be explicitly named as such.  For example, the ``datalog.engine.fuel_rate_gps`` signal is set up as follows:
-
-.. image:: figures/engine_fuel_rate_gps_mask.jpg
-
-The only user-specified part of the name is ``fuel_rate_gps``, the rest is automatic, and the final result is previewed in the ``Datalog Name`` text box.
 
 Understanding Auditing
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -597,157 +777,4 @@ If ``audit_phase`` is ``true`` then an audit for each drive cycle phase **and** 
 
 Setting both ``audit_total`` and ``audit_phase`` to ``true`` results in the same output as setting ``audit_phase`` by itself.
 
-The ``audit`` structure, like the ``result`` structure, contains only scalar values.
 
-For example:
-
-::
-
-    >> audit.total.engine
-
-        ans =
-
-            class_REVS_logging_object with properties:
-
-                 crankshaft_delta_KE_kJ: 0.3309
-                crankshaft_delta_KE_kWh: 9.1911e-05
-                      crankshaft_neg_kJ: 604.0453
-                     crankshaft_neg_kWh: 0.1678
-                      crankshaft_pos_kJ: 7.4220e+03
-                     crankshaft_pos_kWh: 2.0617
-                      crankshaft_tot_kJ: 6.8180e+03
-                     crankshaft_tot_kWh: 1.8939
-                        fuel_consumed_g: 703.2932
-                           gross_neg_kJ: 450.6905
-                          gross_neg_kWh: 0.1252
-                           gross_pos_kJ: 8.0877e+03
-                          gross_pos_kWh: 2.2466
-                           gross_tot_kJ: 7.6371e+03
-                          gross_tot_kWh: 2.1214
-
-    >> audit.phase.engine
-
-        ans =
-
-          class_REVS_logging_object with properties:
-
-             crankshaft_delta_KE_kJ: [0.3321 -0.0017]
-            crankshaft_delta_KE_kWh: [9.2236e-05 -4.6631e-07]
-                  crankshaft_neg_kJ: [250.3882 353.6571]
-                 crankshaft_neg_kWh: [0.0696 0.0982]
-                  crankshaft_pos_kJ: [3.6640e+03 3.7581e+03]
-                 crankshaft_pos_kWh: [1.0178 1.0439]
-                  crankshaft_tot_kJ: [3.4136e+03 3.4044e+03]
-                 crankshaft_tot_kWh: [0.9482 0.9457]
-                    fuel_consumed_g: [319.6850 383.6047]
-                       gross_neg_kJ: [192.0876 258.6029]
-                      gross_neg_kWh: [0.0534 0.0718]
-                       gross_pos_kJ: [3.9019e+03 4.1858e+03]
-                      gross_pos_kWh: [1.0839 1.1627]
-                       gross_tot_kJ: [3.7098e+03 3.9272e+03]
-                      gross_tot_kWh: [1.0305 1.0909]
-
-It should be noted here that the total and phase audits may appear to have discrepancies.  In other words, the sum of the phase audit results may not add up to the total result for the same variable, such as ``fuel_consumed_g``.  This is because the phase audit results are only for phase numbers greater than zero.  In the case of a drive cycle where the engine start is not sampled (not part of the phase results), the first five seconds may be phase zero.  Also, it takes a couple of simulation time steps at the end of the drive cycle to shut down the model, and those are also phase zero.
-
-Enabling the audits populates the workspace with audit data, via the ``class_REVS_audit`` class.  ``class_REVS_audit`` is also responsible for calling the report generators for each unique powertrain type, as follows:
-
-* ``class_REVS_CVM_audit`` - calculates and reports energy balances for Conventional Vehicle Models
-
-* ``class_REVS_EVM_audit`` - calculates and reports energy balances for Electric Vehicle Models
-
-* ``class_REVS_HVM_audit`` - calculates and reports energy balances for Hybrid Vehicle Models
-
-There is no automatic method for the Simulink model itself to comprehend the correct sources and sinks of energy within the model, this is determined by the creator of the model and is based on the underlying physics of the powertrain components.
-
-The audit classes for the various powertrains inherit methods and properties from a base class, ``class_REVS_VM_audit``, which handles audit calculations common to all powertrains, i.e. brakes, tires, roadload losses, etc.
-
-The audit energy datalogs (as seen above) are tallied according to whether they are sources of energy or sinks of energy in the ``calc_audit`` methods of the audit classes.  If the model, audit datalogging and audit calculations are correct then the sum of the energy in the audit sinks will equal the sum of the energy in the audit sources.  The sources and sinks are tallied in the ``energy_balance`` property of the audit class.
-
-::
-
-    >> audit.total.energy_balance
-
-    ans =
-
-      struct with fields:
-
-                         source: [1×1 struct]
-                           sink: [1×1 struct]
-            simulation_error_kJ: -0.5840
-        energy_conservation_pct: 100.0157
-
-    >> audit.total.energy_balance.source
-
-    ans =
-
-      struct with fields:
-
-              KE_kJ: 0
-        gradient_kJ: 0
-              gross: [1×1 struct]
-                net: [1×1 struct]
-
-    >> audit.total.energy_balance.sink
-
-    ans =
-
-      struct with fields:
-
-            KE_kJ: 0.4379
-          vehicle: [1×1 struct]
-        accessory: [1×1 struct]
-         total_kJ: 3.7313e+03
-
-The audit sources consist of ``gross`` and ``net`` categories, where ``gross`` refers to fuel chemical energy and energy stored in batteries, for example.  ``net`` refers to energy used to power the vehicle and/or run electrical accessories, for example.
-
-::
-
-    >> audit.total.energy_balance.source.gross
-
-    ans =
-
-      struct with fields:
-
-          fuel_kJ: 1.3157e+04
-        stored_kJ: 8.0583
-         total_kJ: 1.3165e+04
-
-    >> audit.total.energy_balance.source.net
-
-    ans =
-
-      struct with fields:
-
-                    engine_kJ: 3.7237e+03
-        engine_efficiency_pct: 28.3017
-                    stored_kJ: 7.0347
-                     total_kJ: 3.7307e+03
-
-
-The difference between the net source energy and the total sink energy is the simulation error, which should be very small and is recorded as the energy balance ``energy_conservation_pct`` where 100% is the desired value.
-
-::
-
-    >> audit.total.energy_balance.source.net.total_kJ
-
-    ans =
-
-       3.7307e+03
-
-    >> audit.total.energy_balance.sink.total_kJ
-
-    ans =
-
-       3.7313e+03
-
-    >> audit.total.energy_balance.energy_conservation_pct
-
-    ans =
-
-      100.0157
-
-Typical sources of simulation error are clutch / driveline re-engagements where the small modeled disparity in speeds at lockup causes a small gain or loss of kinetic energy.  If the audit is off by a larger amount then either there is a problem with the model or a problem with the audit itself.  Most of the time the audit is incorrect when there's a discrepancy.  For example, a new component may have been added to the model but the ``calc_audit`` function has not been updated to include the energy as a source or sink, or perhaps the audit datalog has been placed on the wrong signal line or at the incorrect point in the model.  One technique for sorting out whether an error is a just a simulation error due to approximation (like the slightly mismatched speeds) or due to an actual or accounting error is to run the model at a finer timestep.  Generally, simulation errors should decrease as the step size decreases and audit or accounting errors should remain unchanged.
-
-When creating an audit for a new component it's very important to understand that the topology of the blocks in the model in most cases is not the same as the topology of the sources and sinks of energy in the model.  It's tempting to place an audit datalog at the inputs and outputs of the blocks in the model, but if the block is not properly a source or sink of energy then the audit will likely fail.  For example, torques and speeds may pass through several Simulink blocks, but each block is not necessarily a "source" of energy for the next block downstream.
-
-In any case, it's important to track down audit issues if and when they occur.
