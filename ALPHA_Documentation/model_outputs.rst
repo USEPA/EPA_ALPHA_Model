@@ -3,6 +3,8 @@ Model Outputs
 
 When using the batch process, a standardized, customizable output file is created in the ``output`` folder.  When running from a saved workspace, or running from a batch, outputs are always produced in the simulation workspace.
 
+.. _workspace_outputs:
+
 Workspace Outputs
 ^^^^^^^^^^^^^^^^^
 

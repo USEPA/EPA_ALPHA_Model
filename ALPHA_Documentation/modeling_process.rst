@@ -21,15 +21,6 @@ ALPHA batch simulation is implemented via ``class_REVS_sim_batch`` which contain
 
 These many different pieces work in concert to complete the batch simulation process. An analogy may be helpful in understanding how the different pieces work together. The configuration keys define the available knobs the user can turn to influence the simulation. The configuration set is a list of settings for each knob. The scripts (pre and post) are the linkage that connects the knobs to the model and output processing. 
 
-
-.. The goal of simulation pre-processing is to set up the simulation workspace, loading the data from specified param files and making requested modifications.  For example, users may load a particular vehicle param file and then want to change the test weight or roadload in some manner, perhaps as part of a sweep of test weight values.  A variety of predefined modifiers exist and user defined script can be run as well.
-
-.. The ``REVS_VM`` model itself performs some post-processing to create simulation results (phase integrated results, for example), datalogs, and to perform any auditing that may be desired.  These tasks are handled by creating ``result``, ``datalog`` and ``audit`` objects in the workspace from the ``class_REVS_result``, ``class_REVS_datalog`` and ``class_REVS_audit`` classes respectively.  These objects are created in the model's ``StopFcn`` callback which can be viewed in the ``REVS_VM`` model properties.
-
-.. The post-processing included with ALPHA calculates many commonly desired outputs such as fuel economy or GHG emissions.  Other values that need to be calculated from or modify the data from a simulation can be implemented via case post-processing functions.
-
-.. Batch post-processing may be used to examine the total set of simulation results and perform additional processing such as filtering the results from a set of runs and then outputting those results to a separate file.  
-
 Understanding Config Keys, Config Scripts & Config Options
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -69,20 +60,6 @@ The set of simulations to be run is defined using the config keys. The desired s
 Config Keys & Tags
 ------------------
 As mentioned previously the config keys are stored in ``sim_batch.config_keys`` and can be viewed via the ``sim_batch.show_keys`` method, an example of this is shown below. This will display a list of potential ``sim_config`` fieldnames in the 'Key' column, the key tags, for use in the config string, in the 'Tag' column, optional default values, an optional description and the name of the script which defined the key in the 'Provided by' column.
-
-.. There are a few ``class_REVS_sim_batch`` properties that control pre- and post-processing of the simulation data by determining which processing scripts to run.
-
-..     * ``sim_case_preprocess_script``: by default is set to ``REVS_preprocess_sim_case`` which performs pre-processing for the most common overrides that should apply to pretty much any simulation case, regardless of the type of project being worked on.  The overrides/modifiers come from optional config string tags.  For example, the ``ETW_LBS:`` tag may be used to override the vehicle test weight from the vehicle param file.  For application-specific pre-processing, create a custom script that would (generally) call ``REVS_preprocess_sim_case`` and then perform additional pre-processing.  The custom script may handle user-defined application-specific config tags.  For example, regarding 2025 Mid-Term Evaluation work, the ``MTE_batch_sim_case_preprocess`` script calls ``REVS_preprocess_sim_case`` and then performs MTE-related overrides and defaults for aspects such as transmission sizing or behavior.
-
-..     * ``sim_case_postprocess_script``: by default is set to ``REVS_postprocess_sim_case`` which handles calculating fuel economy for the three main powertrain types (Conventional, Hybrid, and Electric).  This script calculates cold-corrected FTP and weighted FTP-HWFET results from the raw phase results, among other things.
-
-..     * ``postprocess_script``: by default is set to ``REVS_postprocess_sim_batch`` which has code for finding performance-neutral runs out of a simulation set that provides a performance baseline for one or more sets of runs.  The selected runs, if any, are output to a separate output file.
-
-.. Understanding Config Strings (Keys)
-.. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. Formatting for the config strings is defined by vectors of one or more instances of ``class_REVS_sim_config_options``.  The easiest way to see which config tags are available to a sim batch is to use the ``sim_batch.show_keys`` method.
-
-.. This will display a list of ``sim_config`` fieldnames in the 'Key' column, the key tags in the 'Tag' column, option default values, an optional description and the name of the script which defines the key in the 'Provided by' column.  A partial list, for example:
 
 ::
 
@@ -195,119 +172,119 @@ Individual config set entries are expanded full factorial to create multiple sim
 
     >> sim_batch.sim_configs
 
-ans = 
+    ans = 
 
-  6×1 struct array with fields:
+    6×1 struct array with fields:
 
-    test_data
-    test_data_index
-    external_drive_cycle
-    external_trans_temp
-    external_shift
-    external_lockup
-    external_accessory_elec
-    external_accessory_mech
-    external_cyl_deac
-    ambient
-    package
-    drive_cycle
-    vehicle
-    driver
-    vehicle_lbs
-    vehicle_kg
-    performance_mass_penalty_kg
-    ETW_lbs
-    ETW_kg
-    ETW_multiplier
-    target_A_lbs
-    target_B_lbs
-    target_C_lbs
-    dyno_set_A_lbs
-    dyno_set_B_lbs
-    dyno_set_C_lbs
-    calc_ABC_adjustment
-    target_A_N
-    target_B_N
-    target_C_N
-    dyno_set_A_N
-    dyno_set_B_N
-    dyno_set_C_N
-    adjust_A_lbs
-    adjust_B_lbs
-    adjust_C_lbs
-    adjust_A_N
-    adjust_B_N
-    adjust_C_N
-    roadload_multiplier
-    NV_ratio
-    FDR
-    FDR_efficiency_norm
-    powertrain_type
-    vehicle_type
-    vehicle_manufacturer
-    vehicle_model
-    vehicle_description
-    tire_radius_mm
-    engine
-    fuel
-    engine_vintage
-    engine_modifiers
-    engine_scale_pct
-    engine_scale_kW
-    engine_scale_hp
-    engine_scale_Nm
-    engine_scale_ftlbs
-    engine_scale_L
-    engine_scale_adjust_BSFC
-    engine_scale_num_cylinders
-    engine_deac_type
-    engine_deac_num_cylinders
-    engine_deac_scale_pct
-    engine_deac_max_reduction_pct
-    engine_deac_reduction_curve
-    engine_deac_activation_delay_secs
-    engine_DCP
-    engine_CCP
-    engine_GDI
-    engine_transient_fuel_penalty
-    engine_fuel_octane_compensation
-    transmission
-    transmission_vintage
-    TC_K_factor
-    TC_stall_rpm
-    TC_torque_ratio
-    TC_lockup_efficiency_pct
-    transmission_autoscale
-    electric
-    propulsion_battery
-    accessory_battery
-    propulsion_battery_initial_soc_norm
-    propulsion_battery_reference_soc_norm
-    accessory_battery_initial_soc_norm
-    propulsion_battery_cells_in_series
-    propulsion_battery_cells_in_parallel
-    propulsion_battery_cell_capacity_Ah
-    MG1
-    MG2
-    P0_MG
-    P2_MG
-    MOT
-    MG1_max_power_kW
-    MG2_max_power_kW
-    P0MG_max_power_kW
-    P2MG_max_power_kW
-    MOT_max_power_kW
-    MG1_max_torque_Nm
-    MG2_max_torque_Nm
-    P0MG_max_torque_Nm
-    P2MG_max_torque_Nm
-    MOT_max_torque_Nm
-    accessory
-    controls
-    start_stop
-    base_hash
-    aggregation_hash
-    simulation_hash
+        test_data
+        test_data_index
+        external_drive_cycle
+        external_trans_temp
+        external_shift
+        external_lockup
+        external_accessory_elec
+        external_accessory_mech
+        external_cyl_deac
+        ambient
+        package
+        drive_cycle
+        vehicle
+        driver
+        vehicle_lbs
+        vehicle_kg
+        performance_mass_penalty_kg
+        ETW_lbs
+        ETW_kg
+        ETW_multiplier
+        target_A_lbs
+        target_B_lbs
+        target_C_lbs
+        dyno_set_A_lbs
+        dyno_set_B_lbs
+        dyno_set_C_lbs
+        calc_ABC_adjustment
+        target_A_N
+        target_B_N
+        target_C_N
+        dyno_set_A_N
+        dyno_set_B_N
+        dyno_set_C_N
+        adjust_A_lbs
+        adjust_B_lbs
+        adjust_C_lbs
+        adjust_A_N
+        adjust_B_N
+        adjust_C_N
+        roadload_multiplier
+        NV_ratio
+        FDR
+        FDR_efficiency_norm
+        powertrain_type
+        vehicle_type
+        vehicle_manufacturer
+        vehicle_model
+        vehicle_description
+        tire_radius_mm
+        engine
+        fuel
+        engine_vintage
+        engine_modifiers
+        engine_scale_pct
+        engine_scale_kW
+        engine_scale_hp
+        engine_scale_Nm
+        engine_scale_ftlbs
+        engine_scale_L
+        engine_scale_adjust_BSFC
+        engine_scale_num_cylinders
+        engine_deac_type
+        engine_deac_num_cylinders
+        engine_deac_scale_pct
+        engine_deac_max_reduction_pct
+        engine_deac_reduction_curve
+        engine_deac_activation_delay_secs
+        engine_DCP
+        engine_CCP
+        engine_GDI
+        engine_transient_fuel_penalty
+        engine_fuel_octane_compensation
+        transmission
+        transmission_vintage
+        TC_K_factor
+        TC_stall_rpm
+        TC_torque_ratio
+        TC_lockup_efficiency_pct
+        transmission_autoscale
+        electric
+        propulsion_battery
+        accessory_battery
+        propulsion_battery_initial_soc_norm
+        propulsion_battery_reference_soc_norm
+        accessory_battery_initial_soc_norm
+        propulsion_battery_cells_in_series
+        propulsion_battery_cells_in_parallel
+        propulsion_battery_cell_capacity_Ah
+        MG1
+        MG2
+        P0_MG
+        P2_MG
+        MOT
+        MG1_max_power_kW
+        MG2_max_power_kW
+        P0MG_max_power_kW
+        P2MG_max_power_kW
+        MOT_max_power_kW
+        MG1_max_torque_Nm
+        MG2_max_torque_Nm
+        P0MG_max_torque_Nm
+        P2MG_max_torque_Nm
+        MOT_max_torque_Nm
+        accessory
+        controls
+        start_stop
+        base_hash
+        aggregation_hash
+        simulation_hash
 
 A deeper look into the ``sim_batch.sim_configs`` structure array shows how some of the keys supplied vary across the cases providing full factorial coverage.
 
@@ -350,7 +327,6 @@ Config Set Aggregation
 ----------------------
 When conducting a large number of simulations it may be desirable to examine or aggregate the results over different subsets of the full collection of sim configs.  In the above example it can be noted that there are three hashes computed in relation to the sim configs. ``base_hash`` corresponds to the original (unexpanded) config set entry that created the resulting sim config. ``simulation_hash`` corresponds to the specific sim config or sim_case to be run. ``aggregation_hash`` is supplied to allow the user to specify groups by which they may want to aggregate the results. The ``sim_batch.config_set`` object by default includes a special member ``aggregation_keys`` where the string for each key the user wants to aggregate over can be included. Each unique set of values for the keys not specified in ``aggregation_keys`` will end up with the same ``aggregation_hash``, which can then be used to the batch post processing the generate the desired outputs.
 
-
 Building Config Set via Config Strings
 --------------------------------------
 Config strings offer the ability to construct a simulation or set of simulations via a one line string. As seen above it can be tedious to set a large number of config keys individually. A config string is constructed via tag-value pairs separated by : and joined by the + symbol.  Within each element spaces cannot be used.  The config string representation of the above config set would look like:
@@ -389,7 +365,32 @@ The aggregation of sim configs / sim cases is implemented in config strings via 
 Creating New Config Keys or Config Options
 ------------------------------------------
 
-``class_REVS_sim_config`` defines quite a few useful tags that should cover many modeling applications but new ones are easy to add.  Adding a new tag is as simple as adding a new property to ``class_REVS_sim_config``:
+The many config option packages included with ALPHA (stored in ``REVS_Common\config_packages``) define quite a few useful keys and tags that should cover many modeling applications but new ones are easy to add. There are two different approaches for adding new keys and associated processing functions. One approach is to create a new config option package, this is discussed further in :ref:`constructing_config_options`. The remainder of this section shows how to add custom keys and associated processing for a single batch. A demo that uses this feature can be found in ``run_ALPHA_demo.m``.
+
+The first step is adding the key to the batch.  This is done using the ``sim_batch.add_key`` method. Similar to the the ``class_REVS_sim_config_key`` constructor the first argument is a string containing the key name. The other options listed below can be used can configure how the key is processed:
+
+============       =======================================
+Parameter          Usage
+============       =======================================
+tag                Tag for use with config strings
+eval               Evaluate tag value used in config strings
+default            Default value to use if none provided
+description        Description to display in show keys
+============       =======================================
+
+
+
+
+.. _constructing_config_options:
+
+Constructing Config Options
+---------------------------
+
+
+
+
+
+Adding a new tag is as simple as adding a new property to ``class_REVS_sim_config``:
 
 ::
 
@@ -428,101 +429,45 @@ Keys from the output file can be used directly in new config sets by cutting and
 Controlling Datalogging and Auditing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This section describes how to control the datalogging and auditing features of ALPHA.
+This section describes how to control the datalogging and auditing features of ALPHA. It may be helpful to understand the different data objects generated, which can be found in :ref:`workspace_outputs`.
 
 Controlling Datalogging
 -----------------------
 
-Datalogging and auditing are controlled by the ``logging_config`` property of the ``class_REVS_sim_batch`` object.  ``logging_config`` is an object of class ``class_REVS_logging_config``.  The constructor of ``class_REVS_sim_batch`` takes a single optional argument which is the default log list.  A log list is a ``class_REVS_log_package`` object.  Many predefined log lists are contained in the ``REVS_Common\log_packages`` folder.
+Datalogging and auditing are controlled by the settings stored in the ``logging_config`` property of the ``class_REVS_sim_batch`` object.  ``logging_config`` is an object of class ``class_REVS_logging_config``.  The ``add_log`` method of ``class_REVS_sim_batch`` is used to add logging packages that define signals to log within the ALPHA model.  Many predefined log lists are contained in the ``REVS_Common\log_packages`` folder including metapackages that are intended to provide an easy bundle of packages. These packages will control what data is avaialble in the ``datalog``, ``result`` and ``model_data`` output variables.
 
-The following are typical examples of creating a sim batch and setting up the default datalogging:
+The following are typical examples of creating a sim batch and setting up the datalogging:
 
 ::
 
-    sim_batch = class_REVS_sim_batch(REVS_log_default);
+    sim_batch = class_REVS_sim_batch();
+    sim_batch.add_log(REVS_log_default);
 
 ``REVS_log_default`` logs only the bare minimum required to calculate fuel economy and GHG emissions, this runs the fastest
 
 ::
 
-    sim_batch = class_REVS_sim_batch(REVS_log_all);
+    sim_batch = class_REVS_sim_batch();
+    sim_batch.add_log(REVS_log_all);
 
 ``REVS_log_all`` logs every available signal, this runs the slowest
 
-::
-
-    sim_batch = class_REVS_sim_batch(REVS_log_engine);
-
-``REVS_log_engine`` logs the most common engine signals of interest
+Log packages can also be combined to tailor the output to a projects needs:
 
 ::
 
-    sim_batch = class_REVS_sim_batch(REVS_log_engine_all);
-
-``REVS_log_engine_all`` logs every available engine signal
-
-Log packages can also be combined by using the ``logging_config.add_log()`` method:
-
-::
-
-    sim_batch = class_REVS_sim_batch(REVS_log_default);
-    sim_batch.logging_config.add_log(REVS_log_engine);
+    sim_batch = class_REVS_sim_batch();
+    sim_batch.add_log(REVS_log_default);
+    sim_batch.logging_config.add_log(REVS_log_engine_all);
     sim_batch.logging_config.add_log(REVS_log_transmission);
 
-        Logs the minimum required signals and adds common engine and transmission datalogs
+Logs the minimum required signals and adds all the engine signals and many common transmission datalogs. 
 
-Understanding the ``datalog`` and ``model_data`` Objects
---------------------------------------------------------
+.. _constructing_log_packages:
 
-The datalog object has hierarchical properties.  The top level should look something like this:
-
-::
-
-    datalog =
-      class_REVS_datalog with properties:
-
-         accessories: [1×1 class_REVS_logging_object]
-            controls: [1×1 class_REVS_logging_object]
-         drive_cycle: [1×1 class_REVS_logging_object]
-              driver: [1×1 class_REVS_logging_object]
-            electric: [1×1 class_REVS_logging_object]
-              engine: [1×1 class_REVS_logging_object]
-        transmission: [1×1 class_REVS_logging_object]
-             vehicle: [1×1 class_REVS_logging_object]
-                time: [137402×1 double]
-
-For example, vehicle speed can be plotted versus time:
-
-::
-
-    plot(datalog.time, datalog.vehicle.output_spd_mps);
-
-The datalog object is also associated with a ``class_test_data`` object called ``model_data``.  The primary difference between the two is that ``model_data`` represents a subset of the logged data and has a common, high-level namespace that can be used to compare model data with test data or data from multiple model runs or even data different models.  For example, vehicle speed can be plotted versus time:
-
-::
-
-    plot(model_data.time, model_data.vehicle.speed_mps);
-
-Generally the best option is to use ``model_data`` for most analysis if it contains what is needed.  Datalogs are copied to the ``model_data`` object through the ``REVS_postprocess_XXX`` M-scripts in the ``REVS_Common/log_packages`` folder.
-
-For example, ``REVS_postprocess_engine_basics_log.m``:
-
-::
-
-    model_data.vehicle.fuel.mass_g               = datalog.engine.fuel_consumed_g;
-
-    model_data.engine.speed_radps                = datalog.engine.crankshaft_spd_radps;
-    model_data.engine.crankshaft_torque_Nm       = datalog.engine.crankshaft_trq_Nm;
-    model_data.engine.load_at_current_speed_norm = datalog.engine.load_norm;
-
-    model_data.engine.fuel.density_kgpL_15C      = engine.fuel.density_kgpL_15C;
-    model_data.engine.fuel.energy_density_MJpkg  = engine.fuel.energy_density_MJpkg;
-    model_data.engine.fuel.flow_rate_gps         = datalog.engine.fuel_rate_gps;
-    model_data.engine.fuel.mass_g                = datalog.engine.fuel_consumed_g;
-
-As demonstrated in this example, the fuel properties are pulled from multiple sources (the engine itself and the engine datalogs) and put into a common location in the ``model_data`` object.  Generally, the datalogs are model-centric and may contain shorthand notation (trq versus torque) whereas the model data is more function- or component-centric and uses a more universal naming convention.  There is no automatic method for populating the ``model_data properties`` (scripts must be written by the user) and not all datalogs have (or should have) an associated property in the model data.  Postprocess scripts are associated with ``class_REVS_log_package`` objects through the ``postprocess_list`` property which is a cell array of scripts to run after datalogging.
-
-For example, the ``REVS_log_all`` package is:
+Constructing Log Packages
+-------------------------
+Log packages are built as functions that return a ``class_REVS_log_package`` object or an array of objects. The package functions generally consist of three parts. The first is the list of signals to log stored into the ``log_list`` property. These are the signals specified in the logging blocks of the model, and wildcards can be used to select multiple items. Note that as mentioned in :ref:`workspace_outputs` additional signals may be available if they can be calculated from the logged output. Next, stored in the ``package_list`` property is the name of any contained packages. The list of packages is available for the post processing to determine is necessary signals are available to complete a given calculation. Generally, the name of the log package function is used. The final item, stored in the ``postprocess_list`` property is a list of scripts to run after simulation, which can be used to calculate or adjust and outputs.  Below the ``REVS_log_all`` package is shown which demonstrates selecting signals via wildcard, using mfilename for package naming and uses an array of postprocessing scripts. 
 
 ::
 
@@ -557,11 +502,11 @@ For example, the ``REVS_log_all`` package is:
 Auditing
 --------
 
-Auditing can be controlled by setting a sim batch ``logging_config`` audit flag:
+Auditing of the energy flows within the model is another feature of ALPHA that can be controlled by the audit flags of the ``logging_config`` propertry of ``class_REVS_sim_batch`` and their usage is shown below.
 
 ::
 
-    logging_config.audit_total = true;
+    sim_batch.logging_config.audit_total = true;
 
 Audits the total energy flow for the entire drive cycle.
 
@@ -569,11 +514,11 @@ Or:
 
 ::
 
-    logging_config.audit_phase = true;
+    sim_batch.logging_config.audit_phase = true;
 
 Audits the total energy flow for the entire drive cycle and also audits each drive cycle phase individually.
 
-By default both flags are set to false, only one flag or the other needs to be set.  To print the audit to the console, use the ``print()`` method:
+By default both flags are set to false, only one flag or the other needs to be set.  To print the audit to the console, use the ``print`` method of the ``audit`` variable that is generated in the workspace:
 
 ::
 
@@ -678,7 +623,7 @@ This will create a timestamped ``.mat`` file in the sim batch output folder's ``
 
     output\sim_input\2019_02_11_16_46_37_sim_1_input_workspace.mat
 
-The workspace is saved after all pre-processing scripts have been run so the workspace contains everything required to replicate the simulation at a later time.  This can be useful when running too many simulations to retain the workspaces in memory while also providing the ability to run individual cases later without having to set up a sim batch.  The workspace may be loaded by using the load command, or double-clicking the filename in the Matlab Current Folder file browser.
+The workspace is saved after all pre-processing scripts have been run so the workspace contains everything required to replicate the simulation at a later time.  This can be useful when running too many simulations to retain the workspaces in memory while also providing the ability to run individual cases later without having to set up a custom sim batch.  The workspace may be loaded by using the load command, or double-clicking the filename in the Matlab Current Folder file browser.
 
 .. _saving_the_output_workspace:
 
@@ -697,7 +642,7 @@ This will create a timestamped ``.mat`` file in the sim batch output folder.  Th
 
     output\2019_02_11_16_52_39_sim_1_output_workspace.mat
 
-The workspace is saved after all post-processing scripts have been run so the workspace contains everything required to replicate the simulation at a later time and also all of the datalogs, audits, etc.  The simulation may be run again or the outputs examined directly without the need for running the simulation.  Keep in mind that output workspaces will always be bigger than input workspaces and also take longer to save.  The workspace may be loaded by using the load command or double-clicking the filename in the Matlab Current Folder file browser.
+The workspace is saved after all post-processing scripts have been run so the workspace contains everything required to replicate the simulation at a later time and also all of the datalogs, audits, etc.  The simulation may be run again or the outputs examined directly without the need for running the simulation.  Keep in mind that output workspaces will always be bigger than input workspaces and also take longer to save.  The workspace may be loaded by using the load command or double-clicking the filename in the Matlab Current Folder file browser. Also note that the resulting mat file will contain variables constructed from various REVS classes and will require ``REVS_common`` to be on the MATLAB path to operate property.
 
 .. _post_simulation_data_analysis:
 
