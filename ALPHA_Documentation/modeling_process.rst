@@ -712,14 +712,3 @@ The ``REVS_Common\log_packages`` folder contains functions to define pre-made 'p
 
 
 
-Understanding Auditing
-^^^^^^^^^^^^^^^^^^^^^^
-Auditing is controlled through the ``sim_batch`` object ``audit_total`` and ``audit_phase`` boolean properties.
-
-If ``audit_total`` is ``true`` then an audit for the drive cycle as a whole will be performed and the resulting summary will be sent the console or an output file.  This is the most commonly used approach for enabling an audit.
-
-If ``audit_phase`` is ``true`` then an audit for each drive cycle phase **and** the total drive cycle will be produced.
-
-Setting both ``audit_total`` and ``audit_phase`` to ``true`` results in the same output as setting ``audit_phase`` by itself.
-
-
