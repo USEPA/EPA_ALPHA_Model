@@ -343,6 +343,8 @@ If multiple config strings are desired they can be provided as a cell array. Thi
 
 The aggregation of sim configs / sim cases is implemented in config strings via the \|\| operator. All tags are expanded, but only those to the left of the \|\| are used to generate the aggregation hash meaning all combinations to the right of the \|\| can used to compute each aggregate result. Again, it is good to note that how this aggregation is handled depends on the batch postprocessing and by default no processing is conducted. As shown below this example generates the same six simulation cases, but only two aggregation cases are generated. In this exammple one would correspond to ``SS:0`` and the other to ``SS:1``.
 
+::
+
     >> config_string = 'VEH:vehicle_FWD_midsize_car + ENG:engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10 + 
     TRANS:transmission_6AT_FWD_midsize_car + ELEC:electric_starter_alternator_param + ACC:accessory_EPS_param + 
     CYC:{''EPA_FTP_NOSOAK'',''EPA_HWFET''} + CON:CVM_controls_param_midsize_car + SS:[0,1] || ETW_LBS:[3000:1000:5000]';
@@ -378,51 +380,47 @@ default            Default value to use if none provided
 description        Description to display in show keys
 ============       =======================================
 
-
-
+With the config key defined any scripting to provide the desired function can be specified using one of the following methods ``sim_batch.add_case_preprocess_script`` for scripts to run before simulation, ``sim_batch.add_case_postprocess_script`` for scripts run after a simulation, and ``sim_batch.add_batch_postprocess_script`` for scripts to run after all cases have been run and post processed. Scripts specified in the case processing methods will be run in the simulation workspace. The data specified in the config keys will be accessible via the ``sim_config`` variable. Batch post process scripts are run in the workspace of the ``sim_batch.run_sim_cases`` method. 
 
 .. _constructing_config_options:
 
 Constructing Config Options
 ---------------------------
 
-
-
-
-
-Adding a new tag is as simple as adding a new property to ``class_REVS_sim_config``:
+The process for creating a custom config option package is very similar to what is shown in the previous section and is shown in the example below.
 
 ::
 
-    new_config  = class_REVS_config_element('NEWTAG:', 'eval', 42);
+    function package = REVS_config_transmission()
+    %REVS_CONFIG_AMBIENT REVS configuration keys for ambient conditions
 
-which would show up as the following when calling ``class_REVS_sim_config.show_tags``:
 
-::
+    package = class_REVS_sim_config_options();
 
-    'NEWTAG:42  -> sim_config.new_config'
+    package.keys = [ ...
+        class_REVS_sim_config_key('transmission',                   'tag',  'TRANS',    'eval',   false); 
+        
+        class_REVS_sim_config_key('transmission_vintage',           'tag',  'TRX_VTG');
 
-The default value (if provided) is shown next to the tag, in this case the default value for ``sim_config.new_config`` is 42.  The variable ``sim_config.new_config`` would now be available for use in user pre- and post- processing scripts.
+        class_REVS_sim_config_key('TC_K_factor',                    'tag',  'TCK');   
+        class_REVS_sim_config_key('TC_stall_rpm',                   'tag',  'TCSTALL');
 
-How to Use ``sim_config`` Values
---------------------------------
+        class_REVS_sim_config_key('TC_torque_ratio',                'tag',  'TCTR');
+        
+        class_REVS_sim_config_key('TC_lockup_efficiency_pct',       'tag',  'TCLUEFF_PCT');
+        
+        class_REVS_sim_config_key('transmission_autoscale',         'tag',  'NTRT',   'default', 0);
 
-The value of a ``sim_config`` property is accessed through the value property.  In addition, the ``has_value()`` method can be used to check if a value has been set by the user before being used in a script.  For example, from ``REVS_preprocess_sim_case``:
+    ];
 
-::
+        
+package.case_preprocess_scripts = [ ...
+    class_REVS_sim_config_script('REVS_config_transmission_load', 1)
+    class_REVS_sim_config_script('REVS_config_transmission_modify', 5)
+    ];
 
-    if sim_config.adjust_A_lbs.has_value
-        vehicle.coastdown_adjust_A_lbf = sim_config.adjust_A_lbs.value;
-    end
 
-A default value, if provided, is always available even if the user has not provided a value (i.e. ``has_value()`` returns false).
-
-Output Summary File Keys
-------------------------
-
-The ``has_value()`` method is also used to cull unnecessary tags from the config string that appear in the output summary file Key column.  Culling empty or default value tags from the Key column makes the strings easier to read and understand but still specifies the correct simulation parameters.
-
-Keys from the output file can be used directly in new config sets by cutting and pasting them into user batch file config sets.  In this way, an end-user of the simulation results can select runs to examine further or may even create new config strings to be run.  Because the output summary file is a .csv file, commas in the Key column are replaced with # symbols to prevent incorrect column breaks.  Even though the # symbol is not a valid Matlab operator, these strings can still be used directly in new config sets.  The batch process converts #'s to commas before parsing the strings.
+Config option packages are functions that return a package of class ``class_REVS_sim_config_options``, and the first step in the function is to create that object. Next, the keys are defined as an array of ``class_REVS_sim_config_key`` elements where the optional arguments for tag, eval and default value discussed previously are specified and stored into the ``keys`` property. Finally the scripts are specified in the appropriate properties. ``case_preprocess_scripts`` are run before simulation ``case_postprocess_scripts`` are run after simulation and ``batch_postprocess_scripts`` are run after all simulations are complete. Each of these properties must be set as an array os ``class_REVS_sim_config_script``objects. The constructor for ``class_REVS_sim_config_scripts`` takes two arguments. The first is the name of the script, the second defines when the scripts will be run.
 
 .. _controlling_datalogging_and_auditing:
 
