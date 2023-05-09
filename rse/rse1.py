@@ -1,3 +1,6 @@
+# import sys
+# sys.path.append("c:/users/jcherr01/pycharmprojects/epa_alpha_model/venv/lib/site-packages")
+
 import numpy as np
 # import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -5,7 +8,7 @@ from sklearn.preprocessing import PolynomialFeatures
 # import xlrd
 
 # Define the data
-from sklearn.utils.extmath import safe_sparse_dot
+# from sklearn.utils.extmath import safe_sparse_dot
 
 # Load the CSV file using NumPy's genfromtxt function
 data = np.genfromtxt('book1.csv', delimiter=',', skip_header=1)
@@ -38,8 +41,8 @@ model.fit(X_design, y)
 # Print the model coefficients
 intercept = model.intercept_
 coeff = model.coef_
-# print(model.intercept_)
-# print(model.coef_)
+print(model.intercept_)
+print(model.coef_)
 
 n = 1
 
@@ -63,7 +66,7 @@ row = intercept + coeff[0] \
 
 # print(f'Response surface equation: {intercept:.2f} + {coeff[0]:.2f}x1 + {coeff[1]:.2f}x2 + {coeff[2]:.2f}x3\
 # + {coeff[3]:.2f}x4 + {coeff[4]:.2f}x1^2 + {coeff[5]:.2f}x2^2 + {coeff[6]:.2f}x3^2 + {coeff[7]:.2f}x4^2\
- #   + {coeff[8]:.2f}x1*X2 + {coeff[9]:.2f}x1*x3 + {coeff[10]:.2f}x1*x3 + {coeff[11]:.2f}x1*x4\
+#   + {coeff[8]:.2f}x1*X2 + {coeff[9]:.2f}x1*x3 + {coeff[10]:.2f}x1*x3 + {coeff[11]:.2f}x1*x4\
 #    + {coeff[12]:.2f}x2*x3 + {coeff[13]:.2f}x2*x4 + {coeff[14]:.2f}x3*x4')
 
 
