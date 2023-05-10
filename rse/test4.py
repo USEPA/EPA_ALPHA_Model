@@ -13,3 +13,4 @@ data = pd.DataFrame.from_dict({
 p = PolynomialFeatures(degree=2).fit(data)
 print(p.get_feature_names(data.columns))
 
+
