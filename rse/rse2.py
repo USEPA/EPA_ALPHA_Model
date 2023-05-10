@@ -89,3 +89,20 @@ with open("coeff.csv", "w", newline="") as file:
 # Save the updated data array to the CSV file
 # np.savetxt('data.csv', data, delimiter=',', fmt='%.8f')
 
+# Get feature names
+feat_names = poly.get_feature_names_out(['RLHP20', 'RLHP60', 'HP_ETW', 'ETW'])
+# print(feat_names)
+#for i in range(len(feat_names)):
+#    print(feat_names[i])
+#    feat_names[i] = feat_names[i].replace(" ", "*")
+#    print(feat_names[i])
+
+# Create equation string
+equation = f"{intercept:.15f} + "
+for i, name in enumerate(feat_names):
+    feat_names[i] = feat_names[i].replace(" ", " * ")
+    equation = equation + str(coeff[i]) + " * " + feat_names[i] + " + "
+    #equation += f"{coeff[i]:.15f} {'*'} {name} + "
+equation = equation[:-3]  # Remove the last " + "
+
+print(equation)
