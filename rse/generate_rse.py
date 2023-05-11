@@ -3,7 +3,12 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 import csv
 
-# Load the input CSV
+# Load the headers
+with open('ttt_1.csv', newline='') as f:
+  reader = csv.reader(f)
+  header = next(reader)  # gets the first line
+
+# Load the input data
 data = np.genfromtxt('ttt_1.csv', delimiter=',', skip_header=1)
 
 # Extract the data into arrays
@@ -27,7 +32,7 @@ intercept = model.intercept_
 coeff = model.coef_
 
 # Get feature names
-feat_names = poly.get_feature_names_out(['RLHP20', 'RLHP60', 'HP_ETW', 'ETW'])
+feat_names = poly.get_feature_names_out([header[0], header[1], header[2], header[3]])
 
 # Generate RSE equation for export
 equation = f"{intercept:.15f} + "
@@ -36,9 +41,12 @@ for i, name in enumerate(feat_names):
     equation = equation + str(coeff[i]) + " * " + feat_names[i] + " + "
 equation = equation[:-3]  # Remove the last " + "
 
-# print(equation)
+print(equation)
 
 # Export equation to file
 output_file = open("equation.txt", "w")
 output_file.write(equation)
 output_file.close()
+
+
+
