@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 
-def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4,inputy,filename):
+def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4,inputy):
     # Define the RSE parameters
     X = np.column_stack((x1, x2, x3, x4))
     poly = PolynomialFeatures(degree=2)
@@ -26,10 +26,10 @@ def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4,inputy,filename):
         feat_names[i] = feat_names[i].replace(" ", " * ")
         equation = equation + str(coeff[i]) + " * " + feat_names[i] + " + "
     equation = equation[:-3]  # Remove the last " + "
+    equ = "(" + equation + ")"
 
-    print(equation)
+    # Get the RSE predictions
+    rse = model.predict(X_design)
 
-    l = model.predict(X_design)
+    return equ, rse
 
-    df = pd.DataFrame({input1: x1, input2: x2, input3: x3, input4: x4, inputy: y, "RSE": l})
-    df.to_csv(filename + ".csv", index=False)
