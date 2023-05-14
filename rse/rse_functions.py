@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
+from PySide2.QtWidgets import QFileDialog
 
 
 def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4,inputy):

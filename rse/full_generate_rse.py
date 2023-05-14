@@ -1,18 +1,26 @@
 from matplotlib import pyplot as plt
 from rse_functions import *
 import sys
-import xlsxwriter
+# import xlsxwriter
 import pandas as pd
 from pathlib import Path
-import tkinter as tk
-from tkinter import filedialog
+from PyQt5.QtWidgets import QApplication, QFileDialog
+# import tkinter as tk
+# from tkinter import filedialog
+
+from PySide2.QtWidgets import QFileDialog
 
 # filename = openfilename()
 
-root = tk.Tk()
-root.withdraw()
+# root = tk.Tk()
+# root.withdraw()
 # filename = filedialog.askopenfilename()
 # input_file = filename
+
+app = QApplication([])
+file_path, _ = QFileDialog.getOpenFileName(None, "Open File", "", "All Files (*.*);;Text Files (*.txt)")
+
+print(file_path)
 
 inputy = []
 equation = []
