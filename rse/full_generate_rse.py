@@ -1,8 +1,18 @@
 from matplotlib import pyplot as plt
 from rse_functions import *
-import os
-# import xlsxwriter
+import sys
+import xlsxwriter
 import pandas as pd
+from pathlib import Path
+import tkinter as tk
+from tkinter import filedialog
+
+# filename = openfilename()
+
+root = tk.Tk()
+root.withdraw()
+# filename = filedialog.askopenfilename()
+# input_file = filename
 
 inputy = []
 equation = []
@@ -21,7 +31,8 @@ inputy.append("Engine Displacement L")
 inputy.append("Engine Cylinders")
 
 # Read the ALPHA file
-df=pd.read_csv("2022_09_15_17_30_26_LMDV_CVM_car_GDI_TRX10_FWD_SS1_results.csv", skiprows=[1])
+input_file = "2022_09_15_17_30_26_LMDV_CVM_car_GDI_TRX10_FWD_SS1_results.csv"
+df=pd.read_csv(input_file, skiprows=[1])
 
 # Get input data columns
 x1 = df[input1]
@@ -30,8 +41,8 @@ x3 = df[input3]
 x4 = df[input4]
 
 # Iterate through all y values
-if os.path.exists("equation.txt"):
-  os.remove("equation.txt")
+#if os.path.exists("equation.txt"):
+#  os.remove("equation.txt")
 count = 0
 for x in inputy:
     y = df[x]
@@ -56,20 +67,20 @@ for x in inputy:
 # Show check plots
 plt.show()
 
-# Export equation to file
+# Create dataframe of equations
 equation1 = pd.DataFrame({"Value" : inputy, "Equation" : equation})
-# df.to_csv("equation.csv", index=False)
 
-# equation1 = pd.DataFrame(equation)
+#strip off .csv and add .xlsx to filename
+filename = Path(input_file)
+filename = filename.with_suffix('')
+filename = filename.with_suffix('.xlsx')
 
-
-writer = pd.ExcelWriter('test.xlsx', engine='xlsxwriter')
-# df = pd.read_csv('equation.csv')
+#Write out Excel file with two sheets
+writer = pd.ExcelWriter(filename, engine='xlsxwriter')
 equation1.to_excel(writer, sheet_name='Equation')
-# df = pd.read_csv('data.csv')
 out1.to_excel(writer, sheet_name='Data')
 writer.close()
 
-
-
+print("exit")
+sys.exit()
 

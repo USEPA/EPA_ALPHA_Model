@@ -1,7 +1,7 @@
-import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
+
 
 def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4,inputy):
     # Define the RSE parameters
@@ -32,4 +32,6 @@ def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4,inputy):
     rse = model.predict(X_design)
 
     return equ, rse
+
+
 
