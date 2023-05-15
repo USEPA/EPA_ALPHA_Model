@@ -1,14 +1,14 @@
 from matplotlib import pyplot as plt
 from rse_functions import *
 import sys
-# import xlsxwriter
+import xlsxwriter
 import pandas as pd
 from pathlib import Path
 from PyQt5.QtWidgets import QApplication, QFileDialog
 # import tkinter as tk
 # from tkinter import filedialog
 
-from PySide2.QtWidgets import QFileDialog
+# from PySide2.QtWidgets import QFileDialog
 
 # filename = openfilename()
 
@@ -18,9 +18,9 @@ from PySide2.QtWidgets import QFileDialog
 # input_file = filename
 
 app = QApplication([])
-file_path, _ = QFileDialog.getOpenFileName(None, "Open File", "", "All Files (*.*);;Text Files (*.txt)")
+input_file, _ = QFileDialog.getOpenFileName(None, "Open File", "", "All Files (*.*);;Text Files (*.txt)")
 
-print(file_path)
+print(input_file)
 
 inputy = []
 equation = []
@@ -39,7 +39,7 @@ inputy.append("Engine Displacement L")
 inputy.append("Engine Cylinders")
 
 # Read the ALPHA file
-input_file = "2022_09_15_17_30_26_LMDV_CVM_car_GDI_TRX10_FWD_SS1_results.csv"
+# input_file = "2022_09_15_17_30_26_LMDV_CVM_car_GDI_TRX10_FWD_SS1_results.csv"
 df=pd.read_csv(input_file, skiprows=[1])
 
 # Get input data columns
