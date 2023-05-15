@@ -5,6 +5,7 @@ import xlsxwriter
 import pandas as pd
 from pathlib import Path
 from PyQt5.QtWidgets import QApplication, QFileDialog
+import numpy
 # import tkinter as tk
 # from tkinter import filedialog
 
@@ -63,8 +64,21 @@ for x in inputy:
     out1[inputy[count]] = y
     out1[inputy[count] + "-RSE"] = rse
     out = pd.DataFrame(out1)
-    # Generate check plots
-    out.plot(x=inputy[count], y=inputy[count] + "-RSE", style='o')
+    # Generate check plot
+    out.plot(x=inputy[count], y=inputy[count] + "-RSE", style='o', legend=None, color="black")
+    # Add titles to plot
+    font1 = {'family': 'arial', 'color': 'black', 'size': 20}
+    font2 = {'family': 'arial', 'color': 'black', 'size': 15}
+    plt.title(inputy[count], fontdict=font1)
+    plt.xlabel(inputy[count] + "-ALPHA", fontdict=font2)
+    plt.ylabel(inputy[count] + "-RSE", fontdict=font2)
+    # calculate equation for trendline
+    z = np.polyfit(out[inputy[count]], out[inputy[count] + "-RSE"], 1)
+    p = np.poly1d(z)
+    # add trendline to plot
+    plt.plot(out[inputy[count]], p(out[inputy[count]]), color="black")
+    # plt.savefig('plot.png')
+
     equation.append(equ)
 
     count += 1
