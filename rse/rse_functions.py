@@ -3,9 +3,10 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 import openpyxl
 
-def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4,inputy):
+# def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4):
+def iterate1(x1, y, x_values):
     # Define the RSE parameters
-    X = np.column_stack((x1, x2, x3, x4))
+    X = np.column_stack((x1))
     poly = PolynomialFeatures(degree=2)
     X_design = poly.fit_transform(X)
 
@@ -18,7 +19,7 @@ def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4,inputy):
     coeff = model.coef_
 
     # Get feature names
-    feat_names = poly.get_feature_names_out([input1, input2, input3, input4])
+    feat_names = poly.get_feature_names_out(x_values)
 
     # Generate RSE equation for export
     equation = f"{intercept:.15f} + "
