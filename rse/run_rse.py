@@ -1,11 +1,7 @@
 import os
 
-import matplotlib
-import pandas
 from matplotlib import pyplot as plt
 from rse_functions import *
-import sys
-import xlsxwriter
 import pandas as pd
 from pathlib import Path
 from PyQt5.QtWidgets import QApplication, QFileDialog
@@ -17,9 +13,7 @@ while 1:
 
     # Read RSE input and output values from configuration file
     x_values = read_column('configuration.xlsx', 'Sheet1', 'RSE Inputs')
-    print(x_values)
     y_values = read_column('configuration.xlsx', 'Sheet1', 'RSE Outputs')
-    print(y_values)
 
     # Clear arrays
     equation = []

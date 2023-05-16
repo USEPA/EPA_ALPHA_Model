@@ -3,7 +3,6 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 import openpyxl
 
-# def iterate1(x1,x2,x3,x4,y,input1,input2,input3,input4):
 def iterate1(x1, y, x_values):
     # Define the RSE parameters
     X = np.column_stack((x1))
@@ -29,10 +28,34 @@ def iterate1(x1, y, x_values):
     equation = equation[:-3]  # Remove the last " + "
     equ = "(" + equation + ")"
 
+    equ1 = equ
+    while equ1.find('^') != -1:
+        loc = equ1.find('^')
+        d = equ1.rfind(" ",0,loc)
+        e = equ1.find(" ", d+1)
+        r = equ1[d+1:e]
+        r1 = equ1[d+1:e-2]
+        equ1 = equ1.replace(r, r1 + " * " + r1)
+
+    print(equ)
+    print(equ1)
+
+
     # Get the RSE predictions
     rse = model.predict(X_design)
 
-    return equ, rse
+    equ2 = equ1
+    count = 0
+    for b in x_values:
+        equ2 = equ2.replace(x_values[count], str(X[0,count]))
+        count += 1
+
+    print(equ2)
+    e = eval(equ2)
+    print(e)
+    print(rse[0])
+
+    return equ1, rse
 
 
 def read_column(filename, sheetname, column_name):
@@ -57,11 +80,4 @@ def read_column(filename, sheetname, column_name):
     return column_values
 
 
-# Usage example
-#filename = 'example.xlsx'  # Replace with your file path
-#sheetname = 'Sheet1'  # Replace with your sheet name
-#column_index = 1  # Replace with the column index you want to read (1 for column A, 2 for column B, etc.)
-
-#column_data = read_column(filename, sheetname, column_index)
-#print(column_data)
 
