@@ -37,9 +37,6 @@ def iterate1(x1, y, x_values):
         r1 = equ1[d+1:e-2]
         equ1 = equ1.replace(r, r1 + " * " + r1)
 
-    print(equ)
-    print(equ1)
-
 
     # Get the RSE predictions
     rse = model.predict(X_design)
@@ -50,10 +47,13 @@ def iterate1(x1, y, x_values):
         equ2 = equ2.replace(x_values[count], str(X[0,count]))
         count += 1
 
-    print(equ2)
     e = eval(equ2)
-    print(e)
-    print(rse[0])
+    f = rse[0]
+    g = (e-f)/e
+    if abs(g) > 0.0001:
+        print("Formula Error")
+        exit()
+
 
     return equ1, rse
 
