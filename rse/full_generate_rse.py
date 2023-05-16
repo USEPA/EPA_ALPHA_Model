@@ -9,9 +9,11 @@ import pandas as pd
 from pathlib import Path
 from PyQt5.QtWidgets import QApplication, QFileDialog
 
+# Open file dialog for ALPHA input file
 app = QApplication([])
 input_file, _ = QFileDialog.getOpenFileName(None, "Open ALPHA Results File", "", "All Files (*.*);;CSV Files (*.csv)")
 
+# Clear arrays
 inputy = []
 equation = []
 plots = []
@@ -29,9 +31,10 @@ inputy.append("EPA_US06_2 gCO2/mi")
 inputy.append("Engine Displacement L")
 inputy.append("Engine Cylinders")
 
-# Read the ALPHA file
-# input_file = "2022_09_15_17_30_26_LMDV_CVM_car_GDI_TRX10_FWD_SS1_results.csv"
+# Read the ALPHA file into dataframes
+# Save the original file for output later
 alpha_csv = pd.read_csv(input_file)
+# Read again skipping second row of units
 df=pd.read_csv(input_file, skiprows=[1])
 
 # Get input data columns
@@ -40,9 +43,7 @@ x2 = df[input2]
 x3 = df[input3]
 x4 = df[input4]
 
-# Iterate through all y values
-#if os.path.exists("equation.txt"):
-#  os.remove("equation.txt")
+# Generate RSE equations iterating through all y values
 count = 0
 for x in inputy:
     y = df[x]
@@ -50,7 +51,7 @@ for x in inputy:
     if count == 0:
         out = pd.DataFrame({input1: x1, input2: x2, input3: x3, input4: x4})
 
-    # Add RSE output to dataframe
+    # Add original and RSE output data to dataframe
     out1 = pd.DataFrame(out)
     out1[inputy[count] + "-ALPHA"] = y
     out1[inputy[count] + "-RSE"] = rse
@@ -69,14 +70,11 @@ for x in inputy:
     # add trendline to plot
     plt.plot(out[inputy[count] + "-ALPHA"], p(out[inputy[count] + "-ALPHA"]), color="black")
     plt.savefig('plot' + str(count) + '.png')
-    # plots.append(fig)
 
+    # Add equation to array
     equation.append(equ)
 
     count += 1
-
-# Output completed results file
-# out1.to_csv("data.csv", index=False)
 
 # Show check plots
 # plt.show()
@@ -84,7 +82,7 @@ for x in inputy:
 # Create dataframe of equations
 equation1 = pd.DataFrame({"Value" : inputy, "Equation" : equation})
 
-#strip off .csv and add .xlsx to filename
+#strip off .csv and add .xlsx to ALPHA filename
 filename = Path(input_file)
 filename = filename.with_suffix('')
 filename = filename.with_suffix('.xlsx')
@@ -99,7 +97,7 @@ worksheet.autofit()
 out1.to_excel(writer, sheet_name='Data')
 worksheet = writer.sheets['Data']
 worksheet.autofit()
-
+# Write original ALPHA data
 alpha_csv.to_excel(writer, sheet_name='ALPHA_Input', index=False)
 worksheet = writer.sheets['ALPHA_Input']
 worksheet.autofit()
@@ -111,11 +109,12 @@ for x in inputy:
     workbook.add_worksheet('Plot ' + str(count))
     worksheet = writer.sheets['Plot ' + str(count)]
     plot_name = 'plot' + str(count) + '.png'
-    worksheet.insert_image('D3', plot_name)
+    worksheet.insert_image('A1', plot_name)
     count += 1
 
 writer.close()
 
+# Delete check plot files
 count = 0
 for x in inputy:
     plot_name = 'plot' + str(count) + '.png'
@@ -123,6 +122,6 @@ for x in inputy:
         os.remove(plot_name)
     count += 1
 
-
+# End script
 sys.exit()
 
