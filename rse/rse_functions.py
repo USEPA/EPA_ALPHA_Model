@@ -6,7 +6,7 @@ import openpyxl
 def iterate1(x1, y, x_values):
     # Define the RSE parameters
     X = np.column_stack((x1))
-    poly = PolynomialFeatures(degree=2)
+    poly = PolynomialFeatures(degree=3)
     X_design = poly.fit_transform(X)
 
     # Solve the RSE
@@ -28,6 +28,7 @@ def iterate1(x1, y, x_values):
     equation = equation[:-3]  # Remove the last " + "
     equ = "(" + equation + ")"
 
+    # Replace equation terms with '^' as this is not valid in Python.
     equ1 = equ
     while equ1.find('^') != -1:
         loc = equ1.find('^')
@@ -35,12 +36,17 @@ def iterate1(x1, y, x_values):
         e = equ1.find(" ", d+1)
         r = equ1[d+1:e]
         r1 = equ1[d+1:e-2]
-        equ1 = equ1.replace(r, r1 + " * " + r1)
-
+        r2 = equ1[loc+1:e]
+        r3 = int(r2)
+        str1 = r1
+        for x in range(r3-1):
+            str1 += " * " + r1
+        equ1 = equ1.replace(r, str1)
 
     # Get the RSE predictions
     rse = model.predict(X_design)
 
+    # Insert actual values into equation to check equation syntax accuracy
     equ2 = equ1
     count = 0
     for b in x_values:
@@ -51,6 +57,7 @@ def iterate1(x1, y, x_values):
     f = rse[0]
     g = (e-f)/e
     if abs(g) > 0.0001:
+        print(equ1)
         print("Formula Error")
         exit()
 

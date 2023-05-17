@@ -10,10 +10,12 @@ app = QApplication([])
 while 1:
     # Open file dialog for ALPHA input file
     input_file, _ = QFileDialog.getOpenFileName(None, "Open ALPHA Results File", "", "All Files (*.*);;CSV Files (*.csv)")
+    file_path = os.path.dirname(input_file)
+    config_path = os.path.join(file_path, "configuration.xlsx")
 
     # Read RSE input and output values from configuration file
-    x_values = read_column('configuration.xlsx', 'Sheet1', 'RSE Inputs')
-    y_values = read_column('configuration.xlsx', 'Sheet1', 'RSE Outputs')
+    x_values = read_column(config_path, 'Sheet1', 'RSE Inputs')
+    y_values = read_column(config_path, 'Sheet1', 'RSE Outputs')
 
     # Clear arrays
     equation = []
