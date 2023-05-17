@@ -2,11 +2,13 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 import openpyxl
+import tkinter as tk
+from PIL import Image, ImageTk
 
 def iterate1(x1, y, x_values):
     # Define the RSE parameters
     X = np.column_stack((x1))
-    poly = PolynomialFeatures(degree=3)
+    poly = PolynomialFeatures(degree=2)
     X_design = poly.fit_transform(X)
 
     # Solve the RSE
@@ -26,7 +28,7 @@ def iterate1(x1, y, x_values):
         feat_names[i] = feat_names[i].replace(" ", " * ")
         equation = equation + str(coeff[i]) + " * " + feat_names[i] + " + "
     equation = equation[:-3]  # Remove the last " + "
-    equ = "(" + equation + ")"
+    equ = "( " + equation + " )"
 
     # Replace equation terms with '^' as this is not valid in Python.
     equ1 = equ
@@ -39,8 +41,10 @@ def iterate1(x1, y, x_values):
         r2 = equ1[loc+1:e]
         r3 = int(r2)
         str1 = r1
+        # Add number of multiply terms based on power
         for x in range(r3-1):
             str1 += " * " + r1
+        # Replace '^' terms in equation with solution
         equ1 = equ1.replace(r, str1)
 
     # Get the RSE predictions
@@ -50,7 +54,7 @@ def iterate1(x1, y, x_values):
     equ2 = equ1
     count = 0
     for b in x_values:
-        equ2 = equ2.replace(x_values[count], str(X[0,count]))
+        equ2 = equ2.replace(" " + x_values[count] + " ", " " + str(X[0,count]) + " ")
         count += 1
 
     e = eval(equ2)
@@ -87,4 +91,36 @@ def read_column(filename, sheetname, column_name):
     return column_values
 
 
+def resize_image(image, max_width, max_height):
+    width, height = image.size
+    aspect_ratio = width / height
 
+    if width > max_width or height > max_height:
+        if width > height:
+            new_width = max_width
+            new_height = int(new_width / aspect_ratio)
+        else:
+            new_height = max_height
+            new_width = int(new_height * aspect_ratio)
+
+        resized_image = image.resize((new_width, new_height), Image.LANCZOS)
+        return resized_image
+    else:
+        return image
+
+def create_image_window(image_files, grid_columns, max_width, max_height):
+    window = tk.Tk()
+    window.title("ALPHA vs RSE Check Plots")
+
+    total_images = len(image_files)
+    grid_rows = (total_images + grid_columns - 1) // grid_columns
+
+    for i, file in enumerate(image_files):
+        image = Image.open(file)
+        resized_image = resize_image(image, max_width, max_height)
+        photo = ImageTk.PhotoImage(resized_image)
+        label = tk.Label(window, image=photo)
+        label.image = photo  # Keep a reference to the image to prevent garbage collection
+        label.grid(row=i // grid_columns, column=i % grid_columns, padx=10, pady=10)
+
+    window.mainloop()

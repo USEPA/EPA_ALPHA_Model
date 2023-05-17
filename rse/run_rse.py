@@ -1,4 +1,5 @@
 import os
+import sys
 
 from matplotlib import pyplot as plt
 from rse_functions import *
@@ -9,9 +10,12 @@ from PyQt5.QtWidgets import QApplication, QFileDialog
 app = QApplication([])
 while 1:
     # Open file dialog for ALPHA input file
-    input_file, _ = QFileDialog.getOpenFileName(None, "Open ALPHA Results File", "", "All Files (*.*);;CSV Files (*.csv)")
+    input_file, _ = QFileDialog.getOpenFileName(None, "Open ALPHA Results File", "", "CSV Files (*.csv);;All Files (*.*)")
     file_path = os.path.dirname(input_file)
     config_path = os.path.join(file_path, "configuration.xlsx")
+
+    if not os.path.exists(input_file):
+        sys.exit()
 
     # Read RSE input and output values from configuration file
     x_values = read_column(config_path, 'Sheet1', 'RSE Inputs')
@@ -106,13 +110,32 @@ while 1:
 
     writer.close()
 
-    # Delete check plot files
+    image_files = []
+    # Load check plot files
     count = 0
     for x in y_values:
         plot_name = 'plot' + str(count) + '.png'
-        if os.path.exists(plot_name):
-            os.remove(plot_name)
+        image_files.append(plot_name)
         count += 1
+
+    # Display check plots
+    grid_columns = 4
+    max_width = 300
+    max_height = 300
+    create_image_window(image_files, grid_columns, max_width, max_height)
+
+    # Delete check plot files
+    for x in image_files:
+        if os.path.exists(x):
+            os.remove(x)
+
+    # Rename input file
+    on1 = input_file
+    fn1 = os.path.basename(on1)
+    fp1 = os.path.dirname(on1)
+    np1 = os.path.join(fp1, 'zzz_' + fn1)
+    # os.rename(on1, np1)
+
 
 # End script
 sys.exit()
