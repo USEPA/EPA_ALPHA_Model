@@ -11,11 +11,14 @@ from PyQt5.QtWidgets import QApplication, QFileDialog
 app = QApplication([])
 while 1:
     # Open file dialog for ALPHA input file
-    input_file, _ = QFileDialog.getOpenFileName(None, "Open ALPHA Results File", "", "CSV Files (*.csv);;All Files (*.*)")
+    input_file, _ = QFileDialog.getOpenFileName(None, "Open ALPHA Results File", "",
+                                                "CSV Files (*.csv);;All Files (*.*)")
+    # Save the path of the selected input file
     file_path = os.path.dirname(input_file)
+    # Create path to configuration file in the same directory as the input file
     config_path = os.path.join(file_path, "configuration.xlsx")
 
-    # Exit if dialog closed
+    # Exit if file error or user cancels dialog
     if not os.path.exists(input_file):
         sys.exit()
 
@@ -25,31 +28,33 @@ while 1:
 
     # Clear arrays
     equation = []
+    out = []
+    out1 = []
+    x1 = []
 
     # Read the ALPHA file into dataframes
     # Save the original file for output later
     alpha_csv = pd.read_csv(input_file)
     # Read again skipping second row of units
-    df=pd.read_csv(input_file, skiprows=[1])
+    df = pd.read_csv(input_file, skiprows=[1])
 
-    # Get input data columns
-    x1 = []
+    # Get input data columns from input file (x)
     count = 0
     for x in x_values:
         x1.append(df[x_values[count]])
         count += 1
 
-    # Generate RSE equations iterating through all y values
+    # Generate RSE equations iterating through all output values (y)
     count = 0
     for x in y_values:
         y = df[x]
-        equ, rse = iterate1(x1,y,x_values)
+        equ, rse = iterate1(x1, y, x_values)
 
         if count == 0:
             count1 = 0
             out = pd.DataFrame()
             for b in x_values:
-                out.insert(count1,x_values[count1], x1[count1], True)
+                out.insert(count1, x_values[count1], x1[count1], True)
                 count1 += 1
 
         # Add original and RSE output data to dataframe
@@ -65,28 +70,26 @@ while 1:
         plt.title(y_values[count], fontdict=font1)
         plt.xlabel(y_values[count] + "-ALPHA", fontdict=font2)
         plt.ylabel(y_values[count] + "-RSE", fontdict=font2)
-        # calculate equation for trendline
+        # Calculate equation for trend line
         z = np.polyfit(out[y_values[count] + "-ALPHA"], out[y_values[count] + "-RSE"], 1)
         p = np.poly1d(z)
-        # add trendline to plot
+        # Add trend line to plot
         plt.plot(out[y_values[count] + "-ALPHA"], p(out[y_values[count] + "-ALPHA"]), color="black")
         plt.savefig('plot' + str(count) + '.png')
         plt.close()
-
         # Add equation to array
         equation.append(equ)
-
         count += 1
 
     # Create dataframe of equations
-    equation1 = pd.DataFrame({"Value" : y_values, "Equation" : equation})
+    equation1 = pd.DataFrame({"Value": y_values, "Equation": equation})
 
-    #strip off .csv and add .xlsx to ALPHA filename
+    # Strip off .csv and add .xlsx to ALPHA filename
     filename = Path(input_file)
     filename = filename.with_suffix('')
     filename = filename.with_suffix('.xlsx')
 
-    #Write out Excel workbook file with multiple worksheets
+    # Write out Excel workbook file with multiple worksheets
     writer = pd.ExcelWriter(filename, engine='xlsxwriter')
     # Write Equation worksheet
     equation1.to_excel(writer, sheet_name='Equation')
@@ -101,7 +104,7 @@ while 1:
     worksheet = writer.sheets['ALPHA_Input']
     worksheet.autofit()
     # Write out check plots
-    workbook  = writer.book
+    workbook = writer.book
     count = 0
     for x in y_values:
         workbook.add_worksheet('Plot ' + str(count))
@@ -109,7 +112,6 @@ while 1:
         plot_name = 'plot' + str(count) + '.png'
         worksheet.insert_image('A1', plot_name)
         count += 1
-
     writer.close()
 
     image_files = []
@@ -133,24 +135,14 @@ while 1:
 
     # Move completed input file
     new_directory = "Completed"
-    # Get the current directory
+    # Get the current input file directory
     current_directory = file_path
-    # Create the path for the new directory
+    # Create subdirectory 'Completed' if it does not exist
     new_directory_path = os.path.join(current_directory, new_directory)
     # Check if the directory already exists
     if not os.path.exists(new_directory_path):
         # Create the new directory
         os.makedirs(new_directory_path)
+    # Move completed input file to 'Completed' subdirectory
     shutil.move(input_file, new_directory_path)
-
-    # Rename input file
-    # on1 = input_file
-    # fn1 = os.path.basename(on1)
-    # fp1 = os.path.dirname(on1)
-    # np1 = os.path.join(fp1, 'zzz_' + fn1)
-    # os.rename(on1, np1)
-
-
-# End script
-sys.exit()
-
+# The main while loop continues
