@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 
 from matplotlib import pyplot as plt
@@ -14,6 +15,7 @@ while 1:
     file_path = os.path.dirname(input_file)
     config_path = os.path.join(file_path, "configuration.xlsx")
 
+    # Exit if dialog closed
     if not os.path.exists(input_file):
         sys.exit()
 
@@ -129,11 +131,23 @@ while 1:
         if os.path.exists(x):
             os.remove(x)
 
+    # Move completed input file
+    new_directory = "Completed"
+    # Get the current directory
+    current_directory = file_path
+    # Create the path for the new directory
+    new_directory_path = os.path.join(current_directory, new_directory)
+    # Check if the directory already exists
+    if not os.path.exists(new_directory_path):
+        # Create the new directory
+        os.makedirs(new_directory_path)
+    shutil.move(input_file, new_directory_path)
+
     # Rename input file
-    on1 = input_file
-    fn1 = os.path.basename(on1)
-    fp1 = os.path.dirname(on1)
-    np1 = os.path.join(fp1, 'zzz_' + fn1)
+    # on1 = input_file
+    # fn1 = os.path.basename(on1)
+    # fp1 = os.path.dirname(on1)
+    # np1 = os.path.join(fp1, 'zzz_' + fn1)
     # os.rename(on1, np1)
 
 
