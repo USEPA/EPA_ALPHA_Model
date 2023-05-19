@@ -5,15 +5,16 @@ import openpyxl
 import tkinter as tk
 from PIL import Image, ImageTk
 
+
 def iterate1(x1, y, x_values):
     # Define the RSE parameters
-    X = np.column_stack((x1))
+    x = np.column_stack(x1)
     poly = PolynomialFeatures(degree=2)
-    X_design = poly.fit_transform(X)
+    x_design = poly.fit_transform(x)
 
     # Solve the RSE
     model = LinearRegression()
-    model.fit(X_design, y)
+    model.fit(x_design, y)
 
     # Get the model coefficients
     intercept = model.intercept_
@@ -34,7 +35,7 @@ def iterate1(x1, y, x_values):
     equ1 = equ
     while equ1.find('^') != -1:
         loc = equ1.find('^')
-        d = equ1.rfind(" ",0,loc)
+        d = equ1.rfind(" ", 0, loc)
         e = equ1.find(" ", d+1)
         r = equ1[d+1:e]
         r1 = equ1[d+1:e-2]
@@ -42,19 +43,19 @@ def iterate1(x1, y, x_values):
         r3 = int(r2)
         str1 = r1
         # Add number of multiply terms based on power
-        for x in range(r3-1):
+        for _ in range(r3-1):
             str1 += " * " + r1
         # Replace '^' terms in equation with solution
         equ1 = equ1.replace(r, str1)
 
     # Get the RSE predictions
-    rse = model.predict(X_design)
+    rse = model.predict(x_design)
 
     # Insert actual values into equation to check equation syntax accuracy
     equ2 = equ1
     count = 0
-    for b in x_values:
-        equ2 = equ2.replace(" " + x_values[count] + " ", " " + str(X[0,count]) + " ")
+    for _ in x_values:
+        equ2 = equ2.replace(" " + x_values[count] + " ", " " + str(x[0, count]) + " ")
         count += 1
 
     e = eval(equ2)
@@ -64,7 +65,6 @@ def iterate1(x1, y, x_values):
         print(equ1)
         print("Formula Error")
         exit()
-
 
     return equ1, rse
 
@@ -108,12 +108,13 @@ def resize_image(image, max_width, max_height):
     else:
         return image
 
+
 def create_image_window(image_files, grid_columns, max_width, max_height):
     window = tk.Tk()
     window.title("ALPHA vs RSE Check Plots")
 
-    total_images = len(image_files)
-    grid_rows = (total_images + grid_columns - 1) // grid_columns
+    # total_images = len(image_files)
+    # grid_rows = (total_images + grid_columns - 1) // grid_columns
 
     for i, file in enumerate(image_files):
         image = Image.open(file)
