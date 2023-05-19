@@ -20,7 +20,7 @@ def iterate1(x1, y, x_values):
     intercept = model.intercept_
     coeff = model.coef_
 
-    # Get feature names
+    # Get feature names from RSE solution
     feat_names = poly.get_feature_names_out(x_values)
 
     # Generate RSE equation for export
