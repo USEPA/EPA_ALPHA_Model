@@ -70,6 +70,7 @@ while 1:
         plt.title(y_values[count], fontdict=font1)
         plt.xlabel(y_values[count] + "-ALPHA", fontdict=font2)
         plt.ylabel(y_values[count] + "-RSE", fontdict=font2)
+        plt.grid()
         # Calculate equation for trend line
         z = np.polyfit(out[y_values[count] + "-ALPHA"], out[y_values[count] + "-RSE"], 1)
         p = np.poly1d(z)
