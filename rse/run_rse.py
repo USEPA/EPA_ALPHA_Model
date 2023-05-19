@@ -6,13 +6,13 @@ from matplotlib import pyplot as plt
 from rse_functions import *
 import pandas as pd
 from pathlib import Path
-from PyQt5.QtWidgets import QApplication, QFileDialog
+from tkinter import filedialog as fd
 
-app = QApplication([])
 while 1:
     # Open file dialog for ALPHA input file
-    input_file, _ = QFileDialog.getOpenFileName(None, "Open ALPHA Results File", "",
-                                                "CSV Files (*.csv);;All Files (*.*)")
+    root = tk.Tk()
+    input_file = fd.askopenfilename()
+
     # Save the path of the selected input file
     file_path = os.path.dirname(input_file)
     # Create path to configuration file in the same directory as the input file
@@ -126,7 +126,7 @@ while 1:
     grid_columns = 4
     max_width = 300
     max_height = 300
-    create_image_window(image_files, grid_columns, max_width, max_height)
+    create_image_window(root, image_files, grid_columns, max_width, max_height)
 
     # Delete check plot files
     for x in image_files:

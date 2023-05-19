@@ -109,8 +109,8 @@ def resize_image(image, max_width, max_height):
         return image
 
 
-def create_image_window(image_files, grid_columns, max_width, max_height):
-    window = tk.Tk()
+def create_image_window(window, image_files, grid_columns, max_width, max_height):
+    # window = tk.Tk()
     window.title("ALPHA vs RSE Check Plots")
 
     # total_images = len(image_files)
