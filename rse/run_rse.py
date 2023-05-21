@@ -11,7 +11,8 @@ from tkinter import filedialog as fd
 while 1:
     # Open file dialog for ALPHA input file
     root = tk.Tk()
-    input_file = fd.askopenfilename()
+    input_file = fd.askopenfilename(title="Open ALPHA Results File",
+                                    filetypes=(("CSV Files", "*.csv"), ("All Files", "*.*")))
 
     # Save the path of the selected input file
     file_path = os.path.dirname(input_file)
