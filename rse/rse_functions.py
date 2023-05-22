@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
@@ -60,7 +61,7 @@ def iterate1(x1, y, x_values):
 
     e = eval(equ2)
     f = rse[0]
-    g = (e-f)/e
+    g = (e-f)/ (e + sys.float_info.epsilon)
     if abs(g) > 0.0001:
         print(equ1)
         print("Formula Error")
