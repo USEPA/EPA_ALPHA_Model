@@ -13,7 +13,8 @@ loop = True
 while loop:
     # Open file dialog for ALPHA input file
     root = tk.Tk()
-    input_files = fd.askopenfilenames(filetypes=[('.csv', '*.csv')])
+    input_file = fd.askopenfilename(title="Open ALPHA Results File",
+                                    filetypes=(("CSV Files", "*.csv"), ("All Files", "*.*")))
 
     if not input_files:
         loop = False
