@@ -67,9 +67,9 @@ def iterate1(x1, y, x_values):
         print("Formula Error")
         exit()
 
-    # if True or 'CO2' in y.name:
-    #     equ1 = 'max(0, %s)' % equ1
-    #     rse = np.maximum(0, rse)
+    if 'CO2' in y.name:
+        equ1 = 'max(0, %s)' % equ1
+        rse = np.maximum(0, rse)
 
     return equ1, rse
 
