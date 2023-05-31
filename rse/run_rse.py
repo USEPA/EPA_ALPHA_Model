@@ -100,12 +100,12 @@ while loop:
         equation1 = pd.DataFrame({"Value": y_values, "Equation": equation})
 
         # Strip off .csv and add .xlsx to ALPHA filename
-        filename = Path(input_file)
-        filename = filename.with_suffix('')
-        filename = filename.with_suffix('.xlsx')
+        output_file = Path(input_file)
+        output_file = output_file.with_suffix('')
+        output_file = output_file.with_suffix('.xlsx')
 
         # Write out Excel workbook file with multiple worksheets
-        writer = pd.ExcelWriter(filename, engine='xlsxwriter')
+        writer = pd.ExcelWriter(output_file, engine='xlsxwriter')
         # Write Equation worksheet
         equation1.to_excel(writer, sheet_name='Equation')
         worksheet = writer.sheets['Equation']
@@ -158,6 +158,11 @@ while loop:
         if not os.path.exists(new_directory_path):
             # Create the new directory
             os.makedirs(new_directory_path)
+
+        # # Move completed input file to 'Completed' subdirectory
+        # shutil.move(input_file, new_directory_path)
+
         # Move completed input file to 'Completed' subdirectory
-        shutil.move(input_file, new_directory_path)
+        shutil.move(output_file, new_directory_path)
+
 # The main while loop continues
