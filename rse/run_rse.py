@@ -57,8 +57,8 @@ while loop:
 
         # Generate RSE equations iterating through all output values (y)
         count = 0
-        for x in y_values:
-            y = df[x]
+        for y_value in y_values:
+            y = df[y_value]
             equ, rse = iterate1(x1, y, x_values)
 
             if count == 0:
@@ -74,7 +74,7 @@ while loop:
             out1[y_values[count] + "-RSE"] = rse
             out = pd.DataFrame(out1)
             # Generate check plot
-            out.plot(x=y_values[count] + "-ALPHA", y=y_values[count] + "-RSE", style='o', legend=None, color="black")
+            out.plot(y_values[count] + "-ALPHA", y_values[count] + "-RSE", style='o', legend=None, color="black")
             # Add titles to plot
             font1 = {'family': 'arial', 'color': 'black', 'size': 20}
             font2 = {'family': 'arial', 'color': 'black', 'size': 15}
