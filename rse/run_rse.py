@@ -160,9 +160,9 @@ while loop:
             os.makedirs(new_directory_path)
 
         # # Move completed input file to 'Completed' subdirectory
-        # shutil.move(input_file, new_directory_path)
+        # shutil.move(input_file, new_directory_path + os.sep + output_file.name)
 
         # Move completed input file to 'Completed' subdirectory
-        shutil.move(output_file, new_directory_path)
+        shutil.move(output_file, new_directory_path + os.sep + output_file.name)
 
 # The main while loop continues
