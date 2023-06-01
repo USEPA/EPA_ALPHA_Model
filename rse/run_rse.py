@@ -59,7 +59,13 @@ while loop:
         count = 0
         for y_value in y_values:
             y = df[y_value]
-            equ, rse = iterate1(x1, y, x_values)
+
+            try:
+                equ, rse = iterate1(x1, y, x_values)
+            except:
+                print('*** could not process %s signal "%s"' % (input_file, y_value))
+                y.update(np.zeros_like(y))
+                equ, rse = iterate1(x1, y, x_values)
 
             if count == 0:
                 count1 = 0
