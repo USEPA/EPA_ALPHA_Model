@@ -24,7 +24,8 @@ while loop:
         file_path = os.path.dirname(input_file)
 
         os.chdir(file_path)
-        config_file = [cf for cf in os.listdir() if 'configuration' in cf if cf.endswith('.xlsx')][0]
+        config_file = [cf for cf in os.listdir() if 'configuration' in cf
+                       if (cf.endswith('.xlsx') or cf.endswith('.csv'))][0]
 
         # Create path to configuration file in the same directory as the input file
         config_path = os.path.join(file_path, config_file)
@@ -34,8 +35,13 @@ while loop:
             sys.exit()
 
         # Read RSE input and output values from configuration file
-        x_values = read_column(config_path, 'Sheet1', 'RSE Inputs')
-        y_values = read_column(config_path, 'Sheet1', 'RSE Outputs')
+        if config_file.endswith('.xlsx'):
+            x_values = read_column(config_path, 'Sheet1', 'RSE Inputs')
+            y_values = read_column(config_path, 'Sheet1', 'RSE Outputs')
+        else:
+            config_df = pd.read_csv(config_path)
+            x_values = config_df['RSE Inputs'].dropna()
+            y_values = config_df['RSE Outputs'].dropna()
 
         # Clear arrays
         equation = []
