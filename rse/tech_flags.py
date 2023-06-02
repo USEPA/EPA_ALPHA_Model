@@ -41,6 +41,8 @@ tech_flags_dict['PS'] = {'ice': 0,
                          'fcv': 0,
                          'hev_truck': 0}
 
+tech_flags_dict['P2'] = tech_flags_dict['PS']
+
 tech_flags_dict['GDI'] = {
     'deac_pd': 0,
     'deac_fc': 0,
