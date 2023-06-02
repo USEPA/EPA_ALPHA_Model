@@ -1,0 +1,9 @@
+alpha_prefix,batch_prefix,rse_terms,alpha_outputs,omega_inputs,condition
+LMDV_,simulated_vehicles_ice,RLHP20,EPA_FTP_1 gCO2/mi,cs_ftp_1:cert_direct_oncycle_co2e_grams_per_mile,'CVM' in input_filename
+,,RLHP60,EPA_FTP_2 gCO2/mi,cs_ftp_2:cert_direct_oncycle_co2e_grams_per_mile,'CVM' in input_filename
+,,HP_ETW,EPA_FTP_3 gCO2/mi,cs_ftp_3:cert_direct_oncycle_co2e_grams_per_mile,'CVM' in input_filename
+,,ETW,EPA_HWFET gCO2/mi,cs_hwfet:cert_direct_oncycle_co2e_grams_per_mile,'CVM' in input_filename
+,,,EPA_US06_1 gCO2/mi,cs_us06_1:cert_direct_oncycle_co2e_grams_per_mile,'CVM' in input_filename
+,,,EPA_US06_2 gCO2/mi,cs_us06_2:cert_direct_oncycle_co2e_grams_per_mile,'CVM' in input_filename
+,,,Engine Displacement L,engine_displacement_liters,'CVM' in input_filename
+,,,Engine Cylinders,engine_cylinders,'CVM' in input_filename

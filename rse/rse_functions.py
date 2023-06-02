@@ -8,6 +8,18 @@ from PIL import Image, ImageTk
 
 
 def iterate1(x1, y, x_values):
+    """
+
+    Parameters
+    ----------
+    x1
+    y
+    x_values
+
+    Returns
+    -------
+
+    """
     # Define the RSE parameters
     x = np.column_stack(x1)
     poly = PolynomialFeatures(degree=2)
@@ -74,29 +86,19 @@ def iterate1(x1, y, x_values):
     return equ1, rse
 
 
-def read_column(filename, sheetname, column_name):
-    workbook = openpyxl.load_workbook(filename)
-    sheet = workbook[sheetname]
-    column_values = []
-
-    column_index = None
-    for cell in sheet[1]:  # Iterate through the first row to find the column index
-        if cell.value == column_name:
-            column_index = cell.column
-            break
-
-    if column_index is not None:
-        for i, row in enumerate(sheet.iter_rows(values_only=True), start=1):
-            if i > 1:  # Skip the first row
-                cell_value = row[column_index - 1]
-                if cell_value is not None:  # Ignore blank cells
-                    column_values.append(cell_value)
-
-    workbook.close()
-    return column_values
-
-
 def resize_image(image, max_width, max_height):
+    """
+
+    Parameters
+    ----------
+    image
+    max_width
+    max_height
+
+    Returns
+    -------
+
+    """
     width, height = image.size
     aspect_ratio = width / height
 
@@ -115,6 +117,20 @@ def resize_image(image, max_width, max_height):
 
 
 def create_image_window(window, image_files, grid_columns, max_width, max_height):
+    """
+
+    Parameters
+    ----------
+    window
+    image_files
+    grid_columns
+    max_width
+    max_height
+
+    Returns
+    -------
+
+    """
     # window = tk.Tk()
     window.title("ALPHA vs RSE Check Plots")
 
