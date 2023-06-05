@@ -269,7 +269,10 @@ while loop:
             y_values = []
             y_names = []
             for i, cyv in enumerate(candidate_y_values):
-                if pd.notna(config_df['condition'][i]) and eval(config_df['condition'][i]):
+                if 'condition' in config_df and pd.notna(config_df['condition'][i]) and eval(config_df['condition'][i]):
+                    y_values.append(cyv)
+                    y_names.append(config_df['omega_inputs'][i])
+                else:
                     y_values.append(cyv)
                     y_names.append(config_df['omega_inputs'][i])
 

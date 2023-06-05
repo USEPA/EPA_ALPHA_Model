@@ -7,8 +7,6 @@ tech_flags_dict['car'] = {'unibody': 1}
 
 tech_flags_dict['truck'] = {'unibody': 0}
 
-tech_flags_dict['all'] = {'high_eff_alternator': 0}  # for now
-
 tech_flags_dict['SS0'] = {'start_stop': 0}
 
 tech_flags_dict['SS1'] = {'start_stop': 1}
@@ -18,30 +16,40 @@ tech_flags_dict['PHEV'] = {'ice': 0,
                            'hev': 0,
                            'phev': 1,
                            'fcv': 0,
-                           'hev_truck': 0}
+                           'hev_truck': 0,
+                           'high_eff_alternator': 0,
+                           }
 
 tech_flags_dict['CVM'] = {'ice': 1,
                           'mhev': 0,
                           'hev': 0,
                           'phev': 0,
                           'fcv': 0,
-                          'hev_truck': 0}
+                          'hev_truck': 0,
+                          'high_eff_alternator': 0,
+                          }
 
 tech_flags_dict['P0'] = {'ice': 0,
                          'mhev': 1,
                          'hev': 0,
                          'phev': 0,
                          'fcv': 0,
-                         'hev_truck': 0}
+                         'hev_truck': 0,
+                         'high_eff_alternator': 0,
+                         }
 
 tech_flags_dict['PS'] = {'ice': 0,
                          'mhev': 0,
                          'hev': 1,
                          'phev': 0,
                          'fcv': 0,
-                         'hev_truck': 0}
+                         'hev_truck': 0,
+                         'high_eff_alternator': 0,
+                         }
 
 tech_flags_dict['P2'] = tech_flags_dict['PS']
+
+tech_flags_dict['EVM'] = {'bev': 1}
 
 tech_flags_dict['GDI'] = {
     'deac_pd': 0,
