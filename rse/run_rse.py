@@ -11,6 +11,7 @@ from pathlib import Path
 from tkinter import filedialog as fd
 
 loop = True
+plot_view = False
 
 
 def generate_check_plot(validation_df, y_values, plot_num):
@@ -155,7 +156,7 @@ def file_cleanup(file_path, image_files, output_filepathnames):
     return new_directory_path
 
 
-def create_combined_check_plot(y_values):
+def create_combined_check_plot(y_values, input_filename, plot_view):
     """
         Create combined check plot image window
 
@@ -178,7 +179,9 @@ def create_combined_check_plot(y_values):
     grid_columns = 4
     max_width = 300
     max_height = 300
-    # create_image_window(root, image_files, grid_columns, max_width, max_height)
+    if plot_view:
+        root = tk.Tk()
+        create_image_window(root, image_files, grid_columns, max_width, max_height, input_filename)
 
     return image_files
 
@@ -246,7 +249,6 @@ while loop:
 
     if input_files:
         for input_filepathname in input_files:
-            root = tk.Tk()
             input_filename = get_filename(input_filepathname)
             print('processing %s ...' % input_filename)
 
@@ -294,7 +296,7 @@ while loop:
 
             output_filepathnames = create_output_files(input_filepathname, equation_df, validation_df, alpha_df)
 
-            image_files = create_combined_check_plot(y_values)
+            image_files = create_combined_check_plot(y_values, input_filename, plot_view)
 
             output_folderpath = file_cleanup(file_path, image_files, output_filepathnames)
 
