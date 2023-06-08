@@ -242,9 +242,11 @@ while loop:
     root = tk.Tk()
     input_files = fd.askopenfilenames(title="Open ALPHA Results File",
                                     filetypes=(("CSV Files", "*.csv"), ("All Files", "*.*")))
+    root.destroy()
 
     if input_files:
         for input_filepathname in input_files:
+            root = tk.Tk()
             input_filename = get_filename(input_filepathname)
             print('processing %s ...' % input_filename)
 
