@@ -5,6 +5,8 @@ from sklearn.preprocessing import PolynomialFeatures
 import openpyxl
 import tkinter as tk
 from PIL import Image, ImageTk
+import math
+
 
 
 def iterate1(x1, y, x_values):
@@ -146,3 +148,34 @@ def create_image_window(window, image_files, grid_columns, max_width, max_height
         label.grid(row=i // grid_columns, column=i % grid_columns, padx=10, pady=10)
 
     window.mainloop()
+
+
+def combine_images(image_paths, output_path, grid_size):
+    images = [Image.open(path) for path in image_paths]
+
+    # Calculate the grid dimensions based on the total number of images and the desired grid size
+    num_images = len(images)
+    rows = math.ceil(math.sqrt(num_images))
+    cols = math.ceil(num_images / rows)
+
+    # Calculate the size of each grid cell
+    cell_width = max(image.width for image in images)
+    cell_height = max(image.height for image in images)
+
+    # Calculate the size of the combined image
+    combined_width = cols * cell_width
+    combined_height = rows * cell_height
+
+    # Create a new combined image with a white background
+    combined_image = Image.new('RGB', (combined_width, combined_height), 'white')
+
+    # Paste each image into the appropriate grid cell
+    for i, image in enumerate(images):
+        col = i % cols
+        row = i // cols
+        x = col * cell_width
+        y = row * cell_height
+        combined_image.paste(image, (x, y))
+
+    # Save the combined image
+    combined_image.save(output_path)

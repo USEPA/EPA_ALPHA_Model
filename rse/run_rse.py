@@ -11,7 +11,10 @@ from pathlib import Path
 from tkinter import filedialog as fd
 
 loop = True
+# User setting to pause and view RSE check plots after each file is processed.
 plot_view = False
+# User setting to output RSE check plots as a single file for each input file processed.
+plot_output = True
 
 
 def generate_check_plot(validation_df, y_values, plot_num):
@@ -297,6 +300,14 @@ while loop:
             output_filepathnames = create_output_files(input_filepathname, equation_df, validation_df, alpha_df)
 
             image_files = create_combined_check_plot(y_values, input_filename, plot_view)
+
+            if plot_output:  # Combine RSE check plots into a single file if desired.
+                # Specify the output file path
+                output_file = input_filename + '.png'
+                # Specify the grid size
+                grid_size = (4, 4)
+                # Combine the images into a single file
+                combine_images(image_files, output_file, grid_size)
 
             output_folderpath = file_cleanup(file_path, image_files, output_filepathnames)
 
