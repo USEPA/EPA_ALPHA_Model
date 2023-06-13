@@ -132,7 +132,6 @@ def file_cleanup(file_path, image_files, output_filepathnames):
     output_filepathnames (list): output file pathnames
 
     """
-
     # Delete check plot files
     for image_file in image_files:
         if os.path.exists(image_file):
@@ -308,6 +307,12 @@ while loop:
                 grid_size = (4, 4)
                 # Combine the images into a single file
                 combine_images(image_files, output_file, grid_size)
+                # Get the absolute path of the current input file and add suffix of image file
+                file_path_1 = Path(input_filepathname)
+                file_path_1 = file_path_1.with_suffix('')
+                file_path_1 = file_path_1.with_suffix('.png')
+                # Append image file to list of files to be processed
+                output_filepathnames.append(file_path_1)
 
             output_folderpath = file_cleanup(file_path, image_files, output_filepathnames)
 
