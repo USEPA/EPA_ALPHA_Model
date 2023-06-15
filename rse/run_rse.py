@@ -12,7 +12,7 @@ from tkinter import filedialog as fd
 
 loop = True
 # User setting to pause and view RSE check plots after each file is processed.
-plot_view = True
+plot_view = False
 # User setting to output RSE check plots as a single file for each input file processed.
 plot_output = True
 
@@ -326,11 +326,9 @@ while loop:
                 # Append image file to list of files to be processed
                 output_filepathnames.append(file_path_1)
 
-            output_folderpath = file_cleanup(file_path, image_files, output_filepathnames)
-
             if plot_view:
                 # Load the image file
-                image_path = "image.png"
+                image_path = input_filename + ".png"
                 image = mpimg.imread(image_path)
 
                 # Create a figure with the desired size
@@ -346,6 +344,8 @@ while loop:
                 # Show the plot
                 # plt.tight_layout
                 plt.show()
+
+            output_folderpath = file_cleanup(file_path, image_files, output_filepathnames)
 
         os.chdir(output_folderpath)
         rse_files = [f for f in os.listdir() if '.xlsx' in f]
