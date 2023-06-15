@@ -3,7 +3,7 @@ import shutil
 import sys
 from datetime import datetime
 
-from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt, image as mpimg
 from rse_functions import *
 from tech_flags import *
 import pandas as pd
@@ -16,7 +16,7 @@ plot_view = False
 # User setting to output RSE check plots as a single file for each input file processed.
 plot_output = True
 
-init_tk = True
+# init_tk = True
 
 
 def generate_check_plot(validation_df, y_values, plot_num):
@@ -173,7 +173,7 @@ def create_combined_check_plot(y_values, input_filename, plot_view):
         list of image files
 
     """
-    global init_tk
+    # global init_tk
 
     image_files = []
     # Load check plot files
@@ -186,9 +186,9 @@ def create_combined_check_plot(y_values, input_filename, plot_view):
     max_width = 300
     max_height = 300
 
-    if plot_view:
-        create_image_window(root, image_files, grid_columns, max_width, max_height, input_filename)
-        init_tk = True
+    #if plot_view:
+    #    create_image_window(root, image_files, grid_columns, max_width, max_height, input_filename)
+    #    init_tk = True
 
     return image_files
 
@@ -247,18 +247,15 @@ def generate_rses_and_plots(input_df):
 
 while loop:
     # Open file dialog for ALPHA input file
-    if init_tk or plot_view:
-        root = tk.Tk()
-        init_tk = False
+    #if init_tk or plot_view:
+    #    root = tk.Tk()
+     #   init_tk = False
 
     input_files = fd.askopenfilenames(title="Open ALPHA Results File",
                                     filetypes=(("CSV Files", "*.csv"), ("All Files", "*.*")))
 
-    # drop configuration file if included:
-    input_files = [f for f in input_files if 'configuration' not in f]
-
-    if plot_view:  # this doesn't actually get rid of the window...
-        root.destroy()
+    #if plot_view:  # this doesn't actually get rid of the window...
+    #    root.destroy()
 
     if input_files:
         for input_filepathname in input_files:
@@ -309,9 +306,9 @@ while loop:
 
             output_filepathnames = create_output_files(input_filepathname, equation_df, validation_df, alpha_df)
 
-            if init_tk and plot_view:
+            #if init_tk and plot_view:
                 # create new window if needed for plot_view
-                root = tk.Tk()
+            #    root = tk.Tk()
 
             image_files = create_combined_check_plot(y_values, input_filename, plot_view)
 
@@ -328,6 +325,25 @@ while loop:
                 file_path_1 = file_path_1.with_suffix('.png')
                 # Append image file to list of files to be processed
                 output_filepathnames.append(file_path_1)
+
+            if plot_view:
+                # Load the image file
+                image_path = input_filename + ".png"
+                image = mpimg.imread(image_path)
+
+                # Create a figure with the desired size
+                fig = plt.figure(figsize=(10, 8))
+
+                # Display the image
+                plt.imshow(image)
+
+                # Hide the axis
+                plt.axis('off')
+                plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
+
+                # Show the plot
+                # plt.tight_layout
+                plt.show()
 
             output_folderpath = file_cleanup(file_path, image_files, output_filepathnames)
 
