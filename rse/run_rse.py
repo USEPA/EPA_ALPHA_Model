@@ -254,6 +254,9 @@ while loop:
     input_files = fd.askopenfilenames(title="Open ALPHA Results File",
                                     filetypes=(("CSV Files", "*.csv"), ("All Files", "*.*")))
 
+    # drop configuration file if included:
+    input_files = [f for f in input_files if 'configuration' not in f]
+
     if plot_view:  # this doesn't actually get rid of the window...
         root.destroy()
 
