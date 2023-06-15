@@ -77,17 +77,9 @@ tech_flags_dict['MILLER'] = {
     'diesel_fuel': 0,
 }
 
-tech_flags_dict['FWD'] = {'fwd': 1,
-                          # 'rwd': 0,
-                          'awd': 0}
-
-tech_flags_dict['RWD'] = {'fwd': 0,
-                          # 'rwd': 1,
-                          'awd': 0}
-
-tech_flags_dict['AWD'] = {'fwd': 0,
-                          # 'rwd': 0,
-                          'awd': 1}
+tech_flags_dict['FWD'] = {'drive_system': 'FWD'}
+tech_flags_dict['RWD'] = {'drive_system': 'RWD'}
+tech_flags_dict['AWD'] = {'drive_system': 'AWD'}
 
 tech_flags_dict['TRX10'] = {'trx10': 1,
                             'trx11': 0,
