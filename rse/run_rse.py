@@ -12,7 +12,7 @@ from tkinter import filedialog as fd
 
 loop = True
 # User setting to pause and view RSE check plots after each file is processed.
-plot_view = False
+plot_view = True
 # User setting to output RSE check plots as a single file for each input file processed.
 plot_output = True
 
@@ -340,6 +340,7 @@ while loop:
                 # Hide the axis
                 plt.axis('off')
                 plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
+                plt.title('ALPHA vs RSE for: ' + input_filename)
 
                 # Show the plot
                 # plt.tight_layout
