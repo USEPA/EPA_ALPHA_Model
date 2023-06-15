@@ -16,8 +16,6 @@ plot_view = False
 # User setting to output RSE check plots as a single file for each input file processed.
 plot_output = True
 
-# init_tk = True
-
 
 def generate_check_plot(validation_df, y_values, plot_num):
     """
@@ -173,7 +171,6 @@ def create_combined_check_plot(y_values, input_filename, plot_view):
         list of image files
 
     """
-    # global init_tk
 
     image_files = []
     # Load check plot files
@@ -185,10 +182,6 @@ def create_combined_check_plot(y_values, input_filename, plot_view):
     grid_columns = 4
     max_width = 300
     max_height = 300
-
-    #if plot_view:
-    #    create_image_window(root, image_files, grid_columns, max_width, max_height, input_filename)
-    #    init_tk = True
 
     return image_files
 
@@ -247,15 +240,8 @@ def generate_rses_and_plots(input_df):
 
 while loop:
     # Open file dialog for ALPHA input file
-    #if init_tk or plot_view:
-    #    root = tk.Tk()
-     #   init_tk = False
-
     input_files = fd.askopenfilenames(title="Open ALPHA Results File",
                                     filetypes=(("CSV Files", "*.csv"), ("All Files", "*.*")))
-
-    #if plot_view:  # this doesn't actually get rid of the window...
-    #    root.destroy()
 
     if input_files:
         for input_filepathname in input_files:
@@ -305,10 +291,6 @@ while loop:
             alpha_df = pd.read_csv(input_filepathname)
 
             output_filepathnames = create_output_files(input_filepathname, equation_df, validation_df, alpha_df)
-
-            #if init_tk and plot_view:
-                # create new window if needed for plot_view
-            #    root = tk.Tk()
 
             image_files = create_combined_check_plot(y_values, input_filename, plot_view)
 
