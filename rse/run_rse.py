@@ -120,7 +120,7 @@ def create_output_files(input_filepathname, equation_df, validation_df, alpha_df
 
     writer.close()
 
-    return [output_filepathname] # , rse_filepathname]
+    return [output_filepathname]  # , rse_filepathname]
 
 
 def file_cleanup(file_path, image_files, output_filepathnames):
@@ -208,10 +208,8 @@ def generate_rses_and_plots(input_df):
     """
     # Get input data columns from input file (x)
     x_data = []
-    count = 0
-    for x in x_values:
-        x_data.append(input_df[x_values[count]])
-        count += 1
+    for i, _ in enumerate(x_values):
+        x_data.append(input_df[x_values[i]])
 
     # Generate RSE equations iterating through all output values (y)
     validation_df = pd.DataFrame()

@@ -8,7 +8,6 @@ from PIL import Image, ImageTk
 import math
 
 
-
 def iterate1(x1, y, x_values):
     """
 
@@ -75,7 +74,7 @@ def iterate1(x1, y, x_values):
 
     e = eval(equ2)
     f = rse[0]
-    g = (e-f)/ (e + sys.float_info.epsilon)
+    g = (e-f) / (e + sys.float_info.epsilon)
     if abs(g) > 0.0001:
         print(equ1)
         print("Formula Error")
@@ -128,6 +127,7 @@ def create_image_window(window, image_files, grid_columns, max_width, max_height
     grid_columns
     max_width
     max_height
+    input_filename
 
     Returns
     -------
