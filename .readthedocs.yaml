@@ -3,11 +3,12 @@
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
 # Required
-version: 1.0
+version: 2
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
   configuration: ALPHA_Documentation/conf.py
+  builder: singlehtml
 
 # Optionally build your docs in additional formats such as PDF
 formats:
