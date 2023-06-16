@@ -308,25 +308,25 @@ while loop:
                 # Append image file to list of files to be processed
                 output_filepathnames.append(file_path_1)
 
-            if plot_view:
-                # Load the image file
-                image_path = input_filename + ".png"
-                image = mpimg.imread(image_path)
+                if plot_view:
+                    # Load the image file
+                    image_path = input_filename + ".png"
+                    image = mpimg.imread(image_path)
 
-                # Create a figure with the desired size
-                fig = plt.figure(figsize=(10, 8))
+                    # Create a figure with the desired size
+                    fig = plt.figure(figsize=(10, 8))
 
-                # Display the image
-                plt.imshow(image)
+                    # Display the image
+                    plt.imshow(image)
 
-                # Hide the axis
-                plt.axis('off')
-                plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
-                plt.title('ALPHA vs RSE for: ' + input_filename)
+                    # Hide the axis
+                    plt.axis('off')
+                    plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
+                    plt.title('ALPHA vs RSE for: ' + input_filename)
 
-                # Show the plot
-                # plt.tight_layout
-                plt.show()
+                    # Show the plot
+                    # plt.tight_layout
+                    plt.show()
 
             output_folderpath = file_cleanup(file_path, image_files, output_filepathnames)
 
