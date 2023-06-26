@@ -370,8 +370,9 @@ while loop:
         processed = []
         for rse_file in rse_files:
             rse_filename = rse_file[20:]  # drop timestamp
+            concat_file = False
 
-            if 'P2_PHEV' in input_filename:
+            if '_PHEV_' in input_filename:
                 for other_file in [f for f in rse_files if f != rse_file and f not in processed]:
                     other_filename = other_file[20:]  # drop timestamp
                     if rse_filename.replace('_CD_', '_CS_') == other_filename:
@@ -385,12 +386,16 @@ while loop:
                             replace('_results', '').\
                             replace('.xlsx', '')
 
-                        print('collating %s...' % rse_name)
+                        print('collating PHEV %s...' % rse_name)
 
-                        rse_df = pd.concat([cd_df, cs_df.drop(columns='index')], axis=1)
+                        rse_df = pd.concat([cd_df, cs_df.drop(columns='index')], axis=1).drop_duplicates()
 
                         processed.extend([rse_file, other_file])
+
+                        concat_file = True
             else:
+                concat_file = True
+
                 rse_df = pd.read_excel(rse_file, 'Equation', index_col=1).transpose().drop('Unnamed: 0').reset_index()
                 rse_df.rename({'index': 'cost_curve_class'}, axis=1, inplace=True)
 
@@ -400,8 +405,9 @@ while loop:
                     replace('.xlsx', '')
                 print('collating %s...' % rse_name)
 
-            rse_df['cost_curve_class'] = rse_name
-            rse_df = apply_tech_flags(rse_df, rse_name)
+            if concat_file:
+                rse_df['cost_curve_class'] = rse_name
+                rse_df = apply_tech_flags(rse_df, rse_name)
 
             collated_rse_df = pd.concat([collated_rse_df, rse_df])
 
