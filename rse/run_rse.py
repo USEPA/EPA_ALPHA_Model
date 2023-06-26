@@ -272,6 +272,8 @@ while loop:
     input_files = fd.askopenfilenames(title="Open ALPHA Results File",
                                     filetypes=(("CSV Files", "*.csv"), ("All Files", "*.*")))
 
+    input_files = [i for i in input_files if 'configuration' not in i]
+
     if input_files:
         for input_filepathname in input_files:
             input_filename = get_filename(input_filepathname)
