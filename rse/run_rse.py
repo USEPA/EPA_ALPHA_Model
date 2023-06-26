@@ -29,24 +29,50 @@ def generate_check_plot(validation_df, y_values, plot_num):
     """
 
     # Generate check plot
-    validation_df.plot(y_values[plot_num] + "-ALPHA", y_values[plot_num] + "-RSE", style='o', legend=None, color="black")
-    # Add titles to plot
-    font1 = {'family': 'arial', 'color': 'black', 'size': 20}
-    font2 = {'family': 'arial', 'color': 'black', 'size': 15}
-    plt.title(y_values[plot_num], fontdict=font1)
-    plt.xlabel(y_values[plot_num] + "-ALPHA", fontdict=font2)
-    plt.ylabel(y_values[plot_num] + "-RSE", fontdict=font2)
-    plt.grid()
+    if plt.fignum_exists(plot_num):
+        fig = plt.figure(plot_num)
+        ax1 = fig.axes[0]
+        ax1.lines[0].set_xdata(validation_df[y_values[plot_num] + "-ALPHA"])
+        ax1.lines[0].set_ydata(validation_df[y_values[plot_num] + "-RSE"])
 
-    # Calculate equation for trend line
-    if not all(validation_df[y_values[plot_num] + "-ALPHA"] == validation_df[y_values[plot_num] + "-RSE"]):
-        z = np.polyfit(validation_df[y_values[plot_num] + "-ALPHA"], validation_df[y_values[plot_num] + "-RSE"], 1)
-        p = np.poly1d(z)
-        # Add trend line to plot
-        plt.plot(validation_df[y_values[plot_num] + "-ALPHA"], p(validation_df[y_values[plot_num] + "-ALPHA"]), color="black")
+        if not all(validation_df[y_values[plot_num] + "-ALPHA"] == validation_df[y_values[plot_num] + "-RSE"]):
+            z = np.polyfit(validation_df[y_values[plot_num] + "-ALPHA"], validation_df[y_values[plot_num] + "-RSE"], 1)
+            p = np.poly1d(z)
 
-    plt.savefig('plot' + str(plot_num) + '.png')
-    plt.close()
+            if len(ax1.lines) == 1:
+                ax1.plot(validation_df[y_values[plot_num] + "-ALPHA"], p(validation_df[y_values[plot_num] + "-ALPHA"]),
+                         color="black")
+            else:
+                ax1.lines[1].set_xdata(validation_df[y_values[plot_num] + "-ALPHA"])
+                ax1.lines[1].set_ydata(p(validation_df[y_values[plot_num] + "-ALPHA"]))
+        else:
+            if len(ax1.lines) > 1:
+                ax1.lines[1].remove()
+
+        ax1.relim()
+        ax1.autoscale_view()
+    else:
+        fig = plt.figure(plot_num)
+        ax1 = fig.add_subplot()
+        font1 = {'family': 'arial', 'color': 'black', 'size': 20}
+        font2 = {'family': 'arial', 'color': 'black', 'size': 15}
+        # Add titles to plot
+        ax1.set_title(y_values[plot_num], fontdict=font1)
+        ax1.set_xlabel(y_values[plot_num] + "-ALPHA", fontdict=font2)
+        ax1.set_ylabel(y_values[plot_num] + "-RSE", fontdict=font2)
+        ax1.grid()
+        # validation_df.plot(y_values[plot_num] + "-ALPHA", y_values[plot_num] + "-RSE", style='o', legend=None, color="black")
+        ax1.plot(validation_df[y_values[plot_num] + "-ALPHA"], validation_df[y_values[plot_num] + "-RSE"], 'ko')
+        # Calculate equation for trend line
+
+        if not all(validation_df[y_values[plot_num] + "-ALPHA"] == validation_df[y_values[plot_num] + "-RSE"]):
+            z = np.polyfit(validation_df[y_values[plot_num] + "-ALPHA"], validation_df[y_values[plot_num] + "-RSE"], 1)
+            p = np.poly1d(z)
+            # Add trend line to plot
+            ax1.plot(validation_df[y_values[plot_num] + "-ALPHA"], p(validation_df[y_values[plot_num] + "-ALPHA"]),
+                     color="black")
+
+    fig.savefig('plot' + str(plot_num) + '.png')
 
 
 def get_filepathname(filename):
@@ -381,4 +407,5 @@ while loop:
     else:
         loop = False
 
+    plt.close('all')
     # The main while loop continues
