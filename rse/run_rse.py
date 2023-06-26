@@ -303,7 +303,7 @@ while loop:
                 if 'condition' in config_df and pd.notna(config_df['condition'][i]) and eval(config_df['condition'][i]):
                     y_values.append(cyv)
                     y_names.append(config_df['omega_inputs'][i])
-                else:
+                elif 'condition' not in config_df and pd.notna(config_df['omega_inputs'][i]):
                     y_values.append(cyv)
                     y_names.append(config_df['omega_inputs'][i])
 
