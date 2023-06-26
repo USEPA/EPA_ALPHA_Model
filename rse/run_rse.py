@@ -2,6 +2,7 @@ import os
 import shutil
 import sys
 from datetime import datetime
+# import time
 
 from matplotlib import pyplot as plt, image as mpimg
 from rse_functions import *
@@ -12,7 +13,7 @@ from tkinter import filedialog as fd
 
 loop = True
 # User setting to pause and view RSE check plots after each file is processed.
-plot_view = True
+plot_view = False
 # User setting to output RSE check plots as a single file for each input file processed.
 plot_output = True
 
@@ -184,9 +185,9 @@ def file_cleanup(file_path, image_files, output_filepathnames):
     return new_directory_path
 
 
-def create_combined_check_plot(y_values, input_filename, plot_view):
+def get_image_file_names(y_values):
     """
-        Create combined check plot image window
+        Create list of image file names
 
     Parameters
     ----------
@@ -199,20 +200,16 @@ def create_combined_check_plot(y_values, input_filename, plot_view):
     """
 
     image_files = []
+
     # Load check plot files
-    for i, v in enumerate(y_values):
+    for i, _ in enumerate(y_values):
         plot_name = 'plot' + str(i) + '.png'
         image_files.append(plot_name)
-
-    # Display check plots
-    grid_columns = 4
-    max_width = 300
-    max_height = 300
 
     return image_files
 
 
-def generate_rses_and_plots(input_df):
+def generate_rses_and_plots(input_df, plot_output):
     """
         Generate response surface equations and validation plots.
 
@@ -277,6 +274,7 @@ while loop:
     if input_files:
         for input_filepathname in input_files:
             input_filename = get_filename(input_filepathname)
+
             print('processing %s ...' % input_filename)
 
             # Save the path of the selected input file
@@ -312,18 +310,24 @@ while loop:
             # Read ALPHA data, skipping second row of units
             input_df = pd.read_csv(input_filepathname, skiprows=[1])
 
-            equation_df, validation_df = generate_rses_and_plots(input_df)
-
             # rename columns
             for k, v in rename_dict.items():
-                equation_df.replace(k, v, inplace=True)  # rename value
+                if not pd.isna(v):
+                    if '=' in v:
+                        rename, value = v.replace(' ', '').split('=')
+                        input_df[k] = eval(value)
+                        rename_dict[k] = rename
+
+            equation_df, validation_df = generate_rses_and_plots(input_df, plot_output)
+
+            equation_df.replace(rename_dict, inplace=True)  # rename values
 
             # Read the ALPHA file into dataframe
             alpha_df = pd.read_csv(input_filepathname)
 
             output_filepathnames = create_output_files(input_filepathname, equation_df, validation_df, alpha_df)
 
-            image_files = create_combined_check_plot(y_values, input_filename, plot_view)
+            image_files = get_image_file_names(y_values)
 
             if plot_output:  # Combine RSE check plots into a single file if desired.
                 # Specify the output file path
@@ -409,11 +413,15 @@ while loop:
                 rse_df['cost_curve_class'] = rse_name
                 rse_df = apply_tech_flags(rse_df, rse_name)
 
-            collated_rse_df = pd.concat([collated_rse_df, rse_df])
+                collated_rse_df = pd.concat([collated_rse_df, rse_df])
 
-        collated_filename = '%s_%s.csv' % (config_df['batch_prefix'][0], datetime.now().strftime('%Y_%m_%d'))
+        collated_filename = '%s_%s_%s.csv' % (get_filename(file_path),
+                                              config_df['batch_prefix'][0],
+                                              datetime.now().strftime('%Y_%m_%d'))
+
         print('\nwriting %s ...\n' % collated_filename)
-        collated_rse_df.to_csv(collated_filename, index=False)
+
+        collated_rse_df.sort_values('cost_curve_class').to_csv(collated_filename, index=False)
 
     else:
         loop = False
