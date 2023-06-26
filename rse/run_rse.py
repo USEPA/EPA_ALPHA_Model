@@ -254,6 +254,9 @@ def generate_rses_and_plots(input_df):
 
         generate_check_plot(validation_df, y_values, count)
 
+        if rse.min() == rse.max():
+            equ = '(%f)' % rse.min()  # parens so column gets treated as string and not numeric
+
         # Add equation to array
         equation_list.append(equ)
         count += 1
