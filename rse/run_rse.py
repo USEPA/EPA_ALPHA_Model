@@ -345,6 +345,7 @@ while loop:
 
                 if plot_view:
                     # Load the image file
+                    plt.close('all')
                     image_path = input_filename + ".png"
                     image = mpimg.imread(image_path)
 
