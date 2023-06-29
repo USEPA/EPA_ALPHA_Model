@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 import openpyxl
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import math
 
 
@@ -86,7 +86,7 @@ def iterate1(x1, y, x_values):
     return equ1, rse
 
 
-def combine_images(image_paths, output_path, grid_size):
+def combine_images(image_paths, output_path, input_filename):
     images = [Image.open(path) for path in image_paths]
 
     # Calculate the grid dimensions based on the total number of images and the desired grid size
@@ -113,5 +113,37 @@ def combine_images(image_paths, output_path, grid_size):
         y = row * cell_height
         combined_image.paste(image, (x, y))
 
-    # Save the combined image
-    combined_image.save(output_path)
+    # Add title to image
+    image = combined_image
+    space_height = 100
+    font_size = 32
+    title = ' ALPHA vs RSE for: ' + input_filename
+    # Create a new image with additional space
+    width, height = image.size
+    new_height = height + space_height
+    new_image = Image.new("RGB", (width, new_height), (255, 255, 255))
+
+    # Paste the original image onto the new image
+    new_image.paste(image, (0, space_height))
+
+    # Get a drawing context
+    draw = ImageDraw.Draw(new_image)
+
+    # Load the font
+    font = ImageFont.truetype("arial.ttf", font_size)
+
+    # Calculate the position to place the title
+    title_width, title_height = draw.textbbox((0, 0), title, font=font)[:2]
+    title_x = 0
+    title_y = int((space_height - title_height) / 2)
+
+    # Draw the black background for the title
+    title_bg = Image.new("RGB", (width, space_height), (255, 255, 255))
+    new_image.paste(title_bg, (0, 0))
+
+    # Draw the title on the new image
+    draw.text((title_x, title_y), title, font=font, fill=(0, 0, 0))
+
+    # Save the result
+    new_image.save(output_path)
+

@@ -335,7 +335,7 @@ while loop:
                 # Specify the grid size
                 grid_size = (4, 4)
                 # Combine the images into a single file
-                combine_images(image_files, output_file, grid_size)
+                combine_images(image_files, output_file, " " + input_filename)
                 # Get the absolute path of the current input file and add suffix of image file
                 file_path_1 = Path(input_filepathname)
                 file_path_1 = file_path_1.with_suffix('')
