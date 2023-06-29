@@ -25,8 +25,7 @@ tech_flags_dict['_'] = {
     'gdi': 0,
     'turb12': 0,
     'turb11': 0,
-    'gas_fuel': 0,
-    'diesel_fuel': 0,
+    'cert_fuel_id': 'gasoline',
 
     # clear TRX tech flags
     'trx10': 0,
@@ -46,7 +45,10 @@ tech_flags_dict['P2'] = {'hev': 1}
 tech_flags_dict['PHEV'] = {'hev': 0, 'phev': 1}
 tech_flags_dict['ICE'] = {'ice': 1}
 tech_flags_dict['P0'] = {'mhev': 1}
-tech_flags_dict['BEV'] = {'bev': 1}
+tech_flags_dict['BEV'] = {'bev': 1,
+                          'drive_system': 'FWD',  # FOR NOW
+                          'cert_fuel_id': 'electricity',
+                          }
 
 tech_flags_dict['DEAC_D'] = {'deac_pd': 1}
 tech_flags_dict['DEAC_C'] = {'deac_fc': 1}
@@ -54,46 +56,39 @@ tech_flags_dict['DEAC_C'] = {'deac_fc': 1}
 tech_flags_dict['ATK'] = {  # engine_2018_Toyota_A25AFKS_2L5_Tier3
     'cegr': 1,  # maybe?
     'gdi': 1,
-    'gas_fuel': 1,
 }
 
 tech_flags_dict['GDI'] = {  # engine_2013_Chevrolet_Ecotec_LCV_2L5_Reg_E10
     'gdi': 1,
-    'gas_fuel': 1,
 }
 
 tech_flags_dict['DHE'] = {  # engine_Toyota_2L5_TNGA_Proto_Hyb_Engine_paper_image_OM_Tier_3
     'gdi': 1,
-    'gas_fuel': 1,
 }
 
 tech_flags_dict['MILLER'] = {  # engine_Volvo_VEP_LP_Gen3_2L0_Miller_paper_image_OM_Tier_3 / engine_Geely_1L5_Miller_GHE_paper_image_OM_Tier_3
     'atk2': 1,
     'gdi': 1,
     'turb12': 1,
-    'gas_fuel': 1,
 }
 
 tech_flags_dict['TDS'] = {  # engine_2016_Honda_L15B7_1L5_Tier3 / engine_2015_Ford_EcoBoost_2L7_Tier3
     'cegr': 1,  # maybe?
     'turb12': 1,
-    'gas_fuel': 1,
 }
 
 tech_flags_dict['TDS11'] = {  # engine_2013_Ford_EcoBoost_1L6_LEVIII
     'cegr': 0,  # maybe?
     'turb12': 1,
-    'gas_fuel': 1,
 }
 
 tech_flags_dict['DIESEL'] = {  # engine_GTP_2020_GM_Duramax_3L0_Diesel_report_image_Diesel
     'cegr': 1,
     'turb11': 1,
-    'diesel_fuel': 1,
+    'cert_fuel_id': 'diesel',
 }
 
 tech_flags_dict['PFI'] = {  # engine_GTP_base_2020_Ford_7L3_report_image_Tier3
-    'gas_fuel': 1,
 }
 
 tech_flags_dict['TRX10'] = {'trx10': 1}
@@ -103,18 +98,13 @@ tech_flags_dict['TRX21'] = {'trx21': 1}
 tech_flags_dict['TRX22'] = {'trx22': 1}
 tech_flags_dict['ECVT'] = {'ecvt': 1}
 
-tech_flags_dict['FWD'] = {'drive_system': 2}
-tech_flags_dict['RWD'] = {'drive_system': 2}
-tech_flags_dict['AWD'] = {'drive_system': 4}
-
-# FUTURE WORK:
-# tech_flags_dict['FWD'] = {'drive_system': 'FWD'}
-# tech_flags_dict['RWD'] = {'drive_system': 'RWD'}
-# tech_flags_dict['AWD'] = {'drive_system': 'AWD'}
+tech_flags_dict['FWD'] = {'drive_system': 'FWD'}
+tech_flags_dict['RWD'] = {'drive_system': 'RWD'}
+tech_flags_dict['AWD'] = {'drive_system': 'AWD'}
 
 tech_flags_dict['SLA'] = {'application_id': 'SLA'}
 tech_flags_dict['HLA'] = {'application_id': 'HLA'}
-
+tech_flags_dict['MDV'] = {'application_id': 'MDV'}
 
 def apply_tech_flags(rse_df, rse_name):
     """

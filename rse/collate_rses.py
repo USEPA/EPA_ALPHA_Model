@@ -6,7 +6,7 @@ import pandas as pd
 
 ice_header = 'input_template_name:,context.rse_cost_clouds,input_template_version:,0.22'
 phev_header = 'input_template_name:,context.rse_cost_clouds,input_template_version:,0.22'
-bev_header = 'input_template_name:,context.rse_cost_clouds,input_template_version:,0.12'
+bev_header = 'input_template_name:,context.rse_cost_clouds,input_template_version:,0.13'
 
 def get_filepathname(filename):
     """
