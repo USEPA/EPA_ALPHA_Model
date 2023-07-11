@@ -130,7 +130,10 @@ def combine_images(image_paths, output_path, input_filename):
     draw = ImageDraw.Draw(new_image)
 
     # Load the font
-    font = ImageFont.truetype("arial.ttf", font_size)
+    try:
+        font = ImageFont.truetype("arial.ttf", font_size)
+    except:
+        font = ImageFont.truetype("Arial.ttf", font_size)
 
     # Calculate the position to place the title
     title_width, title_height = draw.textbbox((0, 0), title, font=font)[:2]
